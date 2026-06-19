@@ -1,6 +1,1 @@
-# ads.txt placeholder for pdf-tools website
-# Replace with your actual ad network entries:
-# google.com, PUB-XXXXXXXXXXXXXXXX, DIRECT, f08c47fec0942fa0
-#
-# For Chinese ad networks (e.g., Baidu):
-# cpro.baidu.com, XXXX, DIRECT, XXXXXX
+google.com, pub-2082456546225568, DIRECT, f08c47fec0942fa0

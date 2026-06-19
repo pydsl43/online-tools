@@ -65,8 +65,6 @@ textarea:focus { border-color: #667eea; outline: none; box-shadow: 0 0 0 3px rgb
 .stat-card .stat-label { font-size: 0.8rem; color: #64748b; margin-top: 4px; }
 .result-area { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; padding: 14px; margin: 12px 0; min-height: 60px; word-break: break-all; font-size: 0.92rem; line-height: 1.6; white-space: pre-wrap; }
 .result-area .placeholder { color: #94a3b8; font-style: italic; }
-.ad-spot { border: 2px dashed #cbd5e1; border-radius: 10px; padding: 20px; text-align: center; color: #94a3b8; font-size: 0.85rem; margin: 16px 0; background: #fafafa; min-height: 60px; }
-.ad-spot::before { content: '广告位'; display: block; font-size: 0.8rem; color: #cbd5e1; letter-spacing: 2px; }
 .char-counter { text-align: right; font-size: 0.8rem; color: #94a3b8; margin-top: 6px; }
 .copy-toast { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); background: #2d3748; color: #fff; padding: 10px 24px; border-radius: 8px; font-size: 0.85rem; opacity: 0; transition: opacity 0.3s; z-index: 1000; pointer-events: none; }
 .copy-toast.show { opacity: 1; }
@@ -82,6 +80,8 @@ footer { text-align: center; padding: 24px; color: rgba(255,255,255,0.7); font-s
 .json-collapsed > .json-children { display: none; }
 @media (max-width: 640px) { .header h1 { font-size: 1.5rem; } .tab-btn { font-size: 0.82rem; padding: 12px 8px; } .tab-content { padding: 16px; } .stat-grid { grid-template-columns: repeat(2, 1fr); } }
 </style>
+<!-- Google AdSense -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2082456546225568" crossorigin="anonymous"></script>
 </head>
 <body>
 
@@ -91,8 +91,16 @@ footer { text-align: center; padding: 24px; color: rgba(255,255,255,0.7); font-s
     <p>免费 · 纯客户端处理 · 无需注册 · 保障数据隐私</p>
   </div>
 
-  <!-- ===== 顶部横幅广告位 - Google AdSense / 百度联盟 ===== -->
-  <div class="ad-spot" style="background:linear-gradient(135deg,#fefce8,#fef9c3);border-color:#fde68a;"></div>
+  <!-- ===== Google AdSense: 顶部横幅广告 ===== -->
+  <ins class="adsbygoogle"
+       style="display:block"
+       data-ad-client="ca-pub-2082456546225568"
+       data-ad-slot="1234567890"
+       data-ad-format="auto"
+       data-full-width-responsive="true"></ins>
+  <script>
+       (adsbygoogle = window.adsbygoogle || []).push({});
+  </script>
 
   <div class="main-card">
     <div class="tab-bar">
@@ -122,8 +130,16 @@ footer { text-align: center; padding: 24px; color: rgba(255,255,255,0.7); font-s
       <div><button class="btn btn-primary btn-sm" onclick="copyWordCount()">📋 复制统计结果</button></div>
     </div>
 
-    <!-- ===== 标签之间广告位 - Google AdSense / 百度联盟 ===== -->
-    <div class="ad-spot" style="margin:0 24px 16px;"></div>
+    <!-- ===== Google AdSense: 中间广告位 ===== -->
+    <ins class="adsbygoogle"
+         style="display:block"
+         data-ad-client="ca-pub-2082456546225568"
+         data-ad-slot="1234567890"
+         data-ad-format="auto"
+         data-full-width-responsive="true"></ins>
+    <script>
+         (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
 
     <!-- ========== TAB 2: 文本转换 ========== -->
     <div id="tab2" class="tab-content">
@@ -175,8 +191,16 @@ footer { text-align: center; padding: 24px; color: rgba(255,255,255,0.7); font-s
     </div>
   </div>
 
-  <!-- ===== 页脚广告位 - Google AdSense / 百度联盟 ===== -->
-  <div class="ad-spot" style="margin-top:20px;background:linear-gradient(135deg,#f0fdf4,#dcfce7);border-color:#86efac;"></div>
+  <!-- ===== Google AdSense: 底部广告 ===== -->
+  <ins class="adsbygoogle"
+       style="display:block"
+       data-ad-client="ca-pub-2082456546225568"
+       data-ad-slot="1234567890"
+       data-ad-format="auto"
+       data-full-width-responsive="true"></ins>
+  <script>
+       (adsbygoogle = window.adsbygoogle || []).push({});
+  </script>
 
   <footer>
     <p>© 2026 在线文字处理工具 · 所有处理均在浏览器本地完成，您的数据不会上传到服务器</p>

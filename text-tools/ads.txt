@@ -1,11 +1,1 @@
-# ads.txt - 广告位声明文件
-# 请根据您使用的广告联盟替换以下内容
-
-# Google AdSense
-# google.com, pub-xxxxxxxxxxxxxxxx, DIRECT, f08c47fec0942fa0
-
-# 百度联盟
-# baidu.com, xxxxxxxxx, DIRECT
-
-# 此文件用于声明广告位所有权，防止广告欺诈
-# 部署前请替换为您的实际广告联盟ID
+google.com, pub-2082456546225568, DIRECT, f08c47fec0942fa0

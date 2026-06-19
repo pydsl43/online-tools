@@ -1,6 +1,1 @@
-# ads.txt
-# 广告投放管理文件
-# 如需接入广告，请在此文件中添加您的广告联盟信息
-
-# 示例: Google AdSense
-# google.com, pub-0000000000000000, DIRECT, f08c47fec0942fa0
+google.com, pub-2082456546225568, DIRECT, f08c47fec0942fa0

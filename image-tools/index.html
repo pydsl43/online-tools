@@ -86,12 +86,6 @@ input[type="range"]::-moz-range-thumb { width: 22px; height: 22px; background: w
 .spinner { display: inline-block; width: 40px; height: 40px; border: 4px solid #e2e8f0; border-top-color: #3b82f6; border-radius: 50%; animation: spin 0.8s linear infinite; }
 @keyframes spin { to { transform: rotate(360deg); } }
 
-/* Ad placeholders */
-.ad-placeholder { border: 2px dashed #d1d5db; border-radius: 0.75rem; background: linear-gradient(135deg, #f9fafb, #f3f4f6); display: flex; align-items: center; justify-content: center; color: #9ca3af; font-size: 0.875rem; min-height: 90px; }
-.ad-placeholder-leaderboard { min-height: 90px; }
-.ad-placeholder-rectangle { min-height: 250px; }
-.ad-placeholder-banner { min-height: 90px; }
-
 /* Animation */
 .fade-in { animation: fadeIn 0.4s ease forwards; }
 @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
@@ -167,17 +161,24 @@ input[type="range"]::-moz-range-thumb { width: 22px; height: 22px; background: w
 .batch-item-size { font-size: 12px; color: #6b7280; }
 .batch-item-status { font-size: 12px; }
 </style>
+<!-- Google AdSense -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2082456546225568" crossorigin="anonymous"></script>
 </head>
 <body class="bg-gradient-to-br from-slate-50 via-blue-50 to-purple-50 min-h-screen">
   <!-- ===== Toast Container ===== -->
   <div id="toastContainer" class="fixed top-4 right-4 z-50 flex flex-col gap-2"></div>
 
-  <!-- ===== Top Ad Placeholder ===== -->
-  <!-- Google AdSense: 顶部横幅广告（Leaderboard） -->
+  <!-- ===== Google AdSense: 顶部横幅广告 ===== -->
   <div class="max-w-5xl mx-auto px-4 pt-4">
-    <div class="ad-placeholder ad-placeholder-leaderboard">
-      <span class="text-gray-400 text-sm">广告位（Leaderboard 728x90）</span>
-    </div>
+    <ins class="adsbygoogle"
+         style="display:block"
+         data-ad-client="ca-pub-2082456546225568"
+         data-ad-slot="1234567890"
+         data-ad-format="auto"
+         data-full-width-responsive="true"></ins>
+    <script>
+         (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
   </div>
 
   <!-- ===== Header ===== -->
@@ -206,11 +207,16 @@ input[type="range"]::-moz-range-thumb { width: 22px; height: 22px; background: w
   <!-- ===== Upload Area ===== -->
   <section class="max-w-5xl mx-auto px-4 mt-8">
     <div class="image-card p-6 md:p-8">
-      <!-- Sidebar Ad -->
       <!-- Google AdSense: 侧面矩形广告 -->
-      <div class="ad-placeholder ad-placeholder-rectangle mb-6 md:hidden">
-        <span class="text-gray-400 text-sm">广告位（Rectangle 300x250）</span>
-      </div>
+      <ins class="adsbygoogle"
+           style="display:block"
+           data-ad-client="ca-pub-2082456546225568"
+           data-ad-slot="1234567890"
+           data-ad-format="auto"
+           data-full-width-responsive="true"></ins>
+      <script>
+           (adsbygoogle = window.adsbygoogle || []).push({});
+      </script>
 
       <div
         id="dropZone"
@@ -300,12 +306,17 @@ input[type="range"]::-moz-range-thumb { width: 22px; height: 22px; background: w
     </div>
   </section>
 
-  <!-- ===== Sidebar Ad (Desktop) ===== -->
-  <!-- Google AdSense: 侧边栏矩形广告 -->
+  <!-- ===== Google AdSense: 侧边栏矩形广告 ===== -->
   <div class="max-w-5xl mx-auto px-4 mt-6 hidden md:block">
-    <div class="ad-placeholder ad-placeholder-rectangle">
-      <span class="text-gray-400 text-sm">广告位（Rectangle 300x250）</span>
-    </div>
+    <ins class="adsbygoogle"
+         style="display:block"
+         data-ad-client="ca-pub-2082456546225568"
+         data-ad-slot="1234567890"
+         data-ad-format="auto"
+         data-full-width-responsive="true"></ins>
+    <script>
+         (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
   </div>
 
   <!-- ===== FAQ Section ===== -->
@@ -376,12 +387,17 @@ input[type="range"]::-moz-range-thumb { width: 22px; height: 22px; background: w
     </div>
   </section>
 
-  <!-- ===== Footer Banner Ad ===== -->
-  <!-- Google AdSense: 底部横幅广告 -->
+  <!-- ===== Google AdSense: 底部横幅广告 ===== -->
   <div class="max-w-5xl mx-auto px-4 mt-10">
-    <div class="ad-placeholder ad-placeholder-banner">
-      <span class="text-gray-400 text-sm">广告位（Banner 728x90）</span>
-    </div>
+    <ins class="adsbygoogle"
+         style="display:block"
+         data-ad-client="ca-pub-2082456546225568"
+         data-ad-slot="1234567890"
+         data-ad-format="auto"
+         data-full-width-responsive="true"></ins>
+    <script>
+         (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
   </div>
 
   <!-- ===== Footer ===== -->
