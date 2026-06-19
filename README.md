@@ -2,14 +2,14 @@
 
 一个免费、安全、隐私保护的在线工具合集，所有处理均在浏览器本地完成。
 
-🌐 **在线访问**: https://pydsl43.github.io/online-tools/
+🌐 **在线访问**: https://wdnmd.vip/
 
 ## 工具列表
 
 | 工具 | 链接 | 状态 |
 |------|------|------|
-| 🖼️ 在线图片压缩 | [立即使用](https://pydsl43.github.io/online-tools/image-tools/) | ✅ 已上线 |
-| 📄 在线 PDF 工具 | [立即使用](https://pydsl43.github.io/online-tools/pdf-tools/) | ✅ 已上线 |
+| 🖼️ 在线图片压缩 | [立即使用](https://wdnmd.vip/image-tools/) | ✅ 已上线 |
+| 📄 在线 PDF 工具 | [立即使用](https://wdnmd.vip/pdf-tools/) | ✅ 已上线 |
 | ✏️ 在线文字处理工具 | (开发中) | 🔄 开发中 |
 
 ## 技术栈
