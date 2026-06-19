@@ -2,13 +2,15 @@
 
 一个免费、安全、隐私保护的在线工具合集，所有处理均在浏览器本地完成。
 
+🌐 **在线访问**: https://pydsl43.github.io/online-tools/
+
 ## 工具列表
 
-| 工具 | 说明 | 状态 |
+| 工具 | 链接 | 状态 |
 |------|------|------|
-| 🖼️ [在线图片压缩](/image-tools/) | 免费压缩 PNG/JPG/WebP 等格式图片 | ✅ 已上线 |
-| 📄 [在线 PDF 工具](/pdf-tools/) | PDF 合并、拆分、压缩 | ✅ 已上线 |
-| ✏️ 在线文字处理工具 | 字数统计、文本转换、JSON格式化 | 🔄 开发中 |
+| 🖼️ 在线图片压缩 | [立即使用](https://pydsl43.github.io/online-tools/image-tools/) | ✅ 已上线 |
+| 📄 在线 PDF 工具 | [立即使用](https://pydsl43.github.io/online-tools/pdf-tools/) | ✅ 已上线 |
+| ✏️ 在线文字处理工具 | (开发中) | 🔄 开发中 |
 
 ## 技术栈
 
@@ -20,4 +22,4 @@
 
 ## 部署
 
-通过 GitHub Pages 免费部署。
+通过 GitHub Pages 免费部署，GitHub Actions 自动构建发布。
