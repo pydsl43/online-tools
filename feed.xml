@@ -3,9 +3,9 @@
      xmlns:content="http://purl.org/rss/1.0/modules/content/"
      xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>免费在线工具集</title>
+    <title>白给工具</title>
     <link>https://wdnmd.vip/</link>
-    <description>免费在线工具集 - 图片压缩、PDF处理、文字处理。无需注册，浏览器本地处理，保护隐私。</description>
+    <description>白给工具 - 免费图片压缩、PDF处理、文字处理。无需注册，浏览器本地处理，保护隐私。</description>
     <language>zh-CN</language>
     <lastBuildDate>Fri, 19 Jun 2026 00:00:00 GMT</lastBuildDate>
     <atom:link href="https://wdnmd.vip/feed.xml" rel="self" type="application/rss+xml"/>
