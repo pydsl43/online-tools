@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0"
+     xmlns:content="http://purl.org/rss/1.0/modules/content/"
+     xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>免费在线工具集</title>
+    <link>https://wdnmd.vip/</link>
+    <description>免费在线工具集 - 图片压缩、PDF处理、文字处理。无需注册，浏览器本地处理，保护隐私。</description>
+    <language>zh-CN</language>
+    <lastBuildDate>Fri, 19 Jun 2026 00:00:00 GMT</lastBuildDate>
+    <atom:link href="https://wdnmd.vip/feed.xml" rel="self" type="application/rss+xml"/>
+
+    <item>
+      <title>在线图片压缩工具 - 免费压缩PNG/JPG/WebP图片</title>
+      <link>https://wdnmd.vip/image-tools/</link>
+      <description>免费、快速、安全的在线图片压缩工具，支持批量上传，压缩质量可调，所有处理仅在浏览器本地完成。</description>
+      <pubDate>Fri, 19 Jun 2026 00:00:00 GMT</pubDate>
+    </item>
+
+    <item>
+      <title>在线PDF工具 - 免费PDF合并/拆分/压缩</title>
+      <link>https://wdnmd.vip/pdf-tools/</link>
+      <description>免费在线PDF工具，支持PDF合并、拆分、压缩，无需上传，浏览器本地处理，保护隐私安全。</description>
+      <pubDate>Fri, 19 Jun 2026 00:00:00 GMT</pubDate>
+    </item>
+
+    <item>
+      <title>在线文字处理工具 - 免费字数统计/文本转换/JSON格式化</title>
+      <link>https://wdnmd.vip/text-tools/</link>
+      <description>免费在线文字处理工具，支持字数统计、大小写转换、简繁转换、JSON格式化等功能。</description>
+      <pubDate>Fri, 19 Jun 2026 00:00:00 GMT</pubDate>
+    </item>
+  </channel>
+</rss>
