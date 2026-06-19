@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>在线文字处理工具 - 免费字数统计/文本转换/JSON格式化</title>
+<meta name="description" content="免费的在线文字处理工具箱，提供字数统计（支持中文字数）、文本转换（大小写/简繁转换/反转）、JSON格式化与验证。无需注册，纯客户端处理，保障数据安全。">
+<meta name="keywords" content="在线文字处理,字数统计,中文字数统计,文本转换,简繁转换,JSON格式化,JSON验证,在线工具">
+<meta property="og:title" content="在线文字处理工具 - 免费字数统计/文本转换/JSON格式化">
+<meta property="og:description" content="免费的在线文字处理工具箱，提供字数统计、文本转换、JSON格式化与验证。">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="zh_CN">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "在线文字处理工具",
+  "description": "免费的在线文字处理工具箱，提供字数统计、文本转换、JSON格式化与验证",
+  "applicationCategory": "UtilityApplication",
+  "operatingSystem": "All",
+  "browserRequirements": "Requires JavaScript",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "CNY"
+  }
+}
+</script>
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; }
+.container { max-width: 1100px; margin: 0 auto; padding: 20px 16px; }
+.header { text-align: center; padding: 30px 0 20px; }
+.header h1 { font-size: 2rem; font-weight: 800; color: #fff; text-shadow: 0 2px 10px rgba(0,0,0,0.2); }
+.header p { color: rgba(255,255,255,0.85); margin-top: 8px; font-size: 0.95rem; }
+.main-card { background: #fff; border-radius: 16px; box-shadow: 0 20px 60px rgba(0,0,0,0.15); overflow: hidden; }
+.tab-bar { display: flex; background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); border-bottom: 1px solid #e2e8f0; }
+.tab-btn { flex: 1; padding: 16px 12px; text-align: center; cursor: pointer; font-size: 0.95rem; font-weight: 600; color: #64748b; transition: all 0.3s; border: none; background: transparent; outline: none; position: relative; }
+.tab-btn:hover { color: #4a5568; background: rgba(255,255,255,0.5); }
+.tab-btn.active { color: #667eea; background: #fff; }
+.tab-btn.active::after { content: ''; position: absolute; bottom: 0; left: 20%; right: 20%; height: 3px; background: linear-gradient(90deg, #667eea, #764ba2); border-radius: 3px 3px 0 0; }
+.tab-content { display: none; padding: 24px; }
+.tab-content.active { display: block; }
+.section-title { font-size: 1.1rem; font-weight: 700; color: #2d3748; margin-bottom: 12px; }
+textarea { width: 100%; min-height: 200px; padding: 14px; border: 2px solid #e2e8f0; border-radius: 10px; font-size: 0.95rem; line-height: 1.6; resize: vertical; transition: border-color 0.3s; font-family: inherit; }
+textarea:focus { border-color: #667eea; outline: none; box-shadow: 0 0 0 3px rgba(102,126,234,0.15); }
+.btn { display: inline-flex; align-items: center; gap: 6px; padding: 10px 20px; border: none; border-radius: 8px; font-size: 0.9rem; font-weight: 600; cursor: pointer; transition: all 0.3s; text-decoration: none; }
+.btn-primary { background: linear-gradient(135deg, #667eea, #764ba2); color: #fff; }
+.btn-primary:hover { transform: translateY(-1px); box-shadow: 0 4px 15px rgba(102,126,234,0.4); }
+.btn-secondary { background: #f1f5f9; color: #475569; }
+.btn-secondary:hover { background: #e2e8f0; }
+.btn-success { background: linear-gradient(135deg, #48bb78, #38a169); color: #fff; }
+.btn-success:hover { transform: translateY(-1px); box-shadow: 0 4px 15px rgba(72,187,120,0.4); }
+.btn-danger { background: linear-gradient(135deg, #fc8181, #e53e3e); color: #fff; }
+.btn-danger:hover { transform: translateY(-1px); box-shadow: 0 4px 15px rgba(252,129,129,0.4); }
+.btn-sm { padding: 6px 14px; font-size: 0.82rem; }
+.btn-group { display: flex; flex-wrap: wrap; gap: 8px; margin: 12px 0; }
+.stat-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 10px; margin: 16px 0; }
+.stat-card { background: linear-gradient(135deg, #f8f9ff, #eef1ff); border-radius: 10px; padding: 14px; text-align: center; }
+.stat-card .stat-value { font-size: 1.5rem; font-weight: 800; color: #667eea; }
+.stat-card .stat-label { font-size: 0.8rem; color: #64748b; margin-top: 4px; }
+.result-area { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; padding: 14px; margin: 12px 0; min-height: 60px; word-break: break-all; font-size: 0.92rem; line-height: 1.6; white-space: pre-wrap; }
+.result-area .placeholder { color: #94a3b8; font-style: italic; }
+.ad-spot { border: 2px dashed #cbd5e1; border-radius: 10px; padding: 20px; text-align: center; color: #94a3b8; font-size: 0.85rem; margin: 16px 0; background: #fafafa; min-height: 60px; }
+.ad-spot::before { content: '广告位'; display: block; font-size: 0.8rem; color: #cbd5e1; letter-spacing: 2px; }
+.char-counter { text-align: right; font-size: 0.8rem; color: #94a3b8; margin-top: 6px; }
+.copy-toast { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); background: #2d3748; color: #fff; padding: 10px 24px; border-radius: 8px; font-size: 0.85rem; opacity: 0; transition: opacity 0.3s; z-index: 1000; pointer-events: none; }
+.copy-toast.show { opacity: 1; }
+footer { text-align: center; padding: 24px; color: rgba(255,255,255,0.7); font-size: 0.85rem; }
+.json-tree-node { margin-left: 20px; }
+.json-tree-toggle { cursor: pointer; user-select: none; color: #667eea; margin-right: 4px; display: inline-block; width: 16px; text-align: center; }
+.json-key { color: #e53e3e; }
+.json-string { color: #38a169; }
+.json-number { color: #3182ce; }
+.json-boolean { color: #805ad5; }
+.json-null { color: #a0aec0; font-style: italic; }
+.json-bracket { color: #718096; }
+.json-collapsed > .json-children { display: none; }
+@media (max-width: 640px) { .header h1 { font-size: 1.5rem; } .tab-btn { font-size: 0.82rem; padding: 12px 8px; } .tab-content { padding: 16px; } .stat-grid { grid-template-columns: repeat(2, 1fr); } }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <div class="header">
+    <h1>🛠 在线文字处理工具</h1>
+    <p>免费 · 纯客户端处理 · 无需注册 · 保障数据隐私</p>
+  </div>
+
+  <!-- ===== 顶部横幅广告位 - Google AdSense / 百度联盟 ===== -->
+  <div class="ad-spot" style="background:linear-gradient(135deg,#fefce8,#fef9c3);border-color:#fde68a;"></div>
+
+  <div class="main-card">
+    <div class="tab-bar">
+      <button class="tab-btn active" data-tab="tab1">📊 字数统计</button>
+      <button class="tab-btn" data-tab="tab2">🔀 文本转换</button>
+      <button class="tab-btn" data-tab="tab3">📋 JSON格式化</button>
+    </div>
+
+    <!-- ========== TAB 1: 字数统计 ========== -->
+    <div id="tab1" class="tab-content active">
+      <div class="section-title">📊 字数统计</div>
+      <p style="color:#64748b;font-size:0.85rem;margin-bottom:12px;">输入或粘贴文本，字数将自动实时统计</p>
+      <textarea id="wordCountInput" placeholder="在此输入或粘贴文本，字数将自动统计..." oninput="updateWordCount()"></textarea>
+      <div class="char-counter">当前输入: <span id="inputCharCount">0</span> 字符</div>
+      <div style="margin:8px 0;"><button class="btn btn-secondary btn-sm" onclick="clearWordCount()">🗑 清空</button></div>
+      <div class="stat-grid" id="wordCountStats">
+        <div class="stat-card"><div class="stat-value" id="totalChars">0</div><div class="stat-label">总字符数</div></div>
+        <div class="stat-card"><div class="stat-value" id="charsNoSpace">0</div><div class="stat-label">字符数(无空格)</div></div>
+        <div class="stat-card"><div class="stat-value" id="chineseChars">0</div><div class="stat-label">中文字数</div></div>
+        <div class="stat-card"><div class="stat-value" id="wordCount">0</div><div class="stat-label">单词数</div></div>
+        <div class="stat-card"><div class="stat-value" id="lineCount">0</div><div class="stat-label">行数</div></div>
+        <div class="stat-card"><div class="stat-value" id="paraCount">0</div><div class="stat-label">段落数</div></div>
+        <div class="stat-card"><div class="stat-value" id="sentCount">0</div><div class="stat-label">句子数</div></div>
+        <div class="stat-card"><div class="stat-value" id="readTime">0<span style="font-size:0.7rem;">分钟</span></div><div class="stat-label">阅读时间</div></div>
+        <div class="stat-card"><div class="stat-value" id="speakTime">0<span style="font-size:0.7rem;">分钟</span></div><div class="stat-label">演讲时间</div></div>
+      </div>
+      <div><button class="btn btn-primary btn-sm" onclick="copyWordCount()">📋 复制统计结果</button></div>
+    </div>
+
+    <!-- ===== 标签之间广告位 - Google AdSense / 百度联盟 ===== -->
+    <div class="ad-spot" style="margin:0 24px 16px;"></div>
+
+    <!-- ========== TAB 2: 文本转换 ========== -->
+    <div id="tab2" class="tab-content">
+      <div class="section-title">🔀 文本转换</div>
+      <p style="color:#64748b;font-size:0.85rem;margin-bottom:12px;">输入文本后选择转换方式</p>
+      <textarea id="convertInput" placeholder="在此输入要转换的文本..." oninput="updateConvertCount()"></textarea>
+      <div class="char-counter">当前输入: <span id="convertCharCount">0</span> 字符</div>
+      <div style="margin:8px 0;"><button class="btn btn-secondary btn-sm" onclick="clearConvert()">🗑 清空</button></div>
+      <div class="section-title" style="margin-top:16px;">大小写转换</div>
+      <div class="btn-group">
+        <button class="btn btn-primary btn-sm" onclick="convertText('uppercase')">A 全部大写</button>
+        <button class="btn btn-primary btn-sm" onclick="convertText('lowercase')">a 全部小写</button>
+        <button class="btn btn-primary btn-sm" onclick="convertText('capitalize')">Aa 首字母大写</button>
+        <button class="btn btn-primary btn-sm" onclick="convertText('camelCase')">aaBb 驼峰式</button>
+        <button class="btn btn-primary btn-sm" onclick="convertText('snakeCase')">aa_bb 蛇形式</button>
+      </div>
+      <div class="section-title" style="margin-top:12px;">其他转换</div>
+      <div class="btn-group">
+        <button class="btn btn-primary btn-sm" onclick="convertText('s2t')">简 → 繁</button>
+        <button class="btn btn-primary btn-sm" onclick="convertText('t2s')">繁 → 简</button>
+        <button class="btn btn-primary btn-sm" onclick="convertText('reverse')">🔄 反转文字</button>
+        <button class="btn btn-primary btn-sm" onclick="convertText('trim')">✂ 去除多余空格</button>
+      </div>
+      <div class="section-title" style="margin-top:12px;">转换结果</div>
+      <div class="result-area" id="convertResult"><span class="placeholder">转换结果将显示在此处</span></div>
+      <div><button class="btn btn-success btn-sm" onclick="copyConvertResult()">📋 复制结果</button></div>
+    </div>
+
+    <!-- ========== TAB 3: JSON格式化 ========== -->
+    <div id="tab3" class="tab-content">
+      <div class="section-title">📋 JSON格式化与验证</div>
+      <p style="color:#64748b;font-size:0.85rem;margin-bottom:12px;">输入JSON字符串，进行格式化、压缩或验证</p>
+      <textarea id="jsonInput" placeholder='例如: {"name":"张三","age":25,"hobbies":["读书","编程"]}' oninput="updateJsonCount()"></textarea>
+      <div class="char-counter">当前输入: <span id="jsonCharCount">0</span> 字符</div>
+      <div class="btn-group">
+        <button class="btn btn-primary btn-sm" onclick="formatJson()">🎨 格式化</button>
+        <button class="btn btn-secondary btn-sm" onclick="compressJson()">📦 压缩</button>
+        <button class="btn btn-success btn-sm" onclick="validateJson()">✅ 验证</button>
+      </div>
+      <div id="jsonError" style="display:none;background:#fff5f5;border:1px solid #feb2b2;border-radius:8px;padding:12px;margin:8px 0;color:#c53030;font-size:0.88rem;white-space:pre-wrap;"></div>
+      <div class="section-title" style="margin-top:12px;">格式化结果</div>
+      <div class="result-area" id="jsonResult"><span class="placeholder">格式化后的JSON将显示在此处</span></div>
+      <div class="btn-group">
+        <button class="btn btn-success btn-sm" onclick="copyJsonResult()">📋 复制结果</button>
+        <button class="btn btn-primary btn-sm" onclick="downloadJson()">⬇ 下载 .json</button>
+      </div>
+      <div class="section-title" style="margin-top:16px;">JSON树形视图</div>
+      <div class="result-area" id="jsonTreeView" style="max-height:400px;overflow:auto;font-family:Menlo,Monaco,Courier New,monospace;font-size:0.82rem;line-height:1.8;"><span class="placeholder">格式化后自动生成树形视图</span></div>
+    </div>
+  </div>
+
+  <!-- ===== 页脚广告位 - Google AdSense / 百度联盟 ===== -->
+  <div class="ad-spot" style="margin-top:20px;background:linear-gradient(135deg,#f0fdf4,#dcfce7);border-color:#86efac;"></div>
+
+  <footer>
+    <p>© 2026 在线文字处理工具 · 所有处理均在浏览器本地完成，您的数据不会上传到服务器</p>
+  </footer>
+</div>
+
+<div id="copyToast" class="copy-toast">✅ 已复制到剪贴板</div>
+
+<script>
+
+// ===== TAB SWITCHING =====
+document.querySelectorAll('.tab-btn').forEach(function(btn) {
+  btn.addEventListener('click', function() {
+    document.querySelectorAll('.tab-btn').forEach(function(b) { b.classList.remove('active'); });
+    document.querySelectorAll('.tab-content').forEach(function(t) { t.classList.remove('active'); });
+    btn.classList.add('active');
+    document.getElementById(btn.getAttribute('data-tab')).classList.add('active');
+  });
+});
+
+// ===== TOAST NOTIFICATION =====
+function showToast(msg) {
+  var t = document.getElementById('copyToast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(function(){ t.classList.remove('show'); }, 2000);
+}
+
+// ===== COPY HELPER =====
+function copyText(text) {
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(text).then(function(){ showToast('✅ 已复制到剪贴板'); });
+  } else {
+    var ta = document.createElement('textarea');
+    ta.value = text; ta.style.position = 'fixed'; ta.style.left = '-9999px';
+    document.body.appendChild(ta); ta.select();
+    document.execCommand('copy'); document.body.removeChild(ta);
+    showToast('✅ 已复制到剪贴板');
+  }
+}
+
+// ===================================================================
+// TAB 1: 字数统计
+// ===================================================================
+function updateWordCount() {
+  var text = document.getElementById('wordCountInput').value;
+  document.getElementById('inputCharCount').textContent = text.length;
+
+  var totalChars = text.length;
+  var charsNoSpace = text.replace(/[\s]/g, '').length;
+  var chineseChars = (text.match(/[\u4e00-\u9fff\u3400-\u4dbf\uf900-\ufaff]/g) || []).length;
+  var wordCount = 0;
+  var trimmed = text.trim();
+  if (trimmed) {
+    wordCount = trimmed.split(/[\s]+/).filter(function(w){ return w.length > 0; }).length;
+  }
+  var lineCount = text ? text.split('\n').length : 0;
+  var paraCount = text ? text.split(/\n\s*\n/).filter(function(p){ return p.trim().length > 0; }).length : 0;
+  var sentCount = (text.match(/[^。！？\.\!\?\n]+[。！？\.\!\?\n]/g) || []).length;
+  if (sentCount === 0 && trimmed.length > 0) sentCount = 1;
+  var readTime = Math.max(1, Math.round(totalChars / 500));
+  var speakTime = Math.max(1, Math.ceil(totalChars / 700));
+
+  document.getElementById('totalChars').textContent = totalChars;
+  document.getElementById('charsNoSpace').textContent = charsNoSpace;
+  document.getElementById('chineseChars').textContent = chineseChars;
+  document.getElementById('wordCount').textContent = wordCount;
+  document.getElementById('lineCount').textContent = lineCount;
+  document.getElementById('paraCount').textContent = paraCount;
+  document.getElementById('sentCount').textContent = sentCount;
+  document.getElementById('readTime').innerHTML = readTime + '<span style="font-size:0.7rem;">分钟</span>';
+  document.getElementById('speakTime').innerHTML = speakTime + '<span style="font-size:0.7rem;">分钟</span>';
+}
+
+function clearWordCount() {
+  document.getElementById('wordCountInput').value = '';
+  updateWordCount();
+}
+
+function copyWordCount() {
+  var text = document.getElementById('wordCountInput').value;
+  var totalChars = document.getElementById('totalChars').textContent;
+  var charsNoSpace = document.getElementById('charsNoSpace').textContent;
+  var chineseChars = document.getElementById('chineseChars').textContent;
+  var wordCount = document.getElementById('wordCount').textContent;
+  var lineCount = document.getElementById('lineCount').textContent;
+  var paraCount = document.getElementById('paraCount').textContent;
+  var sentCount = document.getElementById('sentCount').textContent;
+  var readTime = document.getElementById('readTime').textContent;
+  var speakTime = document.getElementById('speakTime').textContent;
+
+  var report = '===== 字数统计报告 =====\n';
+  report += '总字符数: ' + totalChars + '\n';
+  report += '字符数(无空格): ' + charsNoSpace + '\n';
+  report += '中文字数: ' + chineseChars + '\n';
+  report += '单词数: ' + wordCount + '\n';
+  report += '行数: ' + lineCount + '\n';
+  report += '段落数: ' + paraCount + '\n';
+  report += '句子数: ' + sentCount + '\n';
+  report += '阅读时间: ' + readTime + '\n';
+  report += '演讲时间: ' + speakTime + '\n';
+  report += '========================';
+  copyText(report);
+}
+
+// ===================================================================
+// TAB 2: 文本转换
+// ===================================================================
+var STMap = {
+  '个': '個', '们': '們', '你': '你', '我': '我', '他': '他', '她': '她',
+  '的': '的', '了': '了', '是': '是', '不': '不', '在': '在', '有': '有',
+  '人': '人', '这': '這', '那': '那', '什': '什', '么': '麼', '吗': '嗎',
+  '啊': '啊', '吧': '吧', '呢': '呢', '的': '的', '地': '地', '得': '得',
+  '和': '和', '与': '與', '并': '並', '对': '對', '错': '錯', '好': '好',
+  '坏': '壞', '大': '大', '小': '小', '多': '多', '少': '少', '长': '長',
+  '短': '短', '高': '高', '低': '低', '远': '遠', '近': '近', '开': '開',
+  '关': '關', '门': '門', '问': '問', '说': '說', '话': '話', '读': '讀',
+  '写': '寫', '看': '看', '听': '聽', '吃': '吃', '喝': '喝', '来': '來',
+  '去': '去', '上': '上', '下': '下', '里': '裡', '外': '外', '前': '前',
+  '后': '後', '左': '左', '右': '右', '东': '東', '西': '西', '南': '南',
+  '北': '北', '中': '中', '国': '國', '家': '家', '学': '學', '习': '習',
+  '教': '教', '师': '師', '生': '生', '作': '作', '业': '業', '工': '工',
+  '会': '會', '社': '社', '区': '區', '市': '市', '省': '省', '县': '縣',
+  '镇': '鎮', '村': '村', '路': '路', '街': '街', '号': '號', '电': '電',
+  '话': '話', '机': '機', '车': '車', '船': '船', '飞': '飛', '机': '機',
+  '场': '場', '馆': '館', '院': '院', '校': '校', '园': '園', '网': '網',
+  '站': '站', '页': '頁', '信': '信', '息': '息', '数': '數', '据': '據',
+  '文': '文', '字': '字', '体': '體', '颜': '顏', '色': '色', '声': '聲',
+  '音': '音', '乐': '樂', '戏': '戲', '剧': '劇', '情': '情', '感': '感',
+  '想': '想', '念': '念', '愿': '願', '意': '意', '思': '思', '志': '志',
+  '气': '氣', '力': '力', '量': '量', '度': '度', '质': '質', '量': '量',
+  '时': '時', '间': '間', '点': '點', '钟': '鐘', '秒': '秒', '日': '日',
+  '月': '月', '年': '年', '星': '星', '期': '期', '周': '週', '早': '早',
+  '午': '午', '晚': '晚', '夜': '夜', '今': '今', '明': '明', '昨': '昨',
+  '天': '天', '气': '氣', '温': '溫', '度': '度', '晴': '晴', '雨': '雨',
+  '雪': '雪', '风': '風', '云': '雲', '雷': '雷', '电': '電', '山': '山',
+  '水': '水', '火': '火', '土': '土', '木': '木', '金': '金', '石': '石',
+  '生': '生', '命': '命', '老': '老', '病': '病', '死': '死', '爱': '愛',
+  '恨': '恨', '喜': '喜', '怒': '怒', '哀': '哀', '乐': '樂', '惊': '驚',
+  '怕': '怕', '勇': '勇', '敢': '敢', '怯': '怯', '懒': '懶', '勤': '勤',
+  '劳': '勞', '动': '動', '跑': '跑', '跳': '跳', '走': '走', '停': '停',
+  '坐': '坐', '站': '站', '躺': '躺', '睡': '睡', '醒': '醒', '迷': '迷',
+  '路': '路', '转': '轉', '弯': '彎', '直': '直', '正': '正', '反': '反',
+  '真': '真', '假': '假', '善': '善', '恶': '惡', '美': '美', '丑': '醜',
+  '空': '空', '满': '滿', '难': '難', '易': '易', '简': '簡', '单': '單',
+  '复': '複', '杂': '雜', '纯': '純', '净': '淨', '干': '乾', '湿': '濕',
+  '深': '深', '浅': '淺', '宽': '寬', '窄': '窄', '厚': '厚', '薄': '薄',
+  '重': '重', '轻': '輕', '硬': '硬', '软': '軟', '快': '快', '慢': '慢',
+  '忙': '忙', '闲': '閒', '贫': '貧', '富': '富', '穷': '窮', '贵': '貴',
+  '贱': '賤', '买': '買', '卖': '賣', '进': '進', '出': '出', '回': '回',
+  '到': '到', '过': '過', '从': '從', '经': '經', '历': '歷', '史': '史',
+  '记': '記', '忆': '憶', '讲': '講', '解': '解', '释': '釋', '义': '義',
+  '翻': '翻', '译': '譯', '诗': '詩', '词': '詞', '赋': '賦', '曲': '曲',
+  '画': '畫', '图': '圖', '像': '像', '影': '影', '片': '片', '灯': '燈',
+  '光': '光', '明': '明', '暗': '暗', '黑': '黑', '白': '白', '红': '紅',
+  '黄': '黃', '蓝': '藍', '绿': '綠', '青': '青', '紫': '紫', '灰': '灰',
+  '橙': '橙', '粉': '粉', '棕': '棕', '银': '銀', '铜': '銅', '铁': '鐵',
+  '钢': '鋼', '木': '木', '棉': '棉', '花': '花', '草': '草', '树': '樹',
+  '果': '果', '食': '食', '物': '物', '肉': '肉', '菜': '菜', '米': '米',
+  '面': '麵', '包': '包', '糖': '糖', '盐': '鹽', '油': '油', '酱': '醬',
+  '醋': '醋', '茶': '茶', '酒': '酒', '药': '藥', '病': '病', '医': '醫',
+  '院': '院', '护': '護', '士': '士', '科': '科', '学': '學', '技': '技',
+  '术': '術', '工': '工', '程': '程', '商': '商', '品': '品', '价': '價',
+  '钱': '錢', '币': '幣', '元': '元', '角': '角', '分': '分', '百': '百',
+  '千': '千', '万': '萬', '亿': '億', '兆': '兆', '公': '公', '私': '私',
+  '共': '共', '同': '同', '合': '合', '分': '分', '集': '集', '散': '散',
+  '始': '始', '终': '終', '原': '原', '本': '本', '末': '末', '根': '根',
+  '源': '源', '流': '流', '派': '派', '别': '別', '类': '類', '型': '型',
+  '式': '式', '样': '樣', '模': '模', '范': '範', '围': '圍', '领': '領',
+  '域': '域', '界': '界', '线': '線', '面': '面', '体': '體', '积': '積',
+  '容': '容', '纳': '納', '包': '包', '含': '含', '括': '括', '展': '展',
+  '示': '示', '显': '顯', '现': '現', '态': '態', '状': '狀', '形': '形',
+  '成': '成', '结': '結', '构': '構', '建': '建', '立': '立', '设': '設',
+  '创': '創', '造': '造', '发': '發', '现': '現', '明': '明', '究': '究',
+  '讨': '討', '论': '論', '证': '證', '实': '實', '验': '驗', '检': '檢',
+  '查': '查', '测': '測', '试': '試', '认': '認', '识': '識', '知': '知',
+  '道': '道', '理': '理', '解': '解', '答': '答', '案': '案', '题': '題',
+  '目': '目', '标': '標', '准': '準', '规': '規', '则': '則', '制': '製',
+  '度': '度', '法': '法', '律': '律', '规': '規', '章': '章', '条': '條',
+  '款': '款', '例': '例', '纲': '綱', '目': '目', '细': '細', '节': '節',
+  '内': '內', '外': '外', '部': '部', '门': '門', '组': '組', '织': '織',
+  '队': '隊', '伍': '伍', '官': '官', '兵': '兵', '军': '軍', '队': '隊',
+  '战': '戰', '争': '爭', '和': '和', '平': '平', '安': '安', '全': '全',
+  '险': '險', '卫': '衛', '生': '生', '保': '保', '护': '護', '救': '救',
+  '援': '援', '助': '助', '帮': '幫', '忙': '忙', '支': '支', '持': '持',
+  '赞': '讚', '赏': '賞', '奖': '獎', '励': '勵', '惩': '懲', '罚': '罰',
+  '奖': '獎', '金': '金', '牌': '牌', '杯': '杯', '赛': '賽', '竞': '競',
+  '争': '爭', '比': '比', '胜': '勝', '负': '負', '赢': '贏', '输': '輸'
+};
+
+// Build reverse map (TS)
+var TSMap = {};
+for (var k in STMap) {
+  if (STMap.hasOwnProperty(k)) {
+    TSMap[STMap[k]] = k;
+  }
+}
+
+function s2t(text) {
+  var result = '';
+  for (var i = 0; i < text.length; i++) {
+    var ch = text[i];
+    result += STMap[ch] || ch;
+  }
+  return result;
+}
+
+function t2s(text) {
+  var result = '';
+  for (var i = 0; i < text.length; i++) {
+    var ch = text[i];
+    result += TSMap[ch] || ch;
+  }
+  return result;
+}
+
+function updateConvertCount() {
+  var text = document.getElementById('convertInput').value;
+  document.getElementById('convertCharCount').textContent = text.length;
+}
+
+function clearConvert() {
+  document.getElementById('convertInput').value = '';
+  document.getElementById('convertCharCount').textContent = '0';
+  document.getElementById('convertResult').innerHTML = '<span class="placeholder">转换结果将显示在此处</span>';
+}
+
+function convertText(mode) {
+  var input = document.getElementById('convertInput').value;
+  var result = '';
+
+  try {
+    switch (mode) {
+      case 'uppercase':
+        result = input.toUpperCase();
+        break;
+      case 'lowercase':
+        result = input.toLowerCase();
+        break;
+      case 'capitalize':
+        result = input.replace(/\b\w/g, function(c){ return c.toUpperCase(); });
+        break;
+      case 'camelCase':
+        result = input.toLowerCase().replace(/[^a-zA-Z0-9]+(.)/g, function(_, c){ return c.toUpperCase(); });
+        break;
+      case 'snakeCase':
+        result = input.replace(/([A-Z])/g, '_$1').toLowerCase();
+        result = result.replace(/[^a-zA-Z0-9_]/g, '_');
+        result = result.replace(/_+/g, '_').replace(/^_|_$/g, '');
+        break;
+      case 's2t':
+        result = s2t(input);
+        break;
+      case 't2s':
+        result = t2s(input);
+        break;
+      case 'reverse':
+        result = input.split('').reverse().join('');
+        break;
+      case 'trim':
+        result = input.replace(/^\s+|\s+$/g, '').replace(/\s+/g, ' ');
+        break;
+      default:
+        result = input;
+    }
+    document.getElementById('convertResult').innerHTML = escapeHtml(result);
+  } catch(e) {
+    document.getElementById('convertResult').innerHTML = '<span style="color:#e53e3e;">转换出错: ' + escapeHtml(e.message) + '</span>';
+  }
+}
+
+function escapeHtml(str) {
+  var div = document.createElement('div');
+  div.appendChild(document.createTextNode(str));
+  return div.innerHTML;
+}
+
+function copyConvertResult() {
+  var el = document.getElementById('convertResult');
+  var text = el.textContent || el.innerText;
+  if (text === '转换结果将显示在此处' || !text) {
+    showToast('⚠ 暂无内容可复制');
+    return;
+  }
+  copyText(text);
+}
+
+// ===================================================================
+// TAB 3: JSON格式化
+// ===================================================================
+var parsedJson = null;
+var lastFormattedJson = '';
+
+function updateJsonCount() {
+  var text = document.getElementById('jsonInput').value;
+  document.getElementById('jsonCharCount').textContent = text.length;
+}
+
+function parseJsonInput() {
+  var text = document.getElementById('jsonInput').value;
+  if (!text.trim()) {
+    document.getElementById('jsonError').style.display = 'none';
+    return null;
+  }
+  try {
+    var result = JSON.parse(text);
+    document.getElementById('jsonError').style.display = 'none';
+    return result;
+  } catch(e) {
+    var msg = e.message || 'JSON格式错误';
+    var lineMatch = msg.match(/position\s+(\d+)/i);
+    if (lineMatch) {
+      var pos = parseInt(lineMatch[1]);
+      var lines = text.substring(0, pos).split('\n');
+      var lineNum = lines.length;
+      var colNum = lines[lines.length - 1].length;
+      msg = '第' + lineNum + '行 第' + colNum + '列: ' + msg;
+    }
+    var errDiv = document.getElementById('jsonError');
+    errDiv.style.display = 'block';
+    errDiv.textContent = '❌ ' + msg;
+    return null;
+  }
+}
+
+function formatJson() {
+  var obj = parseJsonInput();
+  if (obj === null) return;
+  try {
+    var formatted = JSON.stringify(obj, null, 2);
+    document.getElementById('jsonResult').innerHTML = '<pre style="margin:0;white-space:pre-wrap;font-family:Menlo,Monaco,Courier New,monospace;font-size:0.82rem;">' + escapeHtml(formatted) + '</pre>';
+    document.getElementById('jsonError').style.display = 'none';
+    lastFormattedJson = formatted;
+    parsedJson = obj;
+    renderJsonTree(obj);
+  } catch(e) {
+    document.getElementById('jsonResult').innerHTML = '<span style="color:#e53e3e;">格式化错误: ' + escapeHtml(e.message) + '</span>';
+  }
+}
+
+function compressJson() {
+  var obj = parseJsonInput();
+  if (obj === null) return;
+  try {
+    var compressed = JSON.stringify(obj);
+    document.getElementById('jsonResult').innerHTML = '<pre style="margin:0;white-space:pre-wrap;font-family:Menlo,Monaco,Courier New,monospace;font-size:0.82rem;">' + escapeHtml(compressed) + '</pre>';
+    document.getElementById('jsonError').style.display = 'none';
+    lastFormattedJson = compressed;
+    parsedJson = obj;
+    renderJsonTree(obj);
+  } catch(e) {
+    document.getElementById('jsonResult').innerHTML = '<span style="color:#e53e3e;">压缩错误: ' + escapeHtml(e.message) + '</span>';
+  }
+}
+
+function validateJson() {
+  var obj = parseJsonInput();
+  if (obj === null) {
+    showToast('❌ JSON格式无效');
+    return;
+  }
+  document.getElementById('jsonError').style.display = 'none';
+  document.getElementById('jsonResult').innerHTML = '<span style="color:#38a169;font-weight:600;">✅ JSON格式有效</span>';
+  showToast('✅ JSON格式有效');
+  parsedJson = obj;
+  renderJsonTree(obj);
+}
+
+function copyJsonResult() {
+  if (!lastFormattedJson) {
+    showToast('⚠ 暂无格式化内容可复制');
+    return;
+  }
+  copyText(lastFormattedJson);
+}
+
+function downloadJson() {
+  if (!lastFormattedJson) {
+    showToast('⚠ 请先格式化JSON');
+    return;
+  }
+  var blob = new Blob([lastFormattedJson], { type: 'application/json' });
+  var url = URL.createObjectURL(blob);
+  var a = document.createElement('a');
+  a.href = url;
+  a.download = 'formatted.json';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+  showToast('⬇ 文件已下载');
+}
+
+// ===== JSON Tree View =====
+function renderJsonTree(obj) {
+  var container = document.getElementById('jsonTreeView');
+  container.innerHTML = '';
+  if (obj === null || typeof obj === 'undefined') {
+    container.innerHTML = '<span class="placeholder">暂无数据</span>';
+    return;
+  }
+  var treeEl = buildTreeNode(obj, 'root');
+  container.appendChild(treeEl);
+  container.querySelectorAll('.json-collapsed > .json-children').forEach(function(el) {
+    // unfold first two levels
+  });
+}
+
+function buildTreeNode(value, key) {
+  var wrapper = document.createElement('div');
+  wrapper.className = 'json-tree-node';
+
+  if (value === null) {
+    var span = document.createElement('span');
+    span.innerHTML = (key !== 'root' ? '<span class="json-key">"' + key + '": </span>' : '') + '<span class="json-null">null</span>';
+    wrapper.appendChild(span);
+    return wrapper;
+  }
+
+  if (typeof value === 'boolean') {
+    var span = document.createElement('span');
+    span.innerHTML = (key !== 'root' ? '<span class="json-key">"' + key + '": </span>' : '') + '<span class="json-boolean">' + value + '</span>';
+    wrapper.appendChild(span);
+    return wrapper;
+  }
+
+  if (typeof value === 'number') {
+    var span = document.createElement('span');
+    span.innerHTML = (key !== 'root' ? '<span class="json-key">"' + key + '": </span>' : '') + '<span class="json-number">' + value + '</span>';
+    wrapper.appendChild(span);
+    return wrapper;
+  }
+
+  if (typeof value === 'string') {
+    var span = document.createElement('span');
+    span.innerHTML = (key !== 'root' ? '<span class="json-key">"' + key + '": </span>' : '') + '<span class="json-string">"' + escapeHtml(value) + '"</span>';
+    wrapper.appendChild(span);
+    return wrapper;
+  }
+
+  if (Array.isArray(value)) {
+    var header = document.createElement('span');
+    var toggle = document.createElement('span');
+    toggle.className = 'json-tree-toggle';
+    toggle.textContent = '▶';
+    header.appendChild(toggle);
+    if (key !== 'root') {
+      var keySpan = document.createElement('span');
+      keySpan.className = 'json-key';
+      keySpan.textContent = '"' + key + '": ';
+      header.appendChild(keySpan);
+    }
+    header.appendChild(createBracket('['));
+    header.appendChild(document.createTextNode(' ' + value.length + ' items '));
+    header.appendChild(createBracket(']'));
+    wrapper.appendChild(header);
+
+    var children = document.createElement('div');
+    children.className = 'json-children';
+    for (var i = 0; i < value.length; i++) {
+      children.appendChild(buildTreeNode(value[i], i));
+    }
+    wrapper.appendChild(children);
+    wrapper.classList.add('json-collapsed');
+
+    toggle.addEventListener('click', function(e) {
+      e.stopPropagation();
+      wrapper.classList.toggle('json-collapsed');
+      toggle.textContent = wrapper.classList.contains('json-collapsed') ? '▶' : '▼';
+    });
+
+    return wrapper;
+  }
+
+  if (typeof value === 'object') {
+    var keys = Object.keys(value);
+    var header = document.createElement('span');
+    var toggle = document.createElement('span');
+    toggle.className = 'json-tree-toggle';
+    toggle.textContent = '▶';
+    header.appendChild(toggle);
+    if (key !== 'root') {
+      var keySpan = document.createElement('span');
+      keySpan.className = 'json-key';
+      keySpan.textContent = '"' + key + '": ';
+      header.appendChild(keySpan);
+    }
+    header.appendChild(createBracket('{'));
+    header.appendChild(document.createTextNode(' ' + keys.length + ' keys '));
+    header.appendChild(createBracket('}'));
+    wrapper.appendChild(header);
+
+    var children = document.createElement('div');
+    children.className = 'json-children';
+    for (var i = 0; i < keys.length; i++) {
+      children.appendChild(buildTreeNode(value[keys[i]], keys[i]));
+    }
+    wrapper.appendChild(children);
+    wrapper.classList.add('json-collapsed');
+
+    toggle.addEventListener('click', function(e) {
+      e.stopPropagation();
+      wrapper.classList.toggle('json-collapsed');
+      toggle.textContent = wrapper.classList.contains('json-collapsed') ? '▶' : '▼';
+    });
+
+    return wrapper;
+  }
+
+  var span = document.createElement('span');
+  span.textContent = String(value);
+  wrapper.appendChild(span);
+  return wrapper;
+}
+
+function createBracket(b) {
+  var span = document.createElement('span');
+  span.className = 'json-bracket';
+  span.textContent = b;
+  return span;
+}
+</script>
+</body>
+</html>
