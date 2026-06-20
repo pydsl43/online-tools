@@ -226,9 +226,88 @@
     container.appendChild(wrapper);
   }
 
+  // --- Language tools catalog ---
+  var toolsCatalog = {
+    zh: [
+      { icon: '🖼️', name: '在线图片压缩', desc: '支持 JPG、PNG、WebP 格式压缩。智能保持画质，可批量处理多张图片，压缩率最高达 80%。所有处理在浏览器本地完成，无需上传。', url: '/image-tools/' },
+      { icon: '📄', name: '在线PDF工具', desc: 'PDF 合并、拆分、压缩、格式转换一站完成。支持 PDF 与 Word、Excel、图片互转，无需安装任何软件。', url: '/pdf-tools/' },
+      { icon: '✍️', name: '在线文字处理工具', desc: '文字去重、排序、替换、统计字数、格式转换。支持正则表达式，批量处理文本文件，编程者和写作者的效率利器。', url: '/text-tools/' },
+    ],
+    en: [
+      { icon: '🖼️', name: 'Image Compression', desc: 'Compress JPG, PNG, WebP images with smart quality preservation. Batch processing, up to 80% compression. All processing done locally in your browser.', url: '/en/unit-converter/' },
+      { icon: '📄', name: 'Resume Builder', desc: 'Create professional resumes and cover letters online. Free templates, real-time preview, and PDF export with one click.', url: '/en/resume-builder/' },
+      { icon: '💰', name: 'Sales Tax Calculator', desc: 'Calculate US sales tax for all 50 states. Enter amount, select state, instantly see base price, tax amount, and total.', url: '/en/sales-tax-calculator/' },
+      { icon: '📏', name: 'Unit Converter', desc: 'Convert between imperial and metric units: length, weight, temperature, volume. Real-time conversion as you type.', url: '/en/unit-converter/' },
+      { icon: '🗺️', name: 'ZIP Code Lookup', desc: 'Lookup US ZIP codes instantly. Find city, state, county, area code, and timezone for any ZIP code.', url: '/en/zip-code-lookup/' },
+      { icon: '📅', name: 'US Holidays', desc: 'View all US federal holidays for any year. Countdown to next holiday, with today highlighting.', url: '/en/us-holidays/' },
+    ],
+    ja: [
+      { icon: '🖼️', name: '画像圧縮ツール', desc: 'JPG、PNG、WebP形式に対応。画質を保持しながら最大80%削減。ブラウザ内で全て処理、サーバーにアップロード不要。', url: '/image-tools/' },
+      { icon: '📄', name: 'PDFツール', desc: 'PDFの結合、分割、圧縮、変換をブラウザ内で完結。ファイルをサーバーに送信せず、プライバシーを保護。', url: '/pdf-tools/' },
+      { icon: '🔮', name: '名前診断', desc: 'あなたの名前で運勢を占う！大吉から末吉まで、簡単な名前診断を楽しめます。SNSで共有も可能。', url: '/ja/fortune-diagnosis/' },
+      { icon: '📮', name: '郵便番号検索', desc: '日本の郵便番号を検索。全国主要都市の郵便番号に対応。都道府県、市区町村、町域を表示。', url: '/ja/zip-code-lookup/' },
+      { icon: '🎂', name: '年齢計算', desc: '生年月日から正確な年齢を計算。和暦（令和/平成/昭和）対応、星座や次の誕生日までの日数も表示。', url: '/ja/age-calculator/' },
+      { icon: '✍️', name: '文字数カウント', desc: 'リアルタイムで文字数をカウント。漢字、ひらがな、カタカナを個別に集計。コピーもワンクリック。', url: '/ja/char-counter/' },
+      { icon: '📋', name: '履歴書作成', desc: 'オンラインで履歴書を作成。学歴、職歴、資格を入力してプレビュー。印刷にも対応。', url: '/ja/resume-builder/' },
+    ],
+    es: [
+      { icon: '🖼️', name: 'Compresión de Imágenes', desc: 'Comprime imágenes JPG, PNG, WebP manteniendo la calidad. Procesamiento por lotes, hasta 80% de compresión. Todo local en el navegador.', url: '/image-tools/' },
+      { icon: '📄', name: 'Herramientas PDF', desc: 'Combina, divide, comprime y convierte PDFs directamente en tu navegador. Sin necesidad de instalar software.', url: '/pdf-tools/' },
+      { icon: '🆔', name: 'Generador CURP/RFC', desc: 'Genera y valida CURP y RFC para México. Algoritmo oficial de la Secretaría de Hacienda.', url: '/es/curp-generator/' },
+      { icon: '🆔', name: 'Validador RUT', desc: 'Valida RUT chileno con algoritmo módulo 11. Genera RUTs aleatorios válidos con formato automático.', url: '/es/rut-validator/' },
+      { icon: '🆔', name: 'Validador DNI/NIE', desc: 'Valida DNI y NIE españoles. Cálculo de letra de control para documentos de identidad nacionales y de extranjeros.', url: '/es/dni-validator/' },
+      { icon: '💱', name: 'Conversor de Monedas', desc: 'Convierte entre monedas latinoamericanas: MXN, ARS, CLP, PEN, COP, USD. Tasas indicativas actualizadas.', url: '/es/currency-converter/' },
+      { icon: '🕐', name: 'Zonas Horarias', desc: 'Convierte horas entre zonas horarias de Latinoamérica. Relojes en vivo para CDMX, Buenos Aires, Santiago, Lima, Bogotá.', url: '/es/timezone-converter/' },
+    ],
+    pt: [
+      { icon: '🖼️', name: 'Compressão de Imagens', desc: 'Comprima imagens JPG, PNG, WebP com qualidade inteligente. Processamento em lote, até 80% de compressão. Tudo local no navegador.', url: '/image-tools/' },
+      { icon: '📄', name: 'Ferramentas PDF', desc: 'Combine, divida, comprima e converta PDFs diretamente no seu navegador. Sem instalação de software.', url: '/pdf-tools/' },
+      { icon: '🆔', name: 'Validador CPF/CNPJ', desc: 'Valide e gere CPF e CNPJ com algoritmo oficial da Receita Federal. Formatação automática.', url: '/pt/cpf-cnpj-validator/' },
+      { icon: '📮', name: 'Consulta CEP', desc: 'Busque CEPs brasileiros. Encontre logradouro, bairro, cidade e estado para qualquer CEP.', url: '/pt/cep-lookup/' },
+      { icon: '💰', name: 'Calculadora INSS', desc: 'Calcule o desconto do INSS sobre o salário. Tabela progressiva 2025-2026 com alíquotas de 7,5% a 14%.', url: '/pt/inss-calculator/' },
+      { icon: '📅', name: 'Feriados Brasil', desc: 'Veja todos os feriados nacionais do Brasil. Contagem regressiva para o próximo feriado.', url: '/pt/brazil-holidays/' },
+      { icon: '💱', name: 'Conversor de Moedas', desc: 'Converta BRL para USD, EUR, GBP, ARS. Taxas indicativas com cartões de referência.', url: '/pt/currency-converter/' },
+    ],
+  };
+
+  /**
+   * Render tool cards for the current language.
+   */
+  function renderToolCards() {
+    var grid = document.getElementById('tool-cards-grid');
+    if (!grid) return;
+
+    var lang = currentLang;
+    var tools = toolsCatalog[lang] || toolsCatalog[DEFAULT_LANG];
+
+    grid.innerHTML = '';
+    tools.forEach(function (tool) {
+      var card = document.createElement('a');
+      card.href = tool.url;
+      card.className = 'glass-card rounded-3xl p-8 cursor-pointer block group';
+      card.innerHTML =
+        '<div class="card-icon text-5xl mb-6 inline-block">' + tool.icon + '</div>' +
+        '<div class="flex items-center gap-2 mb-3">' +
+          '<h3 class="text-2xl font-bold text-gray-800">' + tool.name + '</h3>' +
+          '<span class="badge badge-success">✅ Online Ready</span>' +
+        '</div>' +
+        '<p class="text-gray-500 leading-relaxed mb-6">' + tool.desc + '</p>' +
+        '<div class="flex items-center text-indigo-500 font-semibold group-hover:gap-2 transition-all">' +
+          (lang === 'zh' ? '立即使用 →' : 'Use Now →') +
+        '</div>';
+      grid.appendChild(card);
+    });
+  }
+
   // --- Initialize ---
   var detectedLang = detectLanguage();
   applyTranslations(detectedLang);
+  renderToolCards();
+
+  // Listen for language changes to re-render tools
+  document.addEventListener('languageChanged', function () {
+    renderToolCards();
+  });
 
   // --- Expose public API ---
   window.translations = typeof translations !== 'undefined' ? translations : {};

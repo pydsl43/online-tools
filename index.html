@@ -305,51 +305,8 @@
                 <p class="text-gray-500 text-lg" data-i18n="tools_section_subtitle">精选高频实用工具，全部免费使用</p>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <!-- Tool Card 1: 在线图片压缩 -->
-                <a href="https://wdnmd.vip/image-tools/" class="glass-card rounded-3xl p-8 cursor-pointer block group">
-                    <div class="card-icon text-5xl mb-6 inline-block">🖼️</div>
-                    <div class="flex items-center gap-2 mb-3">
-                        <h3 class="text-2xl font-bold text-gray-800" data-i18n="tool1_name">在线图片压缩</h3>
-                        <span class="badge badge-success" data-i18n="tool1_badge">✅ 在线可用</span>
-                    </div>
-                    <p class="text-gray-500 leading-relaxed mb-6" data-i18n="tool1_desc">
-                        支持 JPG、PNG、WebP 格式压缩。智能保持画质，可批量处理多张图片，压缩率最高达 80%。所有处理在浏览器本地完成，无需上传。
-                    </p>
-                    <div class="flex items-center text-indigo-500 font-semibold group-hover:gap-2 transition-all" data-i18n="tool_cta">
-                        立即使用 →
-                    </div>
-                </a>
-
-                <!-- Tool Card 2: 在线PDF工具 -->
-                <a href="https://wdnmd.vip/pdf-tools/" class="glass-card rounded-3xl p-8 cursor-pointer block group">
-                    <div class="card-icon text-5xl mb-6 inline-block">📄</div>
-                    <div class="flex items-center gap-2 mb-3">
-                        <h3 class="text-2xl font-bold text-gray-800" data-i18n="tool2_name">在线PDF工具</h3>
-                        <span class="badge badge-success" data-i18n="tool1_badge">✅ 在线可用</span>
-                    </div>
-                    <p class="text-gray-500 leading-relaxed mb-6" data-i18n="tool2_desc">
-                        PDF 合并、拆分、压缩、格式转换一站完成。支持 PDF 与 Word、Excel、图片互转，无需安装任何软件。
-                    </p>
-                    <div class="flex items-center text-indigo-500 font-semibold group-hover:gap-2 transition-all" data-i18n="tool_cta">
-                        立即使用 →
-                    </div>
-                </a>
-
-                <!-- Tool Card 3: 在线文字处理工具 -->
-                <a href="https://wdnmd.vip/text-tools/" class="glass-card rounded-3xl p-8 cursor-pointer block group">
-                    <div class="card-icon text-5xl mb-6 inline-block">✍️</div>
-                    <div class="flex items-center gap-2 mb-3">
-                        <h3 class="text-2xl font-bold text-gray-800" data-i18n="tool3_name">在线文字处理工具</h3>
-                        <span class="badge badge-success" data-i18n="tool1_badge">✅ 在线可用</span>
-                    </div>
-                    <p class="text-gray-500 leading-relaxed mb-6" data-i18n="tool3_desc">
-                        文字去重、排序、替换、统计字数、格式转换。支持正则表达式，批量处理文本文件，编程者和写作者的效率利器。
-                    </p>
-                    <div class="flex items-center text-indigo-500 font-semibold group-hover:gap-2 transition-all" data-i18n="tool_cta">
-                        立即使用 →
-                    </div>
-                </a>
+            <div id="tool-cards-grid" class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Tools are dynamically rendered by JS based on language -->
             </div>
         </div>
     </section>
