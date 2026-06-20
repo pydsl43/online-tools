@@ -283,7 +283,7 @@
     grid.innerHTML = '';
     tools.forEach(function (tool) {
       var card = document.createElement('a');
-      card.href = tool.url;
+      card.href = tool.url + (tool.url.indexOf('?') === -1 ? '?lang=' + lang : '&lang=' + lang);
       card.className = 'glass-card rounded-3xl p-8 cursor-pointer block group';
       card.innerHTML =
         '<div class="card-icon text-5xl mb-6 inline-block">' + tool.icon + '</div>' +
@@ -303,6 +303,17 @@
   var detectedLang = detectLanguage();
   applyTranslations(detectedLang);
   renderToolCards();
+
+  // Append ?lang=xx to all internal links (except current language default)
+  document.addEventListener('DOMContentLoaded', function () {
+    var lang = getCurrentLang();
+    document.querySelectorAll('a[href^="/"], a[href^="https://wdnmd.vip"]').forEach(function (a) {
+      var href = a.getAttribute('href');
+      if (href.indexOf('lang=') === -1 && href.indexOf('#') !== 0) {
+        a.setAttribute('href', href + (href.indexOf('?') === -1 ? '?lang=' + lang : '&lang=' + lang));
+      }
+    });
+  });
 
   // Listen for language changes to re-render tools
   document.addEventListener('languageChanged', function () {
