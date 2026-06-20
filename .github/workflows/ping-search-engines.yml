@@ -35,10 +35,12 @@ jobs:
         run: |
           # Extract all URLs from sitemap.xml and push via Baidu API
           # API push works without ICP filing (unlike sitemap tool)
-          URLS=$(rg '<loc>\s*(https://wdnmd\.vip[^<]+)' sitemap.xml -r '$1' --no-filename || true)
+          URLS=$(grep -oP '<loc>\s*\Khttps://wdnmd\.vip[^<]+' sitemap.xml || true)
           if [ -n "$URLS" ]; then
             echo "$URLS" | curl -s \
               -H 'Content-Type:text/plain' \
               --data-binary @- \
               "http://data.zz.baidu.com/urls?site=wdnmd.vip&token=6oMAGbJv1JJXIUVI"
+          else
+            echo "No URLs found in sitemap.xml"
           fi
