@@ -134,9 +134,9 @@
     <!-- Navigation -->
     <nav class="hero-gradient text-white py-3 px-4 shadow-lg no-print">
         <div class="max-w-6xl mx-auto flex items-center justify-between">
-            <a href="https://wdnmd.vip/" class="text-lg font-bold hover:text-purple-300 transition">BaiGei Tools</a>
+            <a href="/?lang=en" class="text-lg font-bold hover:text-purple-300 transition">BaiGei Tools</a>
             <div class="flex gap-4 text-sm">
-                <a href="https://wdnmd.vip/" class="hover:text-purple-300 transition">Home</a>
+                <a href="/?lang=en" class="hover:text-purple-300 transition">Home</a>
                 <a href="/en/resume-builder/" class="text-purple-300 font-semibold">Resume Builder</a>
             </div>
         </div>
@@ -220,9 +220,23 @@
     <footer class="footer-gradient text-white py-8 px-4 no-print">
         <div class="max-w-6xl mx-auto text-center">
             <p class="mb-2">&copy; 2026 BaiGei Tools</p>
-            <a href="https://wdnmd.vip/" class="text-purple-300 hover:text-purple-200 text-sm transition">Back to Home</a>
+            <a href="/?lang=en" class="text-purple-300 hover:text-purple-200 text-sm transition">Back to Home</a>
         </div>
     </footer>
+
+    <!-- Language Selector -->
+    <div id="lang-selector" class="flex justify-center gap-2 mb-8"></div>
+
+    <!-- i18n -->
+    <script src="/i18n/translations.js"></script>
+    <script src="/i18n/i18n.js" defer></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            if (typeof createLanguageSelector === 'function') {
+                createLanguageSelector('lang-selector');
+            }
+        });
+    </script>
 
     <script>
         function updatePreview() {

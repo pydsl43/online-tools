@@ -234,10 +234,9 @@
       { icon: '✍️', name: '在线文字处理工具', desc: '文字去重、排序、替换、统计字数、格式转换。支持正则表达式，批量处理文本文件，编程者和写作者的效率利器。', url: '/text-tools/' },
     ],
     en: [
-      { icon: '🖼️', name: 'Image Compression', desc: 'Compress JPG, PNG, WebP images with smart quality preservation. Batch processing, up to 80% compression. All processing done locally in your browser.', url: '/en/unit-converter/' },
+      { icon: '📏', name: 'Unit Converter', desc: 'Convert between imperial and metric units: length, weight, temperature, volume. Real-time conversion as you type.', url: '/en/unit-converter/' },
       { icon: '📄', name: 'Resume Builder', desc: 'Create professional resumes and cover letters online. Free templates, real-time preview, and PDF export with one click.', url: '/en/resume-builder/' },
       { icon: '💰', name: 'Sales Tax Calculator', desc: 'Calculate US sales tax for all 50 states. Enter amount, select state, instantly see base price, tax amount, and total.', url: '/en/sales-tax-calculator/' },
-      { icon: '📏', name: 'Unit Converter', desc: 'Convert between imperial and metric units: length, weight, temperature, volume. Real-time conversion as you type.', url: '/en/unit-converter/' },
       { icon: '🗺️', name: 'ZIP Code Lookup', desc: 'Lookup US ZIP codes instantly. Find city, state, county, area code, and timezone for any ZIP code.', url: '/en/zip-code-lookup/' },
       { icon: '📅', name: 'US Holidays', desc: 'View all US federal holidays for any year. Countdown to next holiday, with today highlighting.', url: '/en/us-holidays/' },
     ],
@@ -279,6 +278,11 @@
 
     var lang = currentLang;
     var tools = toolsCatalog[lang] || toolsCatalog[DEFAULT_LANG];
+    var ctaTexts = { zh: '立即使用 →', en: 'Use Now →', ja: '今すぐ使う →', es: 'Usar Ahora →', pt: 'Usar Agora →' };
+    var ctaText = ctaTexts[lang] || ctaTexts.en;
+
+    // Use responsive grid: 2 cols on md, 3 on lg
+    grid.className = 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8';
 
     grid.innerHTML = '';
     tools.forEach(function (tool) {
@@ -293,7 +297,7 @@
         '</div>' +
         '<p class="text-gray-500 leading-relaxed mb-6">' + tool.desc + '</p>' +
         '<div class="flex items-center text-indigo-500 font-semibold group-hover:gap-2 transition-all">' +
-          (lang === 'zh' ? '立即使用 →' : 'Use Now →') +
+          ctaText +
         '</div>';
       grid.appendChild(card);
     });
