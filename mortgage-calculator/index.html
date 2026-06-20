@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>房贷计算器 - 在线免费商业贷款/公积金贷款计算 | 白给工具</title>
+    <meta name="description" content="免费在线房贷计算器，支持商业贷款、公积金贷款、组合贷款计算。等额本息和等额本金两种还款方式对比。纯浏览器端计算，安全无上传。">
+    <meta name="keywords" content="房贷计算器,贷款计算,商业贷款,公积金贷款,组合贷款,月供计算,利息计算">
+    <meta property="og:title" content="房贷计算器 - 在线免费商业贷款/公积金贷款计算 | 白给工具">
+    <meta property="og:description" content="免费在线房贷计算器，支持商业贷款、公积金贷款、组合贷款计算。等额本息和等额本金两种还款方式对比。纯浏览器端计算，安全无上传。">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://wdnmd.vip/mortgage-calculator/">
+    <meta property="og:locale" content="zh_CN">
+    <meta name="twitter:card" content="summary_large_image">
+    <link rel="canonical" href="https://wdnmd.vip/mortgage-calculator/">
+    <link rel="manifest" href="/manifest.json">
+    <link rel="icon" type="image/svg+xml" href="/icon.svg">
+    <style>
+        *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+        body{
+            font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;
+            background:#f5f7fa;color:#1a1a2e;line-height:1.6;min-height:100vh;display:flex;flex-direction:column
+        }
+        .hero-gradient{
+            background:linear-gradient(135deg,#0f0c29 0%,#302b63 50%,#24243e 100%);
+            position:relative;overflow:hidden
+        }
+        .hero-gradient::before{
+            content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;
+            background:radial-gradient(circle at 30% 50%,rgba(255,255,255,0.03) 0%,transparent 50%),
+                       radial-gradient(circle at 70% 50%,rgba(99,102,241,0.08) 0%,transparent 50%);
+            pointer-events:none
+        }
+        nav{position:absolute;top:0;left:0;right:0;z-index:10;padding:16px 24px}
+        nav .nav-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between}
+        nav .brand{color:#fff;font-size:1.25rem;font-weight:700;letter-spacing:-0.02em}
+        nav .nav-right{display:flex;align-items:center;gap:16px}
+        nav .nav-right .tagline{color:rgba(255,255,255,0.6);font-size:0.875rem}
+        #lang-selector{min-width:100px}
+        .page-header{padding:100px 24px 48px;text-align:center;position:relative;z-index:1}
+        .page-header h1{color:#fff;font-size:2.5rem;font-weight:800;margin-bottom:8px}
+        .page-header .subtitle{color:rgba(255,255,255,0.7);font-size:1rem}
+        .back-link{display:inline-block;color:rgba(255,255,255,0.6);text-decoration:none;font-size:0.9rem;margin-top:16px;transition:color .3s}
+        .back-link:hover{color:#fff}
+        .container{max-width:1000px;margin:0 auto;padding:0 20px;flex:1}
+        .content-area{margin-top:-20px;position:relative;z-index:2;padding-bottom:40px}
+        .glass-card{
+            background:rgba(255,255,255,0.95);backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,0.3);
+            border-radius:16px;padding:32px;margin-bottom:24px;transition:box-shadow .3s ease
+        }
+        .glass-card:hover{box-shadow:0 20px 60px rgba(0,0,0,0.08)}
+        .card-title{font-size:1.3rem;font-weight:700;margin-bottom:24px;color:#1a1a2e;display:flex;align-items:center;gap:8px}
+        .card-title .icon{font-size:1.4rem}
+        .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+        .form-group{display:flex;flex-direction:column}
+        .form-group.full{grid-column:1/-1}
+        .form-group.half{grid-column:span 1}
+        .form-group label{font-size:.9rem;font-weight:600;color:#374151;margin-bottom:6px}
+        .form-group .hint{font-size:.75rem;color:#9ca3af;margin-top:4px}
+        .form-group input[type="number"],.form-group input[type="month"],.form-group select{
+            padding:10px 14px;border:2px solid #e5e7eb;border-radius:10px;font-size:1rem;
+            transition:border-color .3s,box-shadow .3s;background:#fff;width:100%
+        }
+        .form-group input:focus,.form-group select:focus{
+            outline:none;border-color:#6366f1;box-shadow:0 0 0 3px rgba(99,102,241,0.15)
+        }
+        .input-with-unit{position:relative}
+        .input-with-unit input{padding-right:44px}
+        .input-with-unit .unit{position:absolute;right:14px;top:50%;transform:translateY(-50%);color:#9ca3af;font-size:.9rem;pointer-events:none}
+        .rate-slider-container{display:flex;align-items:center;gap:12px}
+        .rate-slider-container input[type="range"]{
+            flex:1;-webkit-appearance:none;appearance:none;height:6px;border-radius:3px;
+            background:linear-gradient(to right,#6366f1,#ec4899);outline:none
+        }
+        .rate-slider-container input[type="range"]::-webkit-slider-thumb{
+            -webkit-appearance:none;width:20px;height:20px;border-radius:50%;background:#fff;
+            border:2px solid #6366f1;cursor:pointer;box-shadow:0 2px 6px rgba(0,0,0,0.15)
+        }
+        .rate-slider-container input[type="range"]::-moz-range-thumb{
+            width:20px;height:20px;border-radius:50%;background:#fff;border:2px solid #6366f1;cursor:pointer
+        }
+        .rate-value{min-width:70px;text-align:center;font-weight:700;font-size:1rem;color:#6366f1}
+        .radio-group{display:flex;gap:16px}
+        .radio-group label{
+            display:flex;align-items:center;gap:6px;font-weight:500;cursor:pointer;
+            padding:8px 16px;border:2px solid #e5e7eb;border-radius:10px;transition:all .3s
+        }
+        .radio-group label:hover{border-color:#c7d2fe;background:#f5f3ff}
+        .radio-group input[type="radio"]{accent-color:#6366f1}
+        .radio-group input[type="radio"]:checked+span{color:#6366f1}
+        .radio-group label:has(input:checked){border-color:#6366f1;background:#f5f3ff}
+        .btn-calc{
+            grid-column:1/-1;padding:14px 32px;background:linear-gradient(135deg,#6366f1,#8b5cf6);
+            color:#fff;border:none;border-radius:12px;font-size:1.1rem;font-weight:700;
+            cursor:pointer;transition:all .3s;letter-spacing:.02em
+        }
+        .btn-calc:hover{transform:translateY(-2px);box-shadow:0 8px 25px rgba(99,102,241,0.35)}
+        .btn-calc:active{transform:translateY(0)}
+        .result-group{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px}
+        .result-item{
+            background:linear-gradient(135deg,#f8fafc,#f1f5f9);border-radius:12px;padding:16px;text-align:center
+        }
+        .result-item .label{font-size:.85rem;color:#6b7280;margin-bottom:4px}
+        .result-item .value{font-size:1.4rem;font-weight:800;color:#1a1a2e}
+        .result-item .value.principal{color:#3b82f6}
+        .result-item .value.interest{color:#ef4444}
+        .result-item .value.total{color:#10b981}
+        .result-item .value.highlight{color:#6366f1}
+        .comparison-section{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+        .comparison-card{
+            border-radius:12px;padding:20px;border:2px solid #e5e7eb;transition:all .3s
+        }
+        .comparison-card:hover{border-color:#c7d2fe}
+        .comparison-card.highlight{border-color:#6366f1;background:#f5f3ff}
+        .comparison-card .method-name{font-size:1.1rem;font-weight:700;margin-bottom:12px;color:#1a1a2e}
+        .comparison-card .comp-item{
+            display:flex;justify-content:space-between;padding:6px 0;font-size:.9rem;border-bottom:1px solid #f3f4f6
+        }
+        .comparison-card .comp-item:last-child{border-bottom:none}
+        .comparison-card .comp-item .comp-label{color:#6b7280}
+        .comparison-card .comp-item .comp-value{font-weight:700}
+        .bar-visual{margin-top:20px}
+        .bar-visual .bar-row{display:flex;align-items:center;gap:12px;margin-bottom:8px}
+        .bar-visual .bar-label{min-width:80px;font-size:.85rem;color:#6b7280}
+        .bar-visual .bar-track{flex:1;height:28px;background:#f3f4f6;border-radius:14px;overflow:hidden;position:relative}
+        .bar-visual .bar-fill{
+            height:100%;border-radius:14px;transition:width .8s ease;display:flex;align-items:center;
+            justify-content:flex-end;padding-right:10px;font-size:.8rem;color:#fff;font-weight:600;min-width:fit-content
+        }
+        .bar-visual .bar-fill.principal-fill{background:linear-gradient(90deg,#3b82f6,#60a5fa)}
+        .bar-visual .bar-fill.interest-fill{background:linear-gradient(90deg,#ef4444,#f87171)}
+        .bar-visual .bar-fill.total-fill{background:linear-gradient(90deg,#10b981,#34d399)}
+        .bar-visual .bar-percent{min-width:50px;text-align:right;font-size:.85rem;font-weight:600;color:#374151}
+        .schedule-table-wrapper{overflow-x:auto;margin-top:16px}
+        .schedule-table{width:100%;border-collapse:collapse;font-size:.9rem}
+        .schedule-table th{
+            background:#f8fafc;padding:10px 14px;text-align:right;font-weight:700;
+            color:#374151;border-bottom:2px solid #e5e7eb;white-space:nowrap
+        }
+        .schedule-table th:first-child{text-align:center}
+        .schedule-table td{padding:10px 14px;text-align:right;border-bottom:1px solid #f3f4f6;white-space:nowrap}
+        .schedule-table td:first-child{text-align:center}
+        .schedule-table tr:hover td{background:#f9fafb}
+        .pagination{display:flex;align-items:center;justify-content:center;gap:8px;margin-top:16px}
+        .pagination button{
+            padding:8px 16px;border:1px solid #e5e7eb;border-radius:8px;background:#fff;
+            cursor:pointer;font-size:.9rem;transition:all .3s
+        }
+        .pagination button:hover:not(:disabled){border-color:#6366f1;color:#6366f1}
+        .pagination button:disabled{opacity:.5;cursor:not-allowed}
+        .pagination .page-info{font-size:.9rem;color:#6b7280}
+        .empty-state{text-align:center;padding:40px 20px;color:#9ca3af}
+        .empty-state .empty-icon{font-size:3rem;margin-bottom:12px}
+        .empty-state p{font-size:1rem}
+        .seo-text{
+            background:#fff;border-radius:16px;padding:32px;margin-top:0;
+            margin-bottom:24px;border:1px solid #e5e7eb
+        }
+        .seo-text h2{font-size:1.2rem;margin-bottom:12px;color:#1a1a2e}
+        .seo-text p{font-size:.9rem;color:#6b7280;margin-bottom:8px;line-height:1.8}
+        footer{
+            background:linear-gradient(135deg,#0f0c29,#302b63,#24243e);
+            color:rgba(255,255,255,0.6);text-align:center;padding:24px;font-size:.85rem;margin-top:auto
+        }
+        footer a{color:rgba(255,255,255,0.8);text-decoration:none}
+        footer a:hover{color:#fff}
+        @media(max-width:768px){
+            .form-grid{grid-template-columns:1fr}
+            .form-group.half{grid-column:1/-1}
+            .comparison-section{grid-template-columns:1fr}
+            .page-header h1{font-size:1.8rem}
+            .glass-card{padding:20px}
+            .result-group{grid-template-columns:1fr 1fr}
+            nav .nav-right .tagline{display:none}
+        }
+        @media(max-width:480px){
+            .result-group{grid-template-columns:1fr}
+            .page-header{padding:80px 16px 32px}
+            .page-header h1{font-size:1.5rem}
+            .glass-card{padding:16px}
+        }
+        .result-section{display:none}
+        .result-section.active{display:block}
+        .method-tabs{display:flex;gap:8px;margin-bottom:20px}
+        .method-tab{
+            padding:8px 20px;border:2px solid #e5e7eb;border-radius:10px;background:#fff;
+            cursor:pointer;font-size:.9rem;font-weight:600;transition:all .3s;color:#6b7280
+        }
+        .method-tab:hover{border-color:#c7d2fe;color:#6366f1}
+        .method-tab.active{border-color:#6366f1;background:#f5f3ff;color:#6366f1}
+        .hidden{display:none!important}
+        @keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+        .fade-in{animation:fadeIn .5s ease forwards}
+    </style>
+</head>
+<body>
+<div class="hero-gradient">
+    <nav>
+        <div class="nav-inner">
+            <span class="brand" data-i18n="brand_name">&#x1F6E0;&#xFE0F; 白给工具</span>
+            <div class="nav-right">
+                <span class="tagline" data-i18n="header_tagline">白给 · 安全 · 快速</span>
+                <div id="lang-selector"></div>
+            </div>
+        </div>
+    </nav>
+    <div class="page-header">
+        <h1>&#x1F3E0; 房贷计算器</h1>
+        <p class="subtitle">免费 · 纯浏览器端计算 · 保护隐私 · 无需注册</p>
+        <a href="/?lang=zh" class="back-link">&larr; 返回首页 / 白给工具</a>
+    </div>
+</div>
+<div class="container">
+    <div class="content-area">
+        <div class="glass-card">
+            <div class="card-title"><span class="icon">&#x1F4CB;</span> 贷款信息</div>
+            <form id="calcForm" onsubmit="return false;">
+                <div class="form-grid">
+                    <div class="form-group half">
+                        <label for="commercialAmount">商业贷款金额</label>
+                        <div class="input-with-unit">
+                            <input type="number" id="commercialAmount" min="0" max="5000" step="1" value="100" placeholder="例如: 100">
+                            <span class="unit">万元</span>
+                        </div>
+                        <span class="hint">最低 0 万元，最高 5000 万元</span>
+                    </div>
+                    <div class="form-group half">
+                        <label for="hpfAmount">公积金贷款金额</label>
+                        <div class="input-with-unit">
+                            <input type="number" id="hpfAmount" min="0" max="2000" step="1" value="0" placeholder="例如: 60">
+                            <span class="unit">万元</span>
+                        </div>
+                        <span class="hint">最低 0 万元，最高 2000 万元</span>
+                    </div>
+                    <div class="form-group half">
+                        <label for="loanTerm">贷款年限</label>
+                        <select id="loanTerm">
+                            <option value="5">5年</option>
+                            <option value="10">10年</option>
+                            <option value="15">15年</option>
+                            <option value="20">20年</option>
+                            <option value="25">25年</option>
+                            <option value="30" selected>30年</option>
+                        </select>
+                    </div>
+                    <div class="form-group half">
+                        <label for="commercialRate">商业贷款利率 (LPR)</label>
+                        <div class="rate-slider-container">
+                            <input type="range" id="commercialRate" min="2.5" max="6.0" step="0.05" value="3.85">
+                            <span class="rate-value" id="commercialRateDisplay">3.85%</span>
+                        </div>
+                    </div>
+                    <div class="form-group half">
+                        <label for="hpfRate">公积金利率</label>
+                        <div class="rate-slider-container">
+                            <input type="range" id="hpfRate" min="2.0" max="4.5" step="0.05" value="3.1">
+                            <span class="rate-value" id="hpfRateDisplay">3.10%</span>
+                        </div>
+                    </div>
+                    <div class="form-group half">
+                        <label for="startDate">贷款开始日期</label>
+                        <input type="month" id="startDate">
+                    </div>
+                    <div class="form-group full">
+                        <label>还款方式</label>
+                        <div class="radio-group">
+                            <label>
+                                <input type="radio" name="repayment" value="equal-payment" checked>
+                                <span>等额本息</span>
+                            </label>
+                            <label>
+                                <input type="radio" name="repayment" value="equal-principal">
+                                <span>等额本金</span>
+                            </label>
+                        </div>
+                    </div>
+                    <button type="button" class="btn-calc" onclick="calculate()">&#x1F9EE; 计算</button>
+                </div>
+            </form>
+        </div>
+        <div id="resultContainer" style="display:none;">
+            <div class="glass-card">
+                <div class="card-title"><span class="icon">&#x1F4CA;</span> 计算结果</div>
+                <div class="method-tabs">
+                    <button class="method-tab active" onclick="switchResultTab('equal-payment')">等额本息</button>
+                    <button class="method-tab" onclick="switchResultTab('equal-principal')">等额本金</button>
+                </div>
+                <div id="equalPaymentResult" class="result-section active"></div>
+                <div id="equalPrincipalResult" class="result-section"></div>
+            </div>
+            <div class="glass-card">
+                <div class="card-title"><span class="icon">&#x1F4C8;</span> 还款方式对比</div>
+                <div class="comparison-section" id="comparisonSection"></div>
+            </div>
+            <div class="glass-card">
+                <div class="card-title"><span class="icon">&#x1F4CA;</span> 本金与利息占比</div>
+                <div class="bar-visual" id="barVisual"></div>
+            </div>
+            <div class="glass-card">
+                <div class="card-title"><span class="icon">&#x1F4C5;</span> 还款明细表</div>
+                <div id="scheduleContainer">
+                    <div class="schedule-table-wrapper">
+                        <table class="schedule-table">
+                            <thead>
+                                <tr>
+                                    <th>年份</th>
+                                    <th>年还款总额</th>
+                                    <th>本金</th>
+                                    <th>利息</th>
+                                    <th>剩余本金</th>
+                                </tr>
+                            </thead>
+                            <tbody id="scheduleBody"></tbody>
+                        </table>
+                    </div>
+                    <div class="pagination" id="pagination">
+                        <button id="prevPage" onclick="changePage(-1)">上一页</button>
+                        <span class="page-info" id="pageInfo"></span>
+                        <button id="nextPage" onclick="changePage(1)">下一页</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="seo-text">
+            <h2>什么是房贷计算器？</h2>
+            <p>房贷计算器是一款免费在线工具，帮助您快速计算商业贷款、公积金贷款或组合贷款的月供金额。您只需输入贷款金额、利率和期限，即可获得详细的还款计划。</p>
+            <p><strong>等额本息：</strong>每月还款金额固定，前期利息占比高，后期本金占比高。适合收入稳定的借款人，是目前中国最主流的还款方式。</p>
+            <p><strong>等额本金：</strong>每月还款本金固定，利息逐月递减，总利息支出较少。前期还款压力较大，但总利息更省。</p>
+            <p>所有计算均在您的浏览器本地完成，您的贷款信息不会上传至任何服务器，保障您的隐私安全。</p>
+        </div>
+    </div>
+</div>
+<footer>
+    <p>&copy; 2024 <a href="https://wdnmd.vip">白给工具</a> &mdash; 免费在线工具，纯浏览器端计算</p>
+</footer>
+
+<script>
+// Initialize default date
+document.addEventListener('DOMContentLoaded', function() {
+    var now = new Date();
+    var year = now.getFullYear();
+    var month = String(now.getMonth() + 1).padStart(2, '0');
+    document.getElementById('startDate').value = year + '-' + month;
+
+    // Rate slider bindings
+    document.getElementById('commercialRate').addEventListener('input', function() {
+        document.getElementById('commercialRateDisplay').textContent = parseFloat(this.value).toFixed(2) + '%';
+    });
+    document.getElementById('hpfRate').addEventListener('input', function() {
+        document.getElementById('hpfRateDisplay').textContent = parseFloat(this.value).toFixed(2) + '%';
+    });
+
+    // i18n
+    if (typeof createLanguageSelector === 'function') {
+        createLanguageSelector('lang-selector');
+    }
+});
+
+// Format number with commas
+function fmt(num) {
+    return Math.round(num).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+}
+
+// Format with 2 decimals
+function fmt2(num) {
+    return num.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+}
+
+// Calculation state
+var calcState = null;
+
+function calculate() {
+    var commercialAmount = parseFloat(document.getElementById('commercialAmount').value) || 0;
+    var hpfAmount = parseFloat(document.getElementById('hpfAmount').value) || 0;
+    var termYears = parseInt(document.getElementById('loanTerm').value);
+    var commercialRate = parseFloat(document.getElementById('commercialRate').value);
+    var hpfRate = parseFloat(document.getElementById('hpfRate').value);
+    var repaymentMethod = document.querySelector('input[name="repayment"]:checked').value;
+
+    if (commercialAmount === 0 && hpfAmount === 0) {
+        alert('请输入至少一项贷款金额');
+        return;
+    }
+
+    // Convert wan to yuan
+    var commercialPrincipal = commercialAmount * 10000;
+    var hpfPrincipal = hpfAmount * 10000;
+    var totalPrincipal = commercialPrincipal + hpfPrincipal;
+    var n = termYears * 12;
+    var commercialMonthlyRate = commercialRate / 12 / 100;
+    var hpfMonthlyRate = hpfRate / 12 / 100;
+
+    // Calculate for each part
+    function calcEqualPayment(P, r, n) {
+        if (P === 0) return { monthlyPayment: 0, totalPayment: 0, totalInterest: 0 };
+        var factor = Math.pow(1 + r, n);
+        var monthlyPayment = P * r * factor / (factor - 1);
+        var totalPayment = monthlyPayment * n;
+        var totalInterest = totalPayment - P;
+        return { monthlyPayment: monthlyPayment, totalPayment: totalPayment, totalInterest: totalInterest };
+    }
+
+    function calcEqualPrincipal(P, r, n) {
+        if (P === 0) return { monthlyPrincipal: 0, firstPayment: 0, lastPayment: 0, monthlyReduction: 0, totalPayment: 0, totalInterest: 0, payments: [] };
+        var monthlyPrincipal = P / n;
+        var reduction = monthlyPrincipal * r;
+        var payments = [];
+        var totalPayment = 0;
+        for (var i = 1; i <= n; i++) {
+            var interest = (P - monthlyPrincipal * (i - 1)) * r;
+            var payment = monthlyPrincipal + interest;
+            payments.push({ month: i, payment: payment, principal: monthlyPrincipal, interest: interest, balance: P - monthlyPrincipal * i });
+            totalPayment += payment;
+        }
+        return {
+            monthlyPrincipal: monthlyPrincipal,
+            firstPayment: payments[0].payment,
+            lastPayment: payments[n-1].payment,
+            monthlyReduction: reduction,
+            totalPayment: totalPayment,
+            totalInterest: totalPayment - P,
+            payments: payments
+        };
+    }
+
+    // Combined results
+    var comResult, hpfResult;
+
+    if (repaymentMethod === 'equal-payment') {
+        comResult = calcEqualPayment(commercialPrincipal, commercialMonthlyRate, n);
+        hpfResult = calcEqualPayment(hpfPrincipal, hpfMonthlyRate, n);
+    } else {
+        comResult = calcEqualPrincipal(commercialPrincipal, commercialMonthlyRate, n);
+        hpfResult = calcEqualPrincipal(hpfPrincipal, hpfMonthlyRate, n);
+    }
+
+    var monthlyPayment = comResult.monthlyPayment + hpfResult.monthlyPayment;
+    var totalPayment = comResult.totalPayment + hpfResult.totalPayment;
+    var totalInterest = comResult.totalInterest + hpfResult.totalInterest;
+    var interestPercent = totalPrincipal > 0 ? (totalInterest / totalPayment * 100) : 0;
+
+    // Store state for schedule
+    calcState = {
+        totalPrincipal: totalPrincipal,
+        totalPayment: totalPayment,
+        totalInterest: totalInterest,
+        interestPercent: interestPercent,
+        monthlyPayment: monthlyPayment,
+        commercialAmount: commercialAmount,
+        hpfAmount: hpfAmount,
+        termYears: termYears,
+        commercialRate: commercialRate,
+        hpfRate: hpfRate,
+        repaymentMethod: repaymentMethod,
+        // For equal principal
+        firstPayment: (comResult.firstPayment || 0) + (hpfResult.firstPayment || 0),
+        monthlyReduction: (comResult.monthlyReduction || 0) + (hpfResult.monthlyReduction || 0),
+        // Store payments for schedule
+        commercialPrincipal: commercialPrincipal,
+        hpfPrincipal: hpfPrincipal,
+        commercialMonthlyRate: commercialMonthlyRate,
+        hpfMonthlyRate: hpfMonthlyRate,
+        n: n,
+        // Raw results
+        comResult: comResult,
+        hpfResult: hpfResult
+    };
+
+    displayResults();
+    displayComparison();
+    displayBarVisual();
+    buildSchedule();
+
+    document.getElementById('resultContainer').style.display = 'block';
+    document.getElementById('resultContainer').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function displayResults() {
+    var s = calcState;
+    var isEqualPayment = s.repaymentMethod === 'equal-payment';
+
+    // Equal-payment results
+    var epHtml = '<div class="result-group">' +
+        '<div class="result-item"><div class="label">贷款总额</div><div class="value principal">' + fmt(s.totalPrincipal) + ' 元</div></div>' +
+        '<div class="result-item"><div class="label">月均还款</div><div class="value highlight">' + fmt2(s.monthlyPayment) + ' 元</div></div>' +
+        '<div class="result-item"><div class="label">还款总额</div><div class="value total">' + fmt(s.totalPayment) + ' 元</div></div>' +
+        '<div class="result-item"><div class="label">利息总额</div><div class="value interest">' + fmt(s.totalInterest) + ' 元</div></div>' +
+        '<div class="result-item"><div class="label">利息占比</div><div class="value interest">' + s.interestPercent.toFixed(1) + '%</div></div>' +
+        '<div class="result-item"><div class="label">年化利率</div><div class="value highlight">' + ((s.commercialAmount > 0 && s.hpfAmount > 0) ? '商业' + s.commercialRate + '% / 公积金' + s.hpfRate + '%' : (s.commercialAmount > 0 ? s.commercialRate + '%' : s.hpfRate + '%')) + '</div></div>' +
+        '</div>';
+    document.getElementById('equalPaymentResult').innerHTML = epHtml;
+
+    // Equal-principal results (always computed for comparison)
+    var comEP = calcEqualPrincipal(s.commercialPrincipal, s.commercialMonthlyRate, s.n);
+    var hpfEP = calcEqualPrincipal(s.hpfPrincipal, s.hpfMonthlyRate, s.n);
+    var epFirstPayment = (comEP.firstPayment || 0) + (hpfEP.firstPayment || 0);
+    var epReduction = (comEP.monthlyReduction || 0) + (hpfEP.monthlyReduction || 0);
+    var epTotalPayment = comEP.totalPayment + hpfEP.totalPayment;
+    var epTotalInterest = comEP.totalInterest + hpfEP.totalInterest;
+
+    var epPrincHtml = '<div class="result-group">' +
+        '<div class="result-item"><div class="label">贷款总额</div><div class="value principal">' + fmt(s.totalPrincipal) + ' 元</div></div>' +
+        '<div class="result-item"><div class="label">首月还款</div><div class="value highlight">' + fmt2(epFirstPayment) + ' 元</div></div>' +
+        '<div class="result-item"><div class="label">每月递减</div><div class="value">' + fmt2(epReduction) + ' 元</div></div>' +
+        '<div class="result-item"><div class="label">还款总额</div><div class="value total">' + fmt(epTotalPayment) + ' 元</div></div>' +
+        '<div class="result-item"><div class="label">利息总额</div><div class="value interest">' + fmt(epTotalInterest) + ' 元</div></div>' +
+        '<div class="result-item"><div class="label">利息占比</div><div class="value interest">' + (epTotalPayment > 0 ? (epTotalInterest / epTotalPayment * 100).toFixed(1) : '0.0') + '%</div></div>' +
+        '</div>';
+    document.getElementById('equalPrincipalResult').innerHTML = epPrincHtml;
+
+    // Store EP data for comparison
+    calcState._epFirstPayment = epFirstPayment;
+    calcState._epReduction = epReduction;
+    calcState._epTotalPayment = epTotalPayment;
+    calcState._epTotalInterest = epTotalInterest;
+}
+
+function calcEqualPrincipal(P, r, n) {
+    if (P === 0) return { monthlyPrincipal: 0, firstPayment: 0, lastPayment: 0, monthlyReduction: 0, totalPayment: 0, totalInterest: 0, payments: [] };
+    var monthlyPrincipal = P / n;
+    var reduction = monthlyPrincipal * r;
+    var totalPayment = 0;
+    for (var i = 1; i <= n; i++) {
+        var interest = (P - monthlyPrincipal * (i - 1)) * r;
+        var payment = monthlyPrincipal + interest;
+        totalPayment += payment;
+    }
+    var firstPayment = monthlyPrincipal + P * r;
+    return {
+        monthlyPrincipal: monthlyPrincipal,
+        firstPayment: firstPayment,
+        monthlyReduction: reduction,
+        totalPayment: totalPayment,
+        totalInterest: totalPayment - P
+    };
+}
+
+function displayComparison() {
+    var s = calcState;
+    var isEP = s.repaymentMethod === 'equal-payment';
+
+    // Compare both methods
+    var comEPay = calcEqualPayment(s.commercialPrincipal, s.commercialMonthlyRate, s.n);
+    var hpfEPay = calcEqualPayment(s.hpfPrincipal, s.hpfMonthlyRate, s.n);
+    var comEPrinc = calcEqualPrincipal(s.commercialPrincipal, s.commercialMonthlyRate, s.n);
+    var hpfEPrinc = calcEqualPrincipal(s.hpfPrincipal, s.hpfMonthlyRate, s.n);
+
+    var epayMonthly = comEPay.monthlyPayment + hpfEPay.monthlyPayment;
+    var epayTotal = comEPay.totalPayment + hpfEPay.totalPayment;
+    var epayInterest = comEPay.totalInterest + hpfEPay.totalInterest;
+    var eprincFirst = comEPrinc.firstPayment + hpfEPrinc.firstPayment;
+    var eprincTotal = comEPrinc.totalPayment + hpfEPrinc.totalPayment;
+    var eprincInterest = comEPrinc.totalInterest + hpfEPrinc.totalInterest;
+
+    var html = '<div class="comparison-card' + (isEP ? ' highlight' : '') + '">' +
+        '<div class="method-name">&#x1F4B0; 等额本息</div>' +
+        '<div class="comp-item"><span class="comp-label">月均还款</span><span class="comp-value">' + fmt2(epayMonthly) + ' 元</span></div>' +
+        '<div class="comp-item"><span class="comp-label">还款总额</span><span class="comp-value">' + fmt(epayTotal) + ' 元</span></div>' +
+        '<div class="comp-item"><span class="comp-label">利息总额</span><span class="comp-value interest">' + fmt(epayInterest) + ' 元</span></div>' +
+        '<div class="comp-item"><span class="comp-label">利息占比</span><span class="comp-value interest">' + (epayTotal > 0 ? (epayInterest / epayTotal * 100).toFixed(1) : '0.0') + '%</span></div>' +
+        '</div>' +
+        '<div class="comparison-card' + (!isEP ? ' highlight' : '') + '">' +
+        '<div class="method-name">&#x1F4B0; 等额本金</div>' +
+        '<div class="comp-item"><span class="comp-label">首月还款</span><span class="comp-value">' + fmt2(eprincFirst) + ' 元</span></div>' +
+        '<div class="comp-item"><span class="comp-label">每月递减</span><span class="comp-value">' + fmt2(comEPrinc.monthlyReduction + hpfEPrinc.monthlyReduction) + ' 元</span></div>' +
+        '<div class="comp-item"><span class="comp-label">还款总额</span><span class="comp-value">' + fmt(eprincTotal) + ' 元</span></div>' +
+        '<div class="comp-item"><span class="comp-label">利息总额</span><span class="comp-value total">' + fmt(eprincInterest) + ' 元</span></div>' +
+        '<div class="comp-item"><span class="comp-label">利息占比</span><span class="comp-value total">' + (eprincTotal > 0 ? (eprincInterest / eprincTotal * 100).toFixed(1) : '0.0') + '%</span></div>' +
+        '</div>';
+
+    document.getElementById('comparisonSection').innerHTML = html;
+}
+
+function displayBarVisual() {
+    var s = calcState;
+    var total = s.totalPayment;
+    if (total === 0) return;
+    var principalPercent = (s.totalPrincipal / total * 100);
+    var interestPercent = (s.totalInterest / total * 100);
+
+    var html =
+        '<div class="bar-row">' +
+        '<div class="bar-label">本金</div>' +
+        '<div class="bar-track"><div class="bar-fill principal-fill" style="width:' + principalPercent + '%">' + fmt(s.totalPrincipal) + ' 元</div></div>' +
+        '<div class="bar-percent">' + principalPercent.toFixed(1) + '%</div>' +
+        '</div>' +
+        '<div class="bar-row">' +
+        '<div class="bar-label">利息</div>' +
+        '<div class="bar-track"><div class="bar-fill interest-fill" style="width:' + interestPercent + '%">' + fmt(s.totalInterest) + ' 元</div></div>' +
+        '<div class="bar-percent">' + interestPercent.toFixed(1) + '%</div>' +
+        '</div>' +
+        '<div class="bar-row">' +
+        '<div class="bar-label">合计</div>' +
+        '<div class="bar-track"><div class="bar-fill total-fill" style="width:100%">' + fmt(total) + ' 元</div></div>' +
+        '<div class="bar-percent">100%</div>' +
+        '</div>';
+
+    document.getElementById('barVisual').innerHTML = html;
+}
+
+// Schedule pagination
+var currentPage = 0;
+var pageSize = 5;
+var scheduleYears = [];
+
+function buildSchedule() {
+    var s = calcState;
+    var n = s.n;
+    var isEP = s.repaymentMethod === 'equal-payment';
+
+    // Precompute monthly payment for equal-payment
+    var monthlyC = 0, monthlyH = 0;
+    if (isEP) {
+        if (s.commercialPrincipal > 0) {
+            var factorC = Math.pow(1 + s.commercialMonthlyRate, n);
+            monthlyC = s.commercialPrincipal * s.commercialMonthlyRate * factorC / (factorC - 1);
+        }
+        if (s.hpfPrincipal > 0) {
+            var factorH = Math.pow(1 + s.hpfMonthlyRate, n);
+            monthlyH = s.hpfPrincipal * s.hpfMonthlyRate * factorH / (factorH - 1);
+        }
+    }
+
+    // Track remaining balances
+    var remC = s.commercialPrincipal;
+    var remH = s.hpfPrincipal;
+    var monthlyPrincC = s.commercialPrincipal / n;
+    var monthlyPrincH = s.hpfPrincipal / n;
+
+    scheduleYears = [];
+    var monthIdx = 0;
+    for (var y = 1; y <= s.termYears; y++) {
+        var yearPayment = 0, yearPrincipal = 0, yearInterest = 0;
+        for (var m = 0; m < 12; m++) {
+            monthIdx++;
+            if (monthIdx > n) break;
+
+            var pC = 0, pH = 0, iC = 0, iH = 0;
+            if (isEP) {
+                // Equal payment: interest = remaining * monthlyRate, principal = monthlyPayment - interest
+                iC = remC * s.commercialMonthlyRate;
+                pC = monthlyC - iC;
+                iH = remH * s.hpfMonthlyRate;
+                pH = monthlyH - iH;
+            } else {
+                // Equal principal: principal portion is fixed
+                pC = remC > 0 ? monthlyPrincC : 0;
+                pH = remH > 0 ? monthlyPrincH : 0;
+                iC = remC * s.commercialMonthlyRate;
+                iH = remH * s.hpfMonthlyRate;
+            }
+            yearPrincipal += pC + pH;
+            yearInterest += iC + iH;
+            yearPayment += pC + pH + iC + iH;
+            remC = Math.max(0, remC - pC);
+            remH = Math.max(0, remH - pH);
+        }
+        scheduleYears.push({ year: y, payment: yearPayment, principal: yearPrincipal, interest: yearInterest, balance: remC + remH });
+    }
+
+    currentPage = 0;
+    renderSchedulePage();
+}
+
+function renderSchedulePage() {
+    var totalPages = Math.ceil(scheduleYears.length / pageSize);
+    var start = currentPage * pageSize;
+    var end = Math.min(start + pageSize, scheduleYears.length);
+    var rows = '';
+
+    for (var i = start; i < end; i++) {
+        var yr = scheduleYears[i];
+        rows += '<tr>' +
+            '<td>' + yr.year + '</td>' +
+            '<td>' + fmt2(yr.payment) + ' 元</td>' +
+            '<td>' + fmt2(yr.principal) + ' 元</td>' +
+            '<td>' + fmt2(yr.interest) + ' 元</td>' +
+            '<td>' + fmt2(yr.balance) + ' 元</td>' +
+            '</tr>';
+    }
+
+    document.getElementById('scheduleBody').innerHTML = rows;
+    document.getElementById('pageInfo').textContent = '第 ' + (currentPage + 1) + ' / ' + totalPages + ' 页';
+    document.getElementById('prevPage').disabled = currentPage === 0;
+    document.getElementById('nextPage').disabled = currentPage >= totalPages - 1;
+}
+
+function changePage(delta) {
+    var totalPages = Math.ceil(scheduleYears.length / pageSize);
+    var newPage = currentPage + delta;
+    if (newPage < 0 || newPage >= totalPages) return;
+    currentPage = newPage;
+    renderSchedulePage();
+}
+
+function switchResultTab(method) {
+    document.querySelectorAll('.method-tab').forEach(function(t) { t.classList.remove('active'); });
+    document.querySelectorAll('.result-section').forEach(function(s) { s.classList.remove('active'); });
+    if (method === 'equal-payment') {
+        document.querySelectorAll('.method-tab')[0].classList.add('active');
+        document.getElementById('equalPaymentResult').classList.add('active');
+    } else {
+        document.querySelectorAll('.method-tab')[1].classList.add('active');
+        document.getElementById('equalPrincipalResult').classList.add('active');
+    }
+}
+</script>
+
+<script src="/i18n/translations.js"></script>
+    <script src="/i18n/i18n.js" defer></script>
+    <script src="/i18n/tracker.js"></script>
+</body>
+</html>

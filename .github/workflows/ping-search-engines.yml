@@ -1,0 +1,42 @@
+name: Ping Search Engines
+
+on:
+  schedule:
+    # Run daily at 6:00 AM UTC (2:00 PM CST)
+    - cron: '0 6 * * *'
+  workflow_dispatch:
+    # Allow manual trigger
+
+permissions:
+  contents: read
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping Google
+        run: |
+          curl -s -o /dev/null -w "%{http_code}" \
+            "https://www.google.com/ping?sitemap=https://wdnmd.vip/sitemap.xml"
+          
+      - name: Ping Bing
+        run: |
+          curl -s -o /dev/null -w "%{http_code}" \
+            "https://www.bing.com/ping?sitemap=https://wdnmd.vip/sitemap.xml"
+
+      - name: Ping Baidu
+        run: |
+          curl -s -o /dev/null -w "%{http_code}" \
+            "http://data.zz.baidu.com/urls?site=wdnmd.vip&token=6oMAGbJv1JJXIUVI" \
+            -d "$(cat <<'URLS'
+https://wdnmd.vip/
+https://wdnmd.vip/image-tools/
+https://wdnmd.vip/pdf-tools/
+https://wdnmd.vip/text-tools/
+https://wdnmd.vip/password-generator/
+https://wdnmd.vip/id-card-validator/
+https://wdnmd.vip/mortgage-calculator/
+https://wdnmd.vip/ip-lookup/
+https://wdnmd.vip/tax-calculator/
+URLS
+)"

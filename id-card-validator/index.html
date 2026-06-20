@@ -1,0 +1,1241 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-page="id-card-validator">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>身份证号码查询验证 - 在线免费身份证信息解析 | 白给工具</title>
+    <meta name="description" content="免费在线身份证号码查询验证工具。支持18位身份证号校验、提取出生日期、性别、年龄、发证地信息。纯浏览器端处理，保护隐私安全。">
+    <meta name="keywords" content="身份证查询,身份证验证,身份证号,身份信息,在线工具">
+    <meta property="og:title" content="身份证号码查询验证 - 白给工具">
+    <meta property="og:description" content="免费在线身份证号码查询验证工具。支持18位身份证号校验、提取出生日期、性别、年龄、发证地信息。纯浏览器端处理，保护隐私安全。">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://wdnmd.vip/id-card-validator/">
+    <meta property="og:locale" content="zh_CN">
+    <meta property="og:site_name" content="白给工具">
+    <link rel="canonical" href="https://wdnmd.vip/id-card-validator/">
+    <link rel="manifest" href="/manifest.json">
+    <link rel="icon" type="image/svg+xml" href="/icon.svg">
+<style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { font-size: 16px; scroll-behavior: smooth; }
+    body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", "Helvetica Neue", Arial, sans-serif;
+        background: #f5f5f7;
+        color: #1d1d1f;
+        line-height: 1.6;
+        min-height: 100vh;
+    }
+    a { color: #0071e3; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .hero {
+        background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+        padding: 2rem 1.5rem 3rem;
+        position: relative;
+        overflow: hidden;
+    }
+    .hero::before {
+        content: '';
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: radial-gradient(circle at 30% 50%, rgba(255,255,255,0.03) 0%, transparent 50%);
+        pointer-events: none;
+    }
+    .hero-nav {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        max-width: 1050px;
+        margin: 0 auto 1.5rem;
+        position: relative;
+        z-index: 1;
+    }
+    .brand {
+        font-size: 1.35rem;
+        font-weight: 700;
+        color: #fff;
+        letter-spacing: 1px;
+    }
+    .brand span { color: #ffd700; }
+    .back-link {
+        color: rgba(255,255,255,0.7);
+        font-size: 0.9rem;
+        transition: color 0.2s;
+    }
+    .back-link:hover { color: #fff; text-decoration: none; }
+    .lang-selector-wrap {
+        position: relative;
+        z-index: 1;
+        display: flex;
+        justify-content: flex-end;
+        max-width: 1050px;
+        margin: 0 auto 0.5rem;
+    }
+    #lang-selector select {
+        background: rgba(255,255,255,0.12);
+        color: #fff;
+        border: 1px solid rgba(255,255,255,0.2);
+        border-radius: 8px;
+        padding: 0.4rem 1.8rem 0.4rem 0.8rem;
+        font-size: 0.85rem;
+        appearance: none;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='white' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-position: right 8px center;
+        cursor: pointer;
+        outline: none;
+    }
+    #lang-selector select option { background: #302b63; color: #fff; }
+    .hero-content {
+        max-width: 1050px;
+        margin: 0 auto;
+        position: relative;
+        z-index: 1;
+    }
+    .hero h1 {
+        font-size: 2.2rem;
+        font-weight: 800;
+        color: #fff;
+        margin-bottom: 0.5rem;
+        text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+    }
+    .hero-subtitle {
+        color: rgba(255,255,255,0.75);
+        font-size: 1rem;
+        margin-bottom: 0;
+    }
+
+    /* ===== Main Content ===== */
+    .container { max-width: 800px; margin: -2rem auto 2rem; padding: 0 1rem; position: relative; z-index: 2; }
+
+    .card {
+        background: rgba(255,255,255,0.92);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border-radius: 20px;
+        box-shadow: 0 8px 40px rgba(0,0,0,0.08), 0 2px 10px rgba(0,0,0,0.04);
+        padding: 2rem 2.5rem;
+        margin-bottom: 1.5rem;
+        border: 1px solid rgba(255,255,255,0.5);
+    }
+    @media (max-width: 600px) {
+        .card { padding: 1.5rem 1.2rem; }
+        .hero h1 { font-size: 1.6rem; }
+    }
+
+    .input-group {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.75rem;
+        margin-bottom: 1rem;
+    }
+    .input-group input {
+        flex: 1;
+        min-width: 200px;
+        padding: 0.85rem 1rem;
+        border: 2px solid #e0e0e0;
+        border-radius: 12px;
+        font-size: 1.1rem;
+        font-family: 'SF Mono', 'Menlo', 'Monaco', 'Consolas', monospace;
+        letter-spacing: 0.5px;
+        outline: none;
+        transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .input-group input:focus {
+        border-color: #302b63;
+        box-shadow: 0 0 0 3px rgba(48,43,99,0.12);
+    }
+    .input-group input.error {
+        border-color: #e74c3c;
+        box-shadow: 0 0 0 3px rgba(231,76,60,0.12);
+    }
+    .input-group input.success {
+        border-color: #27ae60;
+        box-shadow: 0 0 0 3px rgba(39,174,96,0.12);
+    }
+
+    .btn {
+        padding: 0.85rem 1.8rem;
+        border: none;
+        border-radius: 12px;
+        font-size: 1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: transform 0.15s, box-shadow 0.2s;
+        white-space: nowrap;
+    }
+    .btn:active { transform: scale(0.97); }
+    .btn-primary {
+        background: linear-gradient(135deg, #302b63, #24243e);
+        color: #fff;
+        box-shadow: 0 4px 15px rgba(48,43,99,0.3);
+    }
+    .btn-primary:hover { box-shadow: 0 6px 20px rgba(48,43,99,0.4); }
+    .btn-secondary {
+        background: rgba(48,43,99,0.08);
+        color: #302b63;
+        border: 1px solid rgba(48,43,99,0.15);
+    }
+    .btn-secondary:hover { background: rgba(48,43,99,0.12); }
+    .btn-group {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.75rem;
+    }
+
+    /* ===== Result Card ===== */
+    .result-card {
+        display: none;
+        margin-top: 1.5rem;
+        border-radius: 16px;
+        border: 1px solid #e8e8ed;
+        overflow: hidden;
+        animation: fadeSlideIn 0.4s ease-out;
+    }
+    .result-card.show { display: block; }
+    @keyframes fadeSlideIn {
+        from { opacity: 0; transform: translateY(12px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    .result-header {
+        background: linear-gradient(135deg, #302b63, #24243e);
+        color: #fff;
+        padding: 1.2rem 1.8rem;
+        font-size: 1.1rem;
+        font-weight: 700;
+        display: flex;
+        align-items: center;
+        gap: 0.6rem;
+    }
+    .result-header .badge {
+        background: rgba(255,255,255,0.2);
+        padding: 0.15rem 0.7rem;
+        border-radius: 20px;
+        font-size: 0.75rem;
+        font-weight: 500;
+    }
+    .result-body { padding: 1.2rem 1.8rem 1.8rem; }
+
+    .info-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1rem;
+    }
+    @media (max-width: 500px) {
+        .info-grid { grid-template-columns: 1fr; }
+        .result-body { padding: 1rem 1.2rem 1.4rem; }
+        .result-header { padding: 1rem 1.2rem; }
+    }
+    .info-item {
+        padding: 0.8rem 1rem;
+        background: #f8f8fa;
+        border-radius: 12px;
+        border: 1px solid #eeeef0;
+    }
+    .info-item .label {
+        font-size: 0.8rem;
+        color: #8e8e93;
+        font-weight: 500;
+        margin-bottom: 0.2rem;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+    .info-item .value {
+        font-size: 1.2rem;
+        font-weight: 600;
+        color: #1d1d1f;
+    }
+    .info-item .value.valid { color: #27ae60; }
+    .info-item .value.invalid { color: #e74c3c; }
+
+    .address-tree {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 0.3rem;
+        margin-top: 0.3rem;
+        font-size: 0.95rem;
+        color: #666;
+    }
+    .address-tree .sep { color: #ccc; font-size: 0.8rem; }
+    .address-tree .addr-part {
+        background: #eeeef0;
+        padding: 0.15rem 0.5rem;
+        border-radius: 6px;
+        font-weight: 500;
+        color: #302b63;
+    }
+
+    .error-msg {
+        color: #e74c3c;
+        font-size: 0.9rem;
+        margin-top: 0.4rem;
+        display: none;
+        align-items: center;
+        gap: 0.3rem;
+    }
+    .error-msg.show { display: flex; }
+
+    /* ===== Validation Summary ===== */
+    .validation-summary {
+        margin-top: 1rem;
+        padding: 0.8rem 1.2rem;
+        border-radius: 12px;
+        font-weight: 500;
+        display: none;
+    }
+    .validation-summary.show { display: block; }
+    .validation-summary.pass {
+        background: #e8f8e8;
+        color: #1e7e34;
+        border: 1px solid #b8e6b8;
+    }
+    .validation-summary.fail {
+        background: #fde8e8;
+        color: #c0392b;
+        border: 1px solid #f5c6cb;
+    }
+
+    /* ===== SEO ===== */
+    .seo-content {
+        margin-top: 2.5rem;
+        padding: 1.8rem 2rem;
+    }
+    .seo-content h2 {
+        font-size: 1.3rem;
+        color: #302b63;
+        margin-bottom: 0.8rem;
+        margin-top: 1.5rem;
+    }
+    .seo-content h2:first-child { margin-top: 0; }
+    .seo-content p {
+        color: #555;
+        margin-bottom: 0.8rem;
+        line-height: 1.8;
+    }
+    .seo-content ul {
+        color: #555;
+        padding-left: 1.5rem;
+        margin-bottom: 0.8rem;
+    }
+    .seo-content ul li { margin-bottom: 0.3rem; }
+    .seo-content code {
+        background: #f0f0f5;
+        padding: 0.15rem 0.4rem;
+        border-radius: 4px;
+        font-size: 0.9em;
+    }
+
+    /* ===== Footer ===== */
+    .footer {
+        background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+        color: rgba(255,255,255,0.6);
+        text-align: center;
+        padding: 2rem;
+        font-size: 0.85rem;
+        margin-top: 2rem;
+    }
+    .footer a { color: rgba(255,255,255,0.8); }
+    .footer a:hover { color: #fff; }
+
+    /* ===== Utility ===== */
+    .text-center { text-align: center; }
+    .mt-1 { margin-top: 1rem; }
+    .mb-1 { margin-bottom: 1rem; }
+    .gap-1 { gap: 1rem; }
+    .flex-center { display: flex; align-items: center; justify-content: center; }
+</style>
+
+</head>
+<body>
+
+<!-- ===== Hero Header ===== -->
+<header class="hero">
+    <div class="hero-nav">
+        <div class="brand"><span>白给</span>工具</div>
+        <a href="/?lang=zh" class="back-link">← 返回首页 / 白给工具</a>
+    </div>
+    <div class="lang-selector-wrap">
+        <div id="lang-selector"></div>
+    </div>
+    <div class="hero-content">
+        <h1>🆔 身份证号码查询验证</h1>
+        <p class="hero-subtitle">免费 · 纯浏览器端解析 · 保护隐私 · 无需注册</p>
+    </div>
+</header>
+
+<!-- ===== Main Content ===== -->
+<div class="container">
+
+    <!-- Input Card -->
+    <div class="card">
+        <div class="input-group">
+            <input type="text" id="idInput" placeholder="请输入18位身份证号码" maxlength="18" autocomplete="off" spellcheck="false">
+        </div>
+        <div class="error-msg" id="errorMsg">⚠️ <span id="errorText"></span></div>
+        <div class="btn-group">
+            <button class="btn btn-primary" id="validateBtn">✅ 验证</button>
+            <button class="btn btn-secondary" id="generateBtn">🎲 生成有效身份证号</button>
+            <button class="btn btn-secondary" id="clearBtn">🗑️ 清空</button>
+        </div>
+
+        <!-- Validation Summary -->
+        <div class="validation-summary" id="validationSummary"></div>
+
+        <!-- Result Card -->
+        <div class="result-card" id="resultCard">
+            <div class="result-header">
+                📋 身份证信息
+                <span class="badge" id="resultBadge">已验证</span>
+            </div>
+            <div class="result-body">
+                <div class="info-grid">
+                    <div class="info-item">
+                        <div class="label">身份证号码</div>
+                        <div class="value" id="resultId" style="font-size:1rem;font-family:monospace;"></div>
+                    </div>
+                    <div class="info-item">
+                        <div class="label">校验状态</div>
+                        <div class="value" id="resultStatus"></div>
+                    </div>
+                    <div class="info-item">
+                        <div class="label">出生日期</div>
+                        <div class="value" id="resultBirth"></div>
+                    </div>
+                    <div class="info-item">
+                        <div class="label">性别</div>
+                        <div class="value" id="resultGender"></div>
+                    </div>
+                    <div class="info-item">
+                        <div class="label">年龄</div>
+                        <div class="value" id="resultAge"></div>
+                    </div>
+                    <div class="info-item">
+                        <div class="label">星座</div>
+                        <div class="value" id="resultZodiac"></div>
+                    </div>
+                    <div class="info-item">
+                        <div class="label">生肖</div>
+                        <div class="value" id="resultChineseZodiac"></div>
+                    </div>
+                    <div class="info-item" style="grid-column: 1 / -1;">
+                        <div class="label">发证地</div>
+                        <div class="value" id="resultAddress" style="font-size:1rem;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SEO Content -->
+    <div class="card seo-content">
+        <h2>什么是身份证号码？</h2>
+        <p>中国大陆第二代居民身份证由18位数字组成（最后一位可能为X），具有唯一性和终身不变性。身份证号码包含了公民的户籍所在地、出生日期、性别和校验码等信息。</p>
+
+        <h2>身份证号码编码规则</h2>
+        <ul>
+            <li><strong>前1-2位</strong>：省级行政区代码（如 11=北京市, 31=上海市, 44=广东省）</li>
+            <li><strong>3-4位</strong>：地级行政区代码（城市）</li>
+            <li><strong>5-6位</strong>：县级行政区代码（区/县）</li>
+            <li><strong>7-14位</strong>：出生日期（YYYYMMDD）</li>
+            <li><strong>15-17位</strong>：顺序码（第17位奇数=男性，偶数=女性）</li>
+            <li><strong>第18位</strong>：校验码（0-9或X，使用ISO 7064:1983 MOD 11-2算法计算）</li>
+        </ul>
+
+        <h2>校验码计算方法</h2>
+        <p>将前17位数字分别乘以对应的加权因子 [7, 9, 10, 5, 8, 4, 2, 1, 6, 3, 7, 9, 10, 5, 8, 4, 2]，求和后除以11取余数，根据余数查表得到校验码：余数0→1, 1→0, 2→X, 3→9, 4→8, 5→7, 6→6, 7→5, 8→4, 9→3, 10→2。</p>
+
+        <h2>隐私声明</h2>
+        <p>本站所有处理均在浏览器本地完成，<strong>不会将任何数据发送到服务器</strong>。您的隐私安全始终得到保护。您可以放心使用，无需担心信息泄露。</p>
+    </div>
+</div>
+
+<!-- ===== Footer ===== -->
+<footer class="footer">
+    <p>© 2025-2026 <a href="/">白给工具</a> — 免费在线工具集合</p>
+    <p style="margin-top:0.3rem;font-size:0.8rem;">所有工具均为纯客户端处理，数据不上传服务器</p>
+</footer>
+
+<script>
+// ===== Address Code Database (前6位行政区划代码) =====
+const ADDRESS_CODES = {
+    "110000": {"name":"北京市","level":"province"},
+    "120000": {"name":"天津市","level":"province"},
+    "130000": {"name":"河北省","level":"province"},
+    "140000": {"name":"山西省","level":"province"},
+    "150000": {"name":"内蒙古自治区","level":"province"},
+    "210000": {"name":"辽宁省","level":"province"},
+    "220000": {"name":"吉林省","level":"province"},
+    "230000": {"name":"黑龙江省","level":"province"},
+    "310000": {"name":"上海市","level":"province"},
+    "320000": {"name":"江苏省","level":"province"},
+    "330000": {"name":"浙江省","level":"province"},
+    "340000": {"name":"安徽省","level":"province"},
+    "350000": {"name":"福建省","level":"province"},
+    "360000": {"name":"江西省","level":"province"},
+    "370000": {"name":"山东省","level":"province"},
+    "410000": {"name":"河南省","level":"province"},
+    "420000": {"name":"湖北省","level":"province"},
+    "430000": {"name":"湖南省","level":"province"},
+    "440000": {"name":"广东省","level":"province"},
+    "450000": {"name":"广西壮族自治区","level":"province"},
+    "460000": {"name":"海南省","level":"province"},
+    "500000": {"name":"重庆市","level":"province"},
+    "510000": {"name":"四川省","level":"province"},
+    "520000": {"name":"贵州省","level":"province"},
+    "530000": {"name":"云南省","level":"province"},
+    "540000": {"name":"西藏自治区","level":"province"},
+    "610000": {"name":"陕西省","level":"province"},
+    "620000": {"name":"甘肃省","level":"province"},
+    "630000": {"name":"青海省","level":"province"},
+    "640000": {"name":"宁夏回族自治区","level":"province"},
+    "650000": {"name":"新疆维吾尔自治区","level":"province"},
+    "710000": {"name":"台湾省","level":"province"},
+    "810000": {"name":"香港特别行政区","level":"province"},
+    "820000": {"name":"澳门特别行政区","level":"province"},
+
+    "110101": {"name":"东城区","level":"district","province":"北京市","city":"北京市"},
+    "110102": {"name":"西城区","level":"district","province":"北京市","city":"北京市"},
+    "110105": {"name":"朝阳区","level":"district","province":"北京市","city":"北京市"},
+    "110106": {"name":"丰台区","level":"district","province":"北京市","city":"北京市"},
+    "110107": {"name":"石景山区","level":"district","province":"北京市","city":"北京市"},
+    "110108": {"name":"海淀区","level":"district","province":"北京市","city":"北京市"},
+    "110109": {"name":"门头沟区","level":"district","province":"北京市","city":"北京市"},
+    "110111": {"name":"房山区","level":"district","province":"北京市","city":"北京市"},
+    "110112": {"name":"通州区","level":"district","province":"北京市","city":"北京市"},
+    "110113": {"name":"顺义区","level":"district","province":"北京市","city":"北京市"},
+    "110114": {"name":"昌平区","level":"district","province":"北京市","city":"北京市"},
+    "110115": {"name":"大兴区","level":"district","province":"北京市","city":"北京市"},
+    "110116": {"name":"怀柔区","level":"district","province":"北京市","city":"北京市"},
+    "110117": {"name":"平谷区","level":"district","province":"北京市","city":"北京市"},
+    "110118": {"name":"密云区","level":"district","province":"北京市","city":"北京市"},
+    "110119": {"name":"延庆区","level":"district","province":"北京市","city":"北京市"},
+    "120101": {"name":"和平区","level":"district","province":"天津市","city":"天津市"},
+    "120102": {"name":"河东区","level":"district","province":"天津市","city":"天津市"},
+    "120103": {"name":"河西区","level":"district","province":"天津市","city":"天津市"},
+    "120104": {"name":"南开区","level":"district","province":"天津市","city":"天津市"},
+    "120105": {"name":"河北区","level":"district","province":"天津市","city":"天津市"},
+    "120106": {"name":"红桥区","level":"district","province":"天津市","city":"天津市"},
+    "120110": {"name":"东丽区","level":"district","province":"天津市","city":"天津市"},
+    "120111": {"name":"西青区","level":"district","province":"天津市","city":"天津市"},
+    "120112": {"name":"津南区","level":"district","province":"天津市","city":"天津市"},
+    "120113": {"name":"北辰区","level":"district","province":"天津市","city":"天津市"},
+    "120114": {"name":"武清区","level":"district","province":"天津市","city":"天津市"},
+    "120115": {"name":"宝坻区","level":"district","province":"天津市","city":"天津市"},
+    "120116": {"name":"滨海新区","level":"district","province":"天津市","city":"天津市"},
+    "120117": {"name":"宁河区","level":"district","province":"天津市","city":"天津市"},
+    "120118": {"name":"静海区","level":"district","province":"天津市","city":"天津市"},
+    "120119": {"name":"蓟州区","level":"district","province":"天津市","city":"天津市"},
+    "310101": {"name":"黄浦区","level":"district","province":"上海市","city":"上海市"},
+    "310104": {"name":"徐汇区","level":"district","province":"上海市","city":"上海市"},
+    "310105": {"name":"长宁区","level":"district","province":"上海市","city":"上海市"},
+    "310106": {"name":"静安区","level":"district","province":"上海市","city":"上海市"},
+    "310107": {"name":"普陀区","level":"district","province":"上海市","city":"上海市"},
+    "310109": {"name":"虹口区","level":"district","province":"上海市","city":"上海市"},
+    "310110": {"name":"杨浦区","level":"district","province":"上海市","city":"上海市"},
+    "310112": {"name":"闵行区","level":"district","province":"上海市","city":"上海市"},
+    "310113": {"name":"宝山区","level":"district","province":"上海市","city":"上海市"},
+    "310114": {"name":"嘉定区","level":"district","province":"上海市","city":"上海市"},
+    "310115": {"name":"浦东新区","level":"district","province":"上海市","city":"上海市"},
+    "310116": {"name":"金山区","level":"district","province":"上海市","city":"上海市"},
+    "310117": {"name":"松江区","level":"district","province":"上海市","city":"上海市"},
+    "310118": {"name":"青浦区","level":"district","province":"上海市","city":"上海市"},
+    "310120": {"name":"奉贤区","level":"district","province":"上海市","city":"上海市"},
+    "310151": {"name":"崇明区","level":"district","province":"上海市","city":"上海市"},
+    "500101": {"name":"万州区","level":"district","province":"重庆市","city":"重庆市"},
+    "500102": {"name":"涪陵区","level":"district","province":"重庆市","city":"重庆市"},
+    "500103": {"name":"渝中区","level":"district","province":"重庆市","city":"重庆市"},
+    "500104": {"name":"大渡口区","level":"district","province":"重庆市","city":"重庆市"},
+    "500105": {"name":"江北区","level":"district","province":"重庆市","city":"重庆市"},
+    "500106": {"name":"沙坪坝区","level":"district","province":"重庆市","city":"重庆市"},
+    "500107": {"name":"九龙坡区","level":"district","province":"重庆市","city":"重庆市"},
+    "500108": {"name":"南岸区","level":"district","province":"重庆市","city":"重庆市"},
+    "500109": {"name":"北碚区","level":"district","province":"重庆市","city":"重庆市"},
+    "500110": {"name":"綦江区","level":"district","province":"重庆市","city":"重庆市"},
+    "500111": {"name":"大足区","level":"district","province":"重庆市","city":"重庆市"},
+    "500112": {"name":"渝北区","level":"district","province":"重庆市","city":"重庆市"},
+    "500113": {"name":"巴南区","level":"district","province":"重庆市","city":"重庆市"},
+    "500114": {"name":"黔江区","level":"district","province":"重庆市","city":"重庆市"},
+    "500115": {"name":"长寿区","level":"district","province":"重庆市","city":"重庆市"},
+    "500116": {"name":"江津区","level":"district","province":"重庆市","city":"重庆市"},
+    "500117": {"name":"合川区","level":"district","province":"重庆市","city":"重庆市"},
+    "500118": {"name":"永川区","level":"district","province":"重庆市","city":"重庆市"},
+    "500119": {"name":"南川区","level":"district","province":"重庆市","city":"重庆市"},
+    "500120": {"name":"璧山区","level":"district","province":"重庆市","city":"重庆市"},
+    "500151": {"name":"铜梁区","level":"district","province":"重庆市","city":"重庆市"},
+    "500152": {"name":"潼南区","level":"district","province":"重庆市","city":"重庆市"},
+    "500153": {"name":"荣昌区","level":"district","province":"重庆市","city":"重庆市"},
+    "500154": {"name":"开州区","level":"district","province":"重庆市","city":"重庆市"},
+    "500155": {"name":"梁平区","level":"district","province":"重庆市","city":"重庆市"},
+    "500156": {"name":"武隆区","level":"district","province":"重庆市","city":"重庆市"},
+    "440100": {"name":"广州市","level":"city","province":"广东省"},
+    "440200": {"name":"韶关市","level":"city","province":"广东省"},
+    "440300": {"name":"深圳市","level":"city","province":"广东省"},
+    "440400": {"name":"珠海市","level":"city","province":"广东省"},
+    "440500": {"name":"汕头市","level":"city","province":"广东省"},
+    "440600": {"name":"佛山市","level":"city","province":"广东省"},
+    "440700": {"name":"江门市","level":"city","province":"广东省"},
+    "440800": {"name":"湛江市","level":"city","province":"广东省"},
+    "440900": {"name":"茂名市","level":"city","province":"广东省"},
+    "441200": {"name":"肇庆市","level":"city","province":"广东省"},
+    "441300": {"name":"惠州市","level":"city","province":"广东省"},
+    "441400": {"name":"梅州市","level":"city","province":"广东省"},
+    "441500": {"name":"汕尾市","level":"city","province":"广东省"},
+    "441600": {"name":"河源市","level":"city","province":"广东省"},
+    "441700": {"name":"阳江市","level":"city","province":"广东省"},
+    "441800": {"name":"清远市","level":"city","province":"广东省"},
+    "441900": {"name":"东莞市","level":"city","province":"广东省"},
+    "442000": {"name":"中山市","level":"city","province":"广东省"},
+    "445100": {"name":"潮州市","level":"city","province":"广东省"},
+    "445200": {"name":"揭阳市","level":"city","province":"广东省"},
+    "445300": {"name":"云浮市","level":"city","province":"广东省"},
+    "440103": {"name":"荔湾区","level":"district","province":"广东省","city":"广州市"},
+    "440104": {"name":"越秀区","level":"district","province":"广东省","city":"广州市"},
+    "440105": {"name":"海珠区","level":"district","province":"广东省","city":"广州市"},
+    "440106": {"name":"天河区","level":"district","province":"广东省","city":"广州市"},
+    "440111": {"name":"白云区","level":"district","province":"广东省","city":"广州市"},
+    "440112": {"name":"黄埔区","level":"district","province":"广东省","city":"广州市"},
+    "440113": {"name":"番禺区","level":"district","province":"广东省","city":"广州市"},
+    "440114": {"name":"花都区","level":"district","province":"广东省","city":"广州市"},
+    "440115": {"name":"南沙区","level":"district","province":"广东省","city":"广州市"},
+    "440117": {"name":"从化区","level":"district","province":"广东省","city":"广州市"},
+    "440118": {"name":"增城区","level":"district","province":"广东省","city":"广州市"},
+    "440303": {"name":"罗湖区","level":"district","province":"广东省","city":"深圳市"},
+    "440304": {"name":"福田区","level":"district","province":"广东省","city":"深圳市"},
+    "440305": {"name":"南山区","level":"district","province":"广东省","city":"深圳市"},
+    "440306": {"name":"宝安区","level":"district","province":"广东省","city":"深圳市"},
+    "440307": {"name":"龙岗区","level":"district","province":"广东省","city":"深圳市"},
+    "440308": {"name":"盐田区","level":"district","province":"广东省","city":"深圳市"},
+    "440309": {"name":"龙华区","level":"district","province":"广东省","city":"深圳市"},
+    "440310": {"name":"坪山区","level":"district","province":"广东省","city":"深圳市"},
+    "440311": {"name":"光明区","level":"district","province":"广东省","city":"深圳市"},
+    "440604": {"name":"禅城区","level":"district","province":"广东省","city":"佛山市"},
+    "440605": {"name":"南海区","level":"district","province":"广东省","city":"佛山市"},
+    "440606": {"name":"顺德区","level":"district","province":"广东省","city":"佛山市"},
+    "440607": {"name":"三水区","level":"district","province":"广东省","city":"佛山市"},
+    "440608": {"name":"高明区","level":"district","province":"广东省","city":"佛山市"},
+    "440402": {"name":"香洲区","level":"district","province":"广东省","city":"珠海市"},
+    "440403": {"name":"斗门区","level":"district","province":"广东省","city":"珠海市"},
+    "440404": {"name":"金湾区","level":"district","province":"广东省","city":"珠海市"},
+    "320100": {"name":"南京市","level":"city","province":"江苏省"},
+    "320200": {"name":"无锡市","level":"city","province":"江苏省"},
+    "320300": {"name":"徐州市","level":"city","province":"江苏省"},
+    "320400": {"name":"常州市","level":"city","province":"江苏省"},
+    "320500": {"name":"苏州市","level":"city","province":"江苏省"},
+    "320600": {"name":"南通市","level":"city","province":"江苏省"},
+    "320700": {"name":"连云港市","level":"city","province":"江苏省"},
+    "320800": {"name":"淮安市","level":"city","province":"江苏省"},
+    "320900": {"name":"盐城市","level":"city","province":"江苏省"},
+    "321000": {"name":"扬州市","level":"city","province":"江苏省"},
+    "321100": {"name":"镇江市","level":"city","province":"江苏省"},
+    "321200": {"name":"泰州市","level":"city","province":"江苏省"},
+    "321300": {"name":"宿迁市","level":"city","province":"江苏省"},
+    "320102": {"name":"玄武区","level":"district","province":"江苏省","city":"南京市"},
+    "320104": {"name":"秦淮区","level":"district","province":"江苏省","city":"南京市"},
+    "320105": {"name":"建邺区","level":"district","province":"江苏省","city":"南京市"},
+    "320106": {"name":"鼓楼区","level":"district","province":"江苏省","city":"南京市"},
+    "320111": {"name":"浦口区","level":"district","province":"江苏省","city":"南京市"},
+    "320113": {"name":"栖霞区","level":"district","province":"江苏省","city":"南京市"},
+    "320114": {"name":"雨花台区","level":"district","province":"江苏省","city":"南京市"},
+    "320115": {"name":"江宁区","level":"district","province":"江苏省","city":"南京市"},
+    "320116": {"name":"六合区","level":"district","province":"江苏省","city":"南京市"},
+    "320117": {"name":"溧水区","level":"district","province":"江苏省","city":"南京市"},
+    "320118": {"name":"高淳区","level":"district","province":"江苏省","city":"南京市"},
+    "320505": {"name":"虎丘区","level":"district","province":"江苏省","city":"苏州市"},
+    "320506": {"name":"吴中区","level":"district","province":"江苏省","city":"苏州市"},
+    "320507": {"name":"相城区","level":"district","province":"江苏省","city":"苏州市"},
+    "320508": {"name":"姑苏区","level":"district","province":"江苏省","city":"苏州市"},
+    "320509": {"name":"吴江区","level":"district","province":"江苏省","city":"苏州市"},
+    "320581": {"name":"常熟市","level":"district","province":"江苏省","city":"苏州市"},
+    "320582": {"name":"张家港市","level":"district","province":"江苏省","city":"苏州市"},
+    "320583": {"name":"昆山市","level":"district","province":"江苏省","city":"苏州市"},
+    "320585": {"name":"太仓市","level":"district","province":"江苏省","city":"苏州市"},
+    "330100": {"name":"杭州市","level":"city","province":"浙江省"},
+    "330200": {"name":"宁波市","level":"city","province":"浙江省"},
+    "330300": {"name":"温州市","level":"city","province":"浙江省"},
+    "330400": {"name":"嘉兴市","level":"city","province":"浙江省"},
+    "330500": {"name":"湖州市","level":"city","province":"浙江省"},
+    "330600": {"name":"绍兴市","level":"city","province":"浙江省"},
+    "330700": {"name":"金华市","level":"city","province":"浙江省"},
+    "330800": {"name":"衢州市","level":"city","province":"浙江省"},
+    "330900": {"name":"舟山市","level":"city","province":"浙江省"},
+    "331000": {"name":"台州市","level":"city","province":"浙江省"},
+    "331100": {"name":"丽水市","level":"city","province":"浙江省"},
+    "330102": {"name":"上城区","level":"district","province":"浙江省","city":"杭州市"},
+    "330103": {"name":"下城区","level":"district","province":"浙江省","city":"杭州市"},
+    "330104": {"name":"江干区","level":"district","province":"浙江省","city":"杭州市"},
+    "330105": {"name":"拱墅区","level":"district","province":"浙江省","city":"杭州市"},
+    "330106": {"name":"西湖区","level":"district","province":"浙江省","city":"杭州市"},
+    "330108": {"name":"滨江区","level":"district","province":"浙江省","city":"杭州市"},
+    "330109": {"name":"萧山区","level":"district","province":"浙江省","city":"杭州市"},
+    "330110": {"name":"余杭区","level":"district","province":"浙江省","city":"杭州市"},
+    "330111": {"name":"富阳区","level":"district","province":"浙江省","city":"杭州市"},
+    "330112": {"name":"临安区","level":"district","province":"浙江省","city":"杭州市"},
+    "330122": {"name":"桐庐县","level":"district","province":"浙江省","city":"杭州市"},
+    "330127": {"name":"淳安县","level":"district","province":"浙江省","city":"杭州市"},
+    "330182": {"name":"建德市","level":"district","province":"浙江省","city":"杭州市"},
+    "330201": {"name":"市辖区","level":"district","province":"浙江省","city":"宁波市"},
+    "330203": {"name":"海曙区","level":"district","province":"浙江省","city":"宁波市"},
+    "330205": {"name":"江北区","level":"district","province":"浙江省","city":"宁波市"},
+    "330206": {"name":"北仑区","level":"district","province":"浙江省","city":"宁波市"},
+    "330211": {"name":"镇海区","level":"district","province":"浙江省","city":"宁波市"},
+    "330212": {"name":"鄞州区","level":"district","province":"浙江省","city":"宁波市"},
+    "330213": {"name":"奉化区","level":"district","province":"浙江省","city":"宁波市"},
+    "510100": {"name":"成都市","level":"city","province":"四川省"},
+    "510300": {"name":"自贡市","level":"city","province":"四川省"},
+    "510400": {"name":"攀枝花市","level":"city","province":"四川省"},
+    "510500": {"name":"泸州市","level":"city","province":"四川省"},
+    "510600": {"name":"德阳市","level":"city","province":"四川省"},
+    "510700": {"name":"绵阳市","level":"city","province":"四川省"},
+    "510800": {"name":"广元市","level":"city","province":"四川省"},
+    "510900": {"name":"遂宁市","level":"city","province":"四川省"},
+    "511000": {"name":"内江市","level":"city","province":"四川省"},
+    "511100": {"name":"乐山市","level":"city","province":"四川省"},
+    "511300": {"name":"南充市","level":"city","province":"四川省"},
+    "511400": {"name":"眉山市","level":"city","province":"四川省"},
+    "511500": {"name":"宜宾市","level":"city","province":"四川省"},
+    "511600": {"name":"广安市","level":"city","province":"四川省"},
+    "511700": {"name":"达州市","level":"city","province":"四川省"},
+    "511800": {"name":"雅安市","level":"city","province":"四川省"},
+    "511900": {"name":"巴中市","level":"city","province":"四川省"},
+    "512000": {"name":"资阳市","level":"city","province":"四川省"},
+    "510104": {"name":"锦江区","level":"district","province":"四川省","city":"成都市"},
+    "510105": {"name":"青羊区","level":"district","province":"四川省","city":"成都市"},
+    "510106": {"name":"金牛区","level":"district","province":"四川省","city":"成都市"},
+    "510107": {"name":"武侯区","level":"district","province":"四川省","city":"成都市"},
+    "510108": {"name":"成华区","level":"district","province":"四川省","city":"成都市"},
+    "510112": {"name":"龙泉驿区","level":"district","province":"四川省","city":"成都市"},
+    "510113": {"name":"青白江区","level":"district","province":"四川省","city":"成都市"},
+    "510114": {"name":"新都区","level":"district","province":"四川省","city":"成都市"},
+    "510115": {"name":"温江区","level":"district","province":"四川省","city":"成都市"},
+    "510116": {"name":"双流区","level":"district","province":"四川省","city":"成都市"},
+    "510117": {"name":"郫都区","level":"district","province":"四川省","city":"成都市"},
+    "510118": {"name":"新津区","level":"district","province":"四川省","city":"成都市"},
+    "350100": {"name":"福州市","level":"city","province":"福建省"},
+    "350200": {"name":"厦门市","level":"city","province":"福建省"},
+    "350300": {"name":"莆田市","level":"city","province":"福建省"},
+    "350400": {"name":"三明市","level":"city","province":"福建省"},
+    "350500": {"name":"泉州市","level":"city","province":"福建省"},
+    "350600": {"name":"漳州市","level":"city","province":"福建省"},
+    "350700": {"name":"南平市","level":"city","province":"福建省"},
+    "350800": {"name":"龙岩市","level":"city","province":"福建省"},
+    "350900": {"name":"宁德市","level":"city","province":"福建省"},
+    "350102": {"name":"鼓楼区","level":"district","province":"福建省","city":"福州市"},
+    "350103": {"name":"台江区","level":"district","province":"福建省","city":"福州市"},
+    "350104": {"name":"仓山区","level":"district","province":"福建省","city":"福州市"},
+    "350105": {"name":"马尾区","level":"district","province":"福建省","city":"福州市"},
+    "350111": {"name":"晋安区","level":"district","province":"福建省","city":"福州市"},
+    "350112": {"name":"长乐区","level":"district","province":"福建省","city":"福州市"},
+    "350203": {"name":"思明区","level":"district","province":"福建省","city":"厦门市"},
+    "350205": {"name":"海沧区","level":"district","province":"福建省","city":"厦门市"},
+    "350206": {"name":"湖里区","level":"district","province":"福建省","city":"厦门市"},
+    "350211": {"name":"集美区","level":"district","province":"福建省","city":"厦门市"},
+    "350212": {"name":"同安区","level":"district","province":"福建省","city":"厦门市"},
+    "350213": {"name":"翔安区","level":"district","province":"福建省","city":"厦门市"},
+    "420100": {"name":"武汉市","level":"city","province":"湖北省"},
+    "420200": {"name":"黄石市","level":"city","province":"湖北省"},
+    "420300": {"name":"十堰市","level":"city","province":"湖北省"},
+    "420500": {"name":"宜昌市","level":"city","province":"湖北省"},
+    "420600": {"name":"襄阳市","level":"city","province":"湖北省"},
+    "420700": {"name":"鄂州市","level":"city","province":"湖北省"},
+    "420800": {"name":"荆门市","level":"city","province":"湖北省"},
+    "420900": {"name":"孝感市","level":"city","province":"湖北省"},
+    "421000": {"name":"荆州市","level":"city","province":"湖北省"},
+    "421100": {"name":"黄冈市","level":"city","province":"湖北省"},
+    "421200": {"name":"咸宁市","level":"city","province":"湖北省"},
+    "421300": {"name":"随州市","level":"city","province":"湖北省"},
+    "422800": {"name":"恩施土家族苗族自治州","level":"city","province":"湖北省"},
+    "420102": {"name":"江岸区","level":"district","province":"湖北省","city":"武汉市"},
+    "420103": {"name":"江汉区","level":"district","province":"湖北省","city":"武汉市"},
+    "420104": {"name":"硚口区","level":"district","province":"湖北省","city":"武汉市"},
+    "420105": {"name":"汉阳区","level":"district","province":"湖北省","city":"武汉市"},
+    "420106": {"name":"武昌区","level":"district","province":"湖北省","city":"武汉市"},
+    "420107": {"name":"青山区","level":"district","province":"湖北省","city":"武汉市"},
+    "420111": {"name":"洪山区","level":"district","province":"湖北省","city":"武汉市"},
+    "420112": {"name":"东西湖区","level":"district","province":"湖北省","city":"武汉市"},
+    "420113": {"name":"汉南区","level":"district","province":"湖北省","city":"武汉市"},
+    "420114": {"name":"蔡甸区","level":"district","province":"湖北省","city":"武汉市"},
+    "420115": {"name":"江夏区","level":"district","province":"湖北省","city":"武汉市"},
+    "420116": {"name":"黄陂区","level":"district","province":"湖北省","city":"武汉市"},
+    "420117": {"name":"新洲区","level":"district","province":"湖北省","city":"武汉市"},
+    "430100": {"name":"长沙市","level":"city","province":"湖南省"},
+    "430200": {"name":"株洲市","level":"city","province":"湖南省"},
+    "430300": {"name":"湘潭市","level":"city","province":"湖南省"},
+    "430400": {"name":"衡阳市","level":"city","province":"湖南省"},
+    "430500": {"name":"邵阳市","level":"city","province":"湖南省"},
+    "430600": {"name":"岳阳市","level":"city","province":"湖南省"},
+    "430700": {"name":"常德市","level":"city","province":"湖南省"},
+    "430800": {"name":"张家界市","level":"city","province":"湖南省"},
+    "430900": {"name":"益阳市","level":"city","province":"湖南省"},
+    "431000": {"name":"郴州市","level":"city","province":"湖南省"},
+    "431100": {"name":"永州市","level":"city","province":"湖南省"},
+    "431200": {"name":"怀化市","level":"city","province":"湖南省"},
+    "431300": {"name":"娄底市","level":"city","province":"湖南省"},
+    "433100": {"name":"湘西土家族苗族自治州","level":"city","province":"湖南省"},
+    "430102": {"name":"芙蓉区","level":"district","province":"湖南省","city":"长沙市"},
+    "430103": {"name":"天心区","level":"district","province":"湖南省","city":"长沙市"},
+    "430104": {"name":"岳麓区","level":"district","province":"湖南省","city":"长沙市"},
+    "430105": {"name":"开福区","level":"district","province":"湖南省","city":"长沙市"},
+    "430111": {"name":"雨花区","level":"district","province":"湖南省","city":"长沙市"},
+    "430112": {"name":"望城区","level":"district","province":"湖南省","city":"长沙市"},
+    "430121": {"name":"长沙县","level":"district","province":"湖南省","city":"长沙市"},
+    "430181": {"name":"浏阳市","level":"district","province":"湖南省","city":"长沙市"},
+    "430182": {"name":"宁乡市","level":"district","province":"湖南省","city":"长沙市"},
+    "370100": {"name":"济南市","level":"city","province":"山东省"},
+    "370200": {"name":"青岛市","level":"city","province":"山东省"},
+    "370300": {"name":"淄博市","level":"city","province":"山东省"},
+    "370400": {"name":"枣庄市","level":"city","province":"山东省"},
+    "370500": {"name":"东营市","level":"city","province":"山东省"},
+    "370600": {"name":"烟台市","level":"city","province":"山东省"},
+    "370700": {"name":"潍坊市","level":"city","province":"山东省"},
+    "370800": {"name":"济宁市","level":"city","province":"山东省"},
+    "370900": {"name":"泰安市","level":"city","province":"山东省"},
+    "371000": {"name":"威海市","level":"city","province":"山东省"},
+    "371100": {"name":"日照市","level":"city","province":"山东省"},
+    "371300": {"name":"临沂市","level":"city","province":"山东省"},
+    "371400": {"name":"德州市","level":"city","province":"山东省"},
+    "371500": {"name":"聊城市","level":"city","province":"山东省"},
+    "371600": {"name":"滨州市","level":"city","province":"山东省"},
+    "371700": {"name":"菏泽市","level":"city","province":"山东省"},
+    "370102": {"name":"历下区","level":"district","province":"山东省","city":"济南市"},
+    "370103": {"name":"市中区","level":"district","province":"山东省","city":"济南市"},
+    "370104": {"name":"槐荫区","level":"district","province":"山东省","city":"济南市"},
+    "370105": {"name":"天桥区","level":"district","province":"山东省","city":"济南市"},
+    "370112": {"name":"历城区","level":"district","province":"山东省","city":"济南市"},
+    "370113": {"name":"长清区","level":"district","province":"山东省","city":"济南市"},
+    "370114": {"name":"章丘区","level":"district","province":"山东省","city":"济南市"},
+    "370115": {"name":"济阳区","level":"district","province":"山东省","city":"济南市"},
+    "370116": {"name":"莱芜区","level":"district","province":"山东省","city":"济南市"},
+    "370117": {"name":"钢城区","level":"district","province":"山东省","city":"济南市"},
+    "370202": {"name":"市南区","level":"district","province":"山东省","city":"青岛市"},
+    "370203": {"name":"市北区","level":"district","province":"山东省","city":"青岛市"},
+    "370211": {"name":"黄岛区","level":"district","province":"山东省","city":"青岛市"},
+    "370212": {"name":"崂山区","level":"district","province":"山东省","city":"青岛市"},
+    "370213": {"name":"李沧区","level":"district","province":"山东省","city":"青岛市"},
+    "370214": {"name":"城阳区","level":"district","province":"山东省","city":"青岛市"},
+    "370215": {"name":"即墨区","level":"district","province":"山东省","city":"青岛市"},
+    "410100": {"name":"郑州市","level":"city","province":"河南省"},
+    "410200": {"name":"开封市","level":"city","province":"河南省"},
+    "410300": {"name":"洛阳市","level":"city","province":"河南省"},
+    "410400": {"name":"平顶山市","level":"city","province":"河南省"},
+    "410500": {"name":"安阳市","level":"city","province":"河南省"},
+    "410600": {"name":"鹤壁市","level":"city","province":"河南省"},
+    "410700": {"name":"新乡市","level":"city","province":"河南省"},
+    "410800": {"name":"焦作市","level":"city","province":"河南省"},
+    "410900": {"name":"濮阳市","level":"city","province":"河南省"},
+    "411000": {"name":"许昌市","level":"city","province":"河南省"},
+    "411100": {"name":"漯河市","level":"city","province":"河南省"},
+    "411200": {"name":"三门峡市","level":"city","province":"河南省"},
+    "411300": {"name":"南阳市","level":"city","province":"河南省"},
+    "411400": {"name":"商丘市","level":"city","province":"河南省"},
+    "411500": {"name":"信阳市","level":"city","province":"河南省"},
+    "411600": {"name":"周口市","level":"city","province":"河南省"},
+    "411700": {"name":"驻马店市","level":"city","province":"河南省"},
+    "410102": {"name":"中原区","level":"district","province":"河南省","city":"郑州市"},
+    "410103": {"name":"二七区","level":"district","province":"河南省","city":"郑州市"},
+    "410104": {"name":"管城回族区","level":"district","province":"河南省","city":"郑州市"},
+    "410105": {"name":"金水区","level":"district","province":"河南省","city":"郑州市"},
+    "410106": {"name":"上街区","level":"district","province":"河南省","city":"郑州市"},
+    "410108": {"name":"惠济区","level":"district","province":"河南省","city":"郑州市"},
+    "410122": {"name":"中牟县","level":"district","province":"河南省","city":"郑州市"},
+    "410181": {"name":"巩义市","level":"district","province":"河南省","city":"郑州市"},
+    "410182": {"name":"荥阳市","level":"district","province":"河南省","city":"郑州市"},
+    "410183": {"name":"新密市","level":"district","province":"河南省","city":"郑州市"},
+    "410184": {"name":"新郑市","level":"district","province":"河南省","city":"郑州市"},
+    "410185": {"name":"登封市","level":"district","province":"河南省","city":"郑州市"},
+    "130100": {"name":"石家庄市","level":"city","province":"河北省"},
+    "130200": {"name":"唐山市","level":"city","province":"河北省"},
+    "130300": {"name":"秦皇岛市","level":"city","province":"河北省"},
+    "130400": {"name":"邯郸市","level":"city","province":"河北省"},
+    "130500": {"name":"邢台市","level":"city","province":"河北省"},
+    "130600": {"name":"保定市","level":"city","province":"河北省"},
+    "130700": {"name":"张家口市","level":"city","province":"河北省"},
+    "130800": {"name":"承德市","level":"city","province":"河北省"},
+    "130900": {"name":"沧州市","level":"city","province":"河北省"},
+    "131000": {"name":"廊坊市","level":"city","province":"河北省"},
+    "131100": {"name":"衡水市","level":"city","province":"河北省"},
+    "130102": {"name":"长安区","level":"district","province":"河北省","city":"石家庄市"},
+    "130104": {"name":"桥西区","level":"district","province":"河北省","city":"石家庄市"},
+    "130105": {"name":"新华区","level":"district","province":"河北省","city":"石家庄市"},
+    "130107": {"name":"井陉矿区","level":"district","province":"河北省","city":"石家庄市"},
+    "130108": {"name":"裕华区","level":"district","province":"河北省","city":"石家庄市"},
+    "130109": {"name":"藁城区","level":"district","province":"河北省","city":"石家庄市"},
+    "130110": {"name":"鹿泉区","level":"district","province":"河北省","city":"石家庄市"},
+    "130111": {"name":"栾城区","level":"district","province":"河北省","city":"石家庄市"},
+};
+
+
+// ===== Core Validation Functions =====
+
+// ISO 7064:1983, MOD 11-2 weighting factors
+const WEIGHTS = [7, 9, 10, 5, 8, 4, 2, 1, 6, 3, 7, 9, 10, 5, 8, 4, 2];
+const CHECK_CODES = ['1', '0', 'X', '9', '8', '7', '6', '5', '4', '3', '2'];
+
+// Chinese zodiac animals (生肖)
+const CHINESE_ZODIAC = ['🐭 鼠', '🐮 牛', '🐯 虎', '🐰 兔', '🐲 龙', '🐍 蛇', '🐴 马', '🐏 羊', '🐵 猴', '🐔 鸡', '🐶 狗', '🐷 猪'];
+const CHINESE_ZODIAC_NAMES = ['鼠', '牛', '虎', '兔', '龙', '蛇', '马', '羊', '猴', '鸡', '狗', '猪'];
+
+// Western zodiac signs (星座)
+const ZODIAC_SIGNS = [
+    { name: '♑ 摩羯座', start: [1, 1], end: [1, 19] },
+    { name: '♒ 水瓶座', start: [1, 20], end: [2, 18] },
+    { name: '♓ 双鱼座', start: [2, 19], end: [3, 20] },
+    { name: '♈ 白羊座', start: [3, 21], end: [4, 19] },
+    { name: '♉ 金牛座', start: [4, 20], end: [5, 20] },
+    { name: '♊ 双子座', start: [5, 21], end: [6, 20] },
+    { name: '♋ 巨蟹座', start: [6, 21], end: [7, 22] },
+    { name: '♌ 狮子座', start: [7, 23], end: [8, 22] },
+    { name: '♍ 处女座', start: [8, 23], end: [9, 22] },
+    { name: '♎ 天秤座', start: [9, 23], end: [10, 22] },
+    { name: '♏ 天蝎座', start: [10, 23], end: [11, 21] },
+    { name: '♐ 射手座', start: [11, 22], end: [12, 21] },
+    { name: '♑ 摩羯座', start: [12, 22], end: [12, 31] }
+];
+
+function validateIdCard(id) {
+    id = id.toUpperCase().trim();
+    const errors = [];
+
+    // Check length
+    if (id.length !== 18) {
+        errors.push('身份证号码必须为18位');
+        return { valid: false, errors, id };
+    }
+
+    // Check format: 17 digits + 1 digit or X
+    if (!/^\d{17}[\dX]$/.test(id)) {
+        errors.push('格式错误：前17位必须为数字，第18位为数字或大写X');
+        return { valid: false, errors, id };
+    }
+
+    // Validate date of birth
+    const year = parseInt(id.substring(6, 10), 10);
+    const month = parseInt(id.substring(10, 12), 10);
+    const day = parseInt(id.substring(12, 14), 10);
+    const birthDate = new Date(year, month - 1, day);
+    
+    if (birthDate.getFullYear() !== year || birthDate.getMonth() !== month - 1 || birthDate.getDate() !== day) {
+        errors.push('出生日期无效');
+    }
+    if (year < 1900 || year > new Date().getFullYear()) {
+        errors.push('出生年份超出合理范围');
+    }
+
+    // Validate check digit
+    let sum = 0;
+    for (let i = 0; i < 17; i++) {
+        sum += parseInt(id[i], 10) * WEIGHTS[i];
+    }
+    const remainder = sum % 11;
+    const expectedCheckDigit = CHECK_CODES[remainder];
+    const actualCheckDigit = id[17];
+
+    if (expectedCheckDigit !== actualCheckDigit) {
+        errors.push(`校验码错误：期望为 ${expectedCheckDigit}，实际为 ${actualCheckDigit}`);
+    }
+
+    // Validate address code
+    const addrInfo = lookupAddress(id.substring(0, 6));
+    if (!addrInfo.found) {
+        errors.push('前6位地址代码未识别');
+    }
+
+    return {
+        valid: errors.length === 0,
+        errors,
+        id,
+        year,
+        month,
+        day,
+        birthDate: `${year}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}`,
+        gender: parseInt(id[16], 10) % 2 === 0 ? '👩 女' : '👨 男',
+        genderText: parseInt(id[16], 10) % 2 === 0 ? '女' : '男',
+        address: addrInfo,
+        checkDigitValid: expectedCheckDigit === actualCheckDigit,
+    };
+}
+
+function lookupAddress(code) {
+    // Try exact match first (district/county level)
+    if (ADDRESS_CODES[code]) {
+        const info = ADDRESS_CODES[code];
+        return {
+            found: true,
+            province: info.province || info.name,
+            city: info.city || '',
+            district: info.level === 'district' ? info.name : '',
+            detail: info
+        };
+    }
+    
+    // Try city level (xxxx00 pattern)
+    const cityCode = code.substring(0, 4) + '00';
+    if (ADDRESS_CODES[cityCode]) {
+        const info = ADDRESS_CODES[cityCode];
+        return {
+            found: true,
+            province: info.province || info.name,
+            city: info.level === 'city' ? info.name : '',
+            district: '',
+            detail: info
+        };
+    }
+    
+    // Try province level (xx0000 pattern)
+    const provinceCode = code.substring(0, 2) + '0000';
+    if (ADDRESS_CODES[provinceCode]) {
+        const info = ADDRESS_CODES[provinceCode];
+        return {
+            found: true,
+            province: info.name,
+            city: '',
+            district: '',
+            detail: info
+        };
+    }
+    
+    return { found: false };
+}
+
+function getZodiacSign(month, day) {
+    for (const sign of ZODIAC_SIGNS) {
+        const [sMonth, sDay] = sign.start;
+        const [eMonth, eDay] = sign.end;
+        if (month === sMonth && day >= sDay) return sign.name;
+        if (month === eMonth && day <= eDay) return sign.name;
+        if (sMonth < eMonth && month > sMonth && month < eMonth) return sign.name;
+    }
+    return '未知';
+}
+
+function getChineseZodiac(year) {
+    const idx = (year - 4) % 12;
+    if (idx < 0) return CHINESE_ZODIAC[idx + 12];
+    return CHINESE_ZODIAC[idx];
+}
+
+function calculateAge(year, month, day) {
+    const today = new Date();
+    let age = today.getFullYear() - year;
+    const monthDiff = today.getMonth() + 1 - month;
+    if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < day)) {
+        age--;
+    }
+    return age;
+}
+
+function generateValidId() {
+    // Random province code from our database
+    const provinceCodes = Object.keys(ADDRESS_CODES).filter(k => k.endsWith('0000'));
+    const provinceCode = provinceCodes[Math.floor(Math.random() * provinceCodes.length)];
+    const p2 = provinceCode.substring(0, 2);
+    
+    // Random city code (00-99) and district code (00-99)
+    const cityCode = String(Math.floor(Math.random() * 90) + 10).padStart(2, '0');
+    const districtCode = String(Math.floor(Math.random() * 90) + 10).padStart(2, '0');
+    const areaCode = p2 + cityCode + districtCode;
+    
+    // Random date between 1960-01-01 and 2005-12-31
+    const start = new Date(1960, 0, 1).getTime();
+    const end = new Date(2005, 11, 31).getTime();
+    const randomDate = new Date(start + Math.random() * (end - start));
+    const y = randomDate.getFullYear();
+    const m = String(randomDate.getMonth() + 1).padStart(2, '0');
+    const d = String(randomDate.getDate()).padStart(2, '0');
+    const dateStr = `${y}${m}${d}`;
+    
+    // Random sequence code (3 digits), 001-999
+    const seq = String(Math.floor(Math.random() * 999) + 1).padStart(3, '0');
+    
+    // Build first 17 digits
+    const first17 = areaCode + dateStr + seq;
+    
+    // Calculate check digit
+    let sum = 0;
+    for (let i = 0; i < 17; i++) {
+        sum += parseInt(first17[i], 10) * WEIGHTS[i];
+    }
+    const remainder = sum % 11;
+    const checkDigit = CHECK_CODES[remainder];
+    
+    return first17 + checkDigit;
+}
+
+// ===== UI Interaction =====
+const idInput = document.getElementById('idInput');
+const validateBtn = document.getElementById('validateBtn');
+const generateBtn = document.getElementById('generateBtn');
+const clearBtn = document.getElementById('clearBtn');
+const errorMsg = document.getElementById('errorMsg');
+const errorText = document.getElementById('errorText');
+const resultCard = document.getElementById('resultCard');
+const validationSummary = document.getElementById('validationSummary');
+
+// Result fields
+const resultId = document.getElementById('resultId');
+const resultStatus = document.getElementById('resultStatus');
+const resultBirth = document.getElementById('resultBirth');
+const resultGender = document.getElementById('resultGender');
+const resultAge = document.getElementById('resultAge');
+const resultZodiac = document.getElementById('resultZodiac');
+const resultChineseZodiac = document.getElementById('resultChineseZodiac');
+const resultAddress = document.getElementById('resultAddress');
+const resultBadge = document.getElementById('resultBadge');
+
+function showError(msg) {
+    errorText.textContent = msg;
+    errorMsg.classList.add('show');
+    idInput.classList.add('error');
+    idInput.classList.remove('success');
+}
+
+function hideError() {
+    errorMsg.classList.remove('show');
+    idInput.classList.remove('error');
+    idInput.classList.remove('success');
+}
+
+function displayResult(data) {
+    resultCard.classList.add('show');
+    validationSummary.classList.remove('show', 'pass', 'fail');
+    
+    resultId.textContent = data.id;
+    resultBirth.textContent = data.birthDate || '无效';
+    resultGender.textContent = data.gender || '未知';
+    resultZodiac.textContent = data.birthDate ? getZodiacSign(data.month, data.day) : '未知';
+    resultChineseZodiac.textContent = data.year ? getChineseZodiac(data.year) : '未知';
+    resultAge.textContent = data.year ? calculateAge(data.year, data.month, data.day) + ' 岁' : '未知';
+    
+    // Address
+    if (data.address && data.address.found) {
+        let addrHtml = '<div class="address-tree">';
+        addrHtml += '<span class="addr-part">' + escapeHtml(data.address.province) + '</span>';
+        if (data.address.city) {
+            addrHtml += '<span class="sep">›</span><span class="addr-part">' + escapeHtml(data.address.city) + '</span>';
+        }
+        if (data.address.district) {
+            addrHtml += '<span class="sep">›</span><span class="addr-part">' + escapeHtml(data.address.district) + '</span>';
+        }
+        addrHtml += '</div>';
+        resultAddress.innerHTML = addrHtml;
+    } else {
+        resultAddress.textContent = '未能识别';
+    }
+    
+    // Status
+    if (data.valid) {
+        resultStatus.innerHTML = '✅ <span class="valid">有效身份证号码</span>';
+        resultBadge.textContent = '✓ 有效';
+        resultBadge.style.background = 'rgba(39,174,96,0.25)';
+        idInput.classList.add('success');
+        idInput.classList.remove('error');
+        
+        // Show validation summary
+        validationSummary.textContent = '✅ 校验通过：身份证号码格式正确，校验码验证成功。';
+        validationSummary.className = 'validation-summary show pass';
+    } else {
+        resultStatus.innerHTML = '❌ <span class="invalid">无效身份证号码</span>';
+        resultBadge.textContent = '✗ 无效';
+        resultBadge.style.background = 'rgba(231,76,60,0.25)';
+        idInput.classList.add('error');
+        idInput.classList.remove('success');
+        
+        // Show validation summary with errors
+        validationSummary.textContent = '❌ 校验失败：' + data.errors.join('；');
+        validationSummary.className = 'validation-summary show fail';
+    }
+}
+
+function escapeHtml(text) {
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+}
+
+function doValidate() {
+    hideError();
+    const id = idInput.value.trim();
+    if (!id) {
+        showError('请输入身份证号码');
+        return;
+    }
+    
+    const result = validateIdCard(id);
+    displayResult(result);
+}
+
+function doGenerate() {
+    hideError();
+    const generated = generateValidId();
+    idInput.value = generated;
+    idInput.classList.remove('error', 'success');
+    resultCard.classList.remove('show');
+    validationSummary.classList.remove('show', 'pass', 'fail');
+    
+    // Auto-validate after a brief delay
+    setTimeout(() => {
+        const result = validateIdCard(generated);
+        displayResult(result);
+    }, 100);
+}
+
+function doClear() {
+    idInput.value = '';
+    idInput.classList.remove('error', 'success');
+    hideError();
+    resultCard.classList.remove('show');
+    validationSummary.classList.remove('show', 'pass', 'fail');
+}
+
+// Event listeners
+validateBtn.addEventListener('click', doValidate);
+generateBtn.addEventListener('click', doGenerate);
+clearBtn.addEventListener('click', doClear);
+
+idInput.addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') {
+        e.preventDefault();
+        doValidate();
+    }
+});
+
+idInput.addEventListener('input', function() {
+    // Auto-uppercase x to X
+    const val = this.value;
+    if (val.length === 18 && val[17] === 'x') {
+        this.value = val.substring(0, 17) + 'X';
+    }
+    // Only allow digits and X
+    this.value = this.value.replace(/[^\dXx]/g, '');
+    // Limit to 18 chars
+    if (this.value.length > 18) {
+        this.value = this.value.substring(0, 18);
+    }
+    hideError();
+    resultCard.classList.remove('show');
+    validationSummary.classList.remove('show', 'pass', 'fail');
+});
+
+// Add some placeholder example
+idInput.placeholder = '请输入18位身份证号码 (如 110105199001011234)';
+</script>
+
+<!-- i18n scripts -->
+<script src="/i18n/translations.js"></script>
+    <script src="/i18n/i18n.js" defer></script>
+    <script src="/i18n/tracker.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        if (typeof createLanguageSelector === 'function') {
+            createLanguageSelector('lang-selector');
+        }
+    });
+</script>
+
+</body>
+</html>

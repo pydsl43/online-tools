@@ -71,6 +71,32 @@
     <xhtml:link rel="alternate" hreflang="es" href="https://wdnmd.vip/contact.html?lang=es" />
     <xhtml:link rel="alternate" hreflang="pt" href="https://wdnmd.vip/contact.html?lang=pt" />
   </url>
+  <!-- Chinese Market Tools (New) -->
+  <url>
+    <loc>https://wdnmd.vip/password-generator/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://wdnmd.vip/id-card-validator/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://wdnmd.vip/mortgage-calculator/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://wdnmd.vip/ip-lookup/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://wdnmd.vip/tax-calculator/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
   <!-- English Market Tools -->
   <url>
     <loc>https://wdnmd.vip/en/unit-converter/</loc>

@@ -1,0 +1,17 @@
+{
+  "name": "白给工具 - 免费在线工具集",
+  "short_name": "白给工具",
+  "description": "免费在线图片压缩、PDF处理、文字处理、单位换算等20+实用工具",
+  "start_url": "/?lang=zh",
+  "display": "standalone",
+  "background_color": "#0f0c29",
+  "theme_color": "#667eea",
+  "icons": [
+    {
+      "src": "/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

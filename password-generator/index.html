@@ -1,0 +1,829 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>随机密码生成器 - 在线免费安全密码生成工具 | 白给工具</title>
+<meta name="description" content="免费在线随机密码生成器。支持自定义长度、包含大写字母、小写字母、数字、特殊符号。一键复制，纯浏览器端生成，保护隐私安全。">
+<meta name="keywords" content="密码生成器,随机密码,在线密码生成,安全密码,密码工具">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://wdnmd.vip/password-generator/">
+
+<meta property="og:title" content="随机密码生成器 - 在线免费安全密码生成工具 | 白给工具">
+<meta property="og:description" content="免费在线随机密码生成器。支持自定义长度、包含大写字母、小写字母、数字、特殊符号。一键复制，纯浏览器端生成，保护隐私安全。">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://wdnmd.vip/password-generator/">
+
+<link rel="manifest" href="/manifest.json">
+<link rel="icon" type="image/svg+xml" href="/icon.svg">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "随机密码生成器",
+  "description": "免费在线随机密码生成器，支持自定义长度和字符类型，纯浏览器端生成",
+  "applicationCategory": "SecurityApplication",
+  "operatingSystem": "All",
+  "browserRequirements": "Requires JavaScript",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "CNY"
+  }
+}
+</script>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+  background: #f5f7fa;
+  min-height: 100vh;
+  color: #1f2937;
+}
+
+.hero-gradient {
+  background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
+}
+
+.glass-card {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 20px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.12);
+  transition: all 0.3s ease;
+}
+
+.glass-card:hover {
+  box-shadow: 0 25px 70px rgba(0, 0, 0, 0.16);
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  transition: all 0.3s ease;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+}
+
+.btn-primary:active {
+  transform: translateY(0);
+}
+
+.btn-secondary {
+  background: #f1f5f9;
+  color: #475569;
+  border: 1px solid #e2e8f0;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-secondary:hover {
+  background: #e2e8f0;
+}
+
+.btn-success {
+  background: linear-gradient(135deg, #48bb78, #38a169);
+  transition: all 0.3s ease;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+}
+
+.btn-success:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 30px rgba(72, 187, 120, 0.4);
+}
+
+.btn-success:active {
+  transform: translateY(0);
+}
+
+/* Password strength bar */
+.strength-bar {
+  height: 8px;
+  border-radius: 4px;
+  transition: all 0.3s ease;
+  overflow: hidden;
+}
+
+.strength-bar-fill {
+  height: 100%;
+  border-radius: 4px;
+  transition: all 0.5s ease;
+}
+
+/* Copy toast */
+.copy-toast {
+  position: fixed;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #2d3748;
+  color: #fff;
+  padding: 12px 28px;
+  border-radius: 10px;
+  font-size: 0.9rem;
+  opacity: 0;
+  transition: opacity 0.3s;
+  z-index: 1000;
+  pointer-events: none;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+}
+
+.copy-toast.show {
+  opacity: 1;
+}
+
+/* Checkbox style */
+.checkbox-group {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 10px;
+}
+
+.checkbox-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 14px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  user-select: none;
+}
+
+.checkbox-item:hover {
+  border-color: #667eea;
+  background: #f0f2ff;
+}
+
+.checkbox-item input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  accent-color: #667eea;
+  cursor: pointer;
+}
+
+.checkbox-item label {
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #374151;
+}
+
+/* Range slider */
+input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 6px;
+  background: #e2e8f0;
+  border-radius: 3px;
+  outline: none;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(102, 126, 234, 0.4);
+  transition: all 0.2s ease;
+}
+
+input[type="range"]::-webkit-slider-thumb:hover {
+  transform: scale(1.15);
+}
+
+input[type="range"]::-moz-range-thumb {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  cursor: pointer;
+  border: none;
+}
+
+/* Batch list */
+.batch-list {
+  max-height: 350px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.batch-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 14px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  font-family: 'SF Mono', 'Menlo', 'Monaco', 'Courier New', monospace;
+  font-size: 0.85rem;
+  gap: 10px;
+}
+
+.batch-item .batch-index {
+  color: #94a3b8;
+  font-weight: 600;
+  min-width: 28px;
+}
+
+.batch-item .batch-pwd {
+  flex: 1;
+  word-break: break-all;
+  letter-spacing: 1px;
+}
+
+.batch-item .batch-copy-btn {
+  background: none;
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+  padding: 4px 10px;
+  font-size: 0.78rem;
+  cursor: pointer;
+  color: #64748b;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+
+.batch-item .batch-copy-btn:hover {
+  background: #667eea;
+  color: #fff;
+  border-color: #667eea;
+}
+
+/* Toggle switch */
+.toggle-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.toggle-switch {
+  position: relative;
+  width: 44px;
+  height: 24px;
+  cursor: pointer;
+}
+
+.toggle-switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.toggle-slider {
+  position: absolute;
+  inset: 0;
+  background: #cbd5e1;
+  border-radius: 12px;
+  transition: all 0.3s ease;
+}
+
+.toggle-slider::before {
+  content: '';
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  left: 2px;
+  bottom: 2px;
+  background: #fff;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+}
+
+.toggle-switch input:checked + .toggle-slider {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+}
+
+.toggle-switch input:checked + .toggle-slider::before {
+  transform: translateX(20px);
+}
+
+.toggle-label {
+  font-size: 0.9rem;
+  color: #374151;
+  font-weight: 500;
+}
+
+/* SEO content section */
+.seo-content h2 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.seo-content h3 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-top: 1.5rem;
+  margin-bottom: 0.75rem;
+  color: #374151;
+}
+
+.seo-content p {
+  margin-bottom: 1rem;
+  line-height: 1.75;
+  color: #4b5563;
+}
+
+.seo-content ul {
+  list-style: disc;
+  padding-left: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.seo-content li {
+  margin-bottom: 0.5rem;
+  line-height: 1.75;
+  color: #4b5563;
+}
+
+/* Input number for batch */
+input[type="number"] {
+  padding: 8px 12px;
+  border: 2px solid #e2e8f0;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  width: 80px;
+  text-align: center;
+  outline: none;
+  transition: border-color 0.3s;
+}
+
+input[type="number"]:focus {
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.15);
+}
+
+/* Responsive */
+@media (max-width: 640px) {
+  .checkbox-group {
+    grid-template-columns: 1fr 1fr;
+  }
+  .batch-list {
+    max-height: 300px;
+  }
+  .batch-item {
+    flex-wrap: wrap;
+  }
+}
+</style>
+</head>
+<body>
+
+<!-- ======== Nav Bar ======== -->
+<nav class="hero-gradient px-6 py-4">
+  <div style="max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;">
+    <a href="/?lang=zh" style="color:rgba(255,255,255,0.8);text-decoration:none;font-size:0.9rem;font-weight:500;transition:color 0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,0.8)'">← 返回首页 / 白给工具</a>
+    <div style="display:flex;align-items:center;gap:12px;">
+      <span style="color:rgba(255,255,255,0.6);font-size:0.85rem;">🛠️ 白给工具</span>
+      <div id="lang-selector"></div>
+    </div>
+  </div>
+</nav>
+
+<!-- ======== Main Content ======== -->
+<div style="max-width:1100px;margin:0 auto;padding:30px 16px;">
+
+  <!-- Header -->
+  <div style="text-align:center;margin-bottom:30px;">
+    <h1 style="font-size:2.2rem;font-weight:800;background:linear-gradient(135deg,#667eea,#764ba2);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:8px;">🔐 随机密码生成器</h1>
+    <p style="color:#64748b;font-size:0.95rem;">免费 · 纯浏览器端生成 · 保护隐私 · 无需注册</p>
+  </div>
+
+  <!-- Main Card -->
+  <div class="glass-card" style="padding:30px;margin-bottom:30px;">
+    <!-- Length Slider -->
+    <div style="margin-bottom:24px;">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+        <label style="font-weight:600;color:#374151;font-size:0.95rem;">密码长度</label>
+        <span id="lengthDisplay" style="font-size:1.2rem;font-weight:700;color:#667eea;min-width:40px;text-align:right;">16</span>
+      </div>
+      <input type="range" id="lengthSlider" min="4" max="64" value="16" oninput="updateLengthDisplay()">
+      <div style="display:flex;justify-content:space-between;font-size:0.78rem;color:#94a3b8;margin-top:4px;">
+        <span>4</span>
+        <span>64</span>
+      </div>
+    </div>
+
+    <!-- Character Types -->
+    <div style="margin-bottom:20px;">
+      <label style="font-weight:600;color:#374151;font-size:0.95rem;display:block;margin-bottom:10px;">包含字符类型</label>
+      <div class="checkbox-group">
+        <div class="checkbox-item">
+          <input type="checkbox" id="chkUpper" checked>
+          <label for="chkUpper">大写字母 (A-Z)</label>
+        </div>
+        <div class="checkbox-item">
+          <input type="checkbox" id="chkLower" checked>
+          <label for="chkLower">小写字母 (a-z)</label>
+        </div>
+        <div class="checkbox-item">
+          <input type="checkbox" id="chkDigit" checked>
+          <label for="chkDigit">数字 (0-9)</label>
+        </div>
+        <div class="checkbox-item">
+          <input type="checkbox" id="chkSymbol" checked>
+          <label for="chkSymbol">特殊符号</label>
+        </div>
+      </div>
+      <div id="charTypeError" style="color:#e53e3e;font-size:0.82rem;margin-top:6px;display:none;">至少选择一种字符类型</div>
+    </div>
+
+    <!-- Exclude ambiguous chars -->
+    <div style="margin-bottom:20px;">
+      <div class="toggle-wrapper">
+        <label class="toggle-switch">
+          <input type="checkbox" id="excludeAmbiguous">
+          <span class="toggle-slider"></span>
+        </label>
+        <span class="toggle-label">排除混淆字符 (oO0l1I| 等)</span>
+      </div>
+    </div>
+
+    <!-- Generate Button -->
+    <div style="margin-bottom:24px;">
+      <button id="generateBtn" class="btn-primary" style="padding:14px 36px;border-radius:12px;font-size:1.05rem;font-weight:600;width:100%;">生成密码</button>
+    </div>
+
+    <!-- Password Output -->
+    <div style="margin-bottom:16px;">
+      <label style="font-weight:600;color:#374151;font-size:0.95rem;display:block;margin-bottom:8px;">生成的密码</label>
+      <div style="display:flex;gap:8px;align-items:stretch;">
+        <input type="text" id="passwordOutput" readonly style="flex:1;padding:14px 16px;border:2px solid #e2e8f0;border-radius:10px;font-family:'SF Mono','Menlo','Monaco','Courier New',monospace;font-size:1.2rem;letter-spacing:2px;background:#f8fafc;outline:none;transition:border-color 0.3s;" onfocus="this.select()">
+        <button id="copyBtn" class="btn-success" style="padding:14px 24px;border-radius:10px;font-size:0.95rem;font-weight:600;white-space:nowrap;">📋 复制</button>
+      </div>
+    </div>
+
+    <!-- Strength Indicator -->
+    <div style="margin-bottom:16px;">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
+        <span style="font-weight:600;color:#374151;font-size:0.9rem;">密码强度</span>
+        <span id="strengthLabel" style="font-size:0.9rem;font-weight:600;color:#94a3b8;">—</span>
+      </div>
+      <div class="strength-bar" style="background:#e2e8f0;">
+        <div id="strengthFill" class="strength-bar-fill" style="width:0%;background:#e2e8f0;"></div>
+      </div>
+    </div>
+
+    <!-- Batch Mode -->
+    <div style="border-top:1px solid #e2e8f0;padding-top:20px;">
+      <div style="display:flex;flex-wrap:wrap;align-items:center;gap:12px;margin-bottom:14px;">
+        <span style="font-weight:600;color:#374151;font-size:0.95rem;">批量生成</span>
+        <div style="display:flex;align-items:center;gap:8px;">
+          <label style="font-size:0.85rem;color:#64748b;">数量:</label>
+          <input type="number" id="batchCount" value="5" min="1" max="20">
+          <button id="batchGenerateBtn" class="btn-primary" style="padding:8px 20px;border-radius:8px;font-size:0.9rem;font-weight:600;">生成</button>
+        </div>
+      </div>
+      <div id="batchResults" class="batch-list">
+        <div style="text-align:center;color:#94a3b8;font-size:0.85rem;padding:20px;">点击"生成"按钮批量生成密码</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SEO Content -->
+  <div class="seo-content" style="max-width:850px;margin:0 auto;padding:20px 0;">
+    <h2>在线随机密码生成器 —— 保护您的数字安全</h2>
+    <p>在互联网时代，密码安全是保护个人隐私和账户安全的第一道防线。使用弱密码或在多个平台重复使用同一个密码，极易导致账户被破解或数据泄露。我们的<strong>在线随机密码生成器</strong>可以帮助您快速生成高强度、不可预测的安全密码，有效提升您的账户安全等级。</p>
+
+    <h3>为什么需要随机密码生成器？</h3>
+    <p>很多人习惯使用生日、电话号码或简单的字母组合作为密码，这些密码极易被暴力破解或社会工程学攻击攻破。使用随机密码生成器创建的密码具有高熵值和不可预测性，即使一个平台的数据库被泄露，攻击者也难以通过破解的密码入侵您的其他账户。</p>
+
+    <h3>密码强度建议</h3>
+    <ul>
+      <li>密码长度至少 12 位以上，推荐 16 位或更长</li>
+      <li>混合使用大写字母、小写字母、数字和特殊符号</li>
+      <li>避免使用字典中的单词或个人信息</li>
+      <li>每个重要账户使用不同的密码</li>
+      <li>配合密码管理器使用，无需记忆复杂密码</li>
+    </ul>
+
+    <h3>隐私安全保障</h3>
+    <p>本工具所有密码生成过程均在您的浏览器本地完成，<strong>不会将任何数据传输到服务器</strong>。您生成的密码仅保存在您的设备内存中，刷新或关闭页面后自动消失，充分保护您的隐私安全。</p>
+  </div>
+</div>
+
+<!-- ======== Footer ======== -->
+<footer class="hero-gradient" style="padding:24px 16px;text-align:center;">
+  <p style="color:rgba(255,255,255,0.5);font-size:0.85rem;">&copy; 2026 白给工具 · 保留所有权利</p>
+</footer>
+
+<!-- Toast -->
+<div id="copyToast" class="copy-toast">✅ 已复制!</div>
+
+<script>
+(function() {
+  'use strict';
+
+  // DOM refs
+  var lengthSlider = document.getElementById('lengthSlider');
+  var lengthDisplay = document.getElementById('lengthDisplay');
+  var chkUpper = document.getElementById('chkUpper');
+  var chkLower = document.getElementById('chkLower');
+  var chkDigit = document.getElementById('chkDigit');
+  var chkSymbol = document.getElementById('chkSymbol');
+  var excludeAmbiguous = document.getElementById('excludeAmbiguous');
+  var generateBtn = document.getElementById('generateBtn');
+  var passwordOutput = document.getElementById('passwordOutput');
+  var copyBtn = document.getElementById('copyBtn');
+  var strengthFill = document.getElementById('strengthFill');
+  var strengthLabel = document.getElementById('strengthLabel');
+  var charTypeError = document.getElementById('charTypeError');
+  var batchCount = document.getElementById('batchCount');
+  var batchGenerateBtn = document.getElementById('batchGenerateBtn');
+  var batchResults = document.getElementById('batchResults');
+
+  // Character pools
+  var UPPER = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+  var LOWER = 'abcdefghijklmnopqrstuvwxyz';
+  var DIGITS = '0123456789';
+  var SYMBOLS = '!@#$%^&*()_+-=[]{}|;:,.<>?';
+  var AMBIGUOUS = 'oO0l1I|';
+
+  function getCharPool() {
+    var pool = '';
+    if (chkUpper.checked) pool += UPPER;
+    if (chkLower.checked) pool += LOWER;
+    if (chkDigit.checked) pool += DIGITS;
+    if (chkSymbol.checked) pool += SYMBOLS;
+
+    if (excludeAmbiguous.checked) {
+      for (var i = 0; i < AMBIGUOUS.length; i++) {
+        pool = pool.replace(new RegExp('\\' + AMBIGUOUS[i], 'g'), '');
+      }
+    }
+    return pool;
+  }
+
+  function getRequiredPools() {
+    var pools = [];
+    if (chkUpper.checked) pools.push(UPPER);
+    if (chkLower.checked) pools.push(LOWER);
+    if (chkDigit.checked) pools.push(DIGITS);
+    if (chkSymbol.checked) pools.push(SYMBOLS);
+
+    if (excludeAmbiguous.checked) {
+      for (var i = 0; i < pools.length; i++) {
+        for (var j = 0; j < AMBIGUOUS.length; j++) {
+          pools[i] = pools[i].replace(new RegExp('\\' + AMBIGUOUS[j], 'g'), '');
+        }
+      }
+    }
+    return pools.filter(function(p) { return p.length > 0; });
+  }
+
+  function getRandomChar(str) {
+    return str.charAt(Math.floor(Math.random() * str.length));
+  }
+
+  function shuffleArray(arr) {
+    for (var i = arr.length - 1; i > 0; i--) {
+      var j = Math.floor(Math.random() * (i + 1));
+      var tmp = arr[i];
+      arr[i] = arr[j];
+      arr[j] = tmp;
+    }
+    return arr;
+  }
+
+  function generatePassword() {
+    var requiredPools = getRequiredPools();
+    var charPool = getCharPool();
+    var length = parseInt(lengthSlider.value, 10);
+
+    // Validate at least one char type selected
+    if (requiredPools.length === 0) {
+      charTypeError.style.display = 'block';
+      return null;
+    }
+    charTypeError.style.display = 'none';
+
+    // If no characters available after excluding
+    if (charPool.length === 0) {
+      return null;
+    }
+
+    // Ensure at least one char from each selected pool
+    var chars = [];
+    for (var i = 0; i < requiredPools.length; i++) {
+      chars.push(getRandomChar(requiredPools[i]));
+    }
+
+    // Fill the rest
+    for (var i = chars.length; i < length; i++) {
+      chars.push(getRandomChar(charPool));
+    }
+
+    // Shuffle
+    chars = shuffleArray(chars);
+    return chars.join('');
+  }
+
+  function updateLengthDisplay() {
+    lengthDisplay.textContent = lengthSlider.value;
+  }
+
+  function updateStrength(password) {
+    var len = password ? password.length : 0;
+    var hasUpper = /[A-Z]/.test(password);
+    var hasLower = /[a-z]/.test(password);
+    var hasDigit = /\d/.test(password);
+    var hasSymbol = /[^a-zA-Z0-9]/.test(password);
+    var typesUsed = (hasUpper ? 1 : 0) + (hasLower ? 1 : 0) + (hasDigit ? 1 : 0) + (hasSymbol ? 1 : 0);
+
+    var score = 0;
+    // Length score (max 40)
+    score += Math.min(len * 2.5, 40);
+    // Variety score (max 40)
+    score += typesUsed * 10;
+    // Length bonus for longer passwords
+    if (len >= 12) score += 10;
+    if (len >= 16) score += 10;
+
+    var pct;
+    var label;
+    var color;
+
+    if (score >= 90) {
+      pct = 100;
+      label = '🔒 非常强';
+      color = '#48bb78';
+    } else if (score >= 70) {
+      pct = 75;
+      label = '🛡️ 强';
+      color = '#ecc94b';
+    } else if (score >= 45) {
+      pct = 50;
+      label = '⚠️ 中';
+      color = '#ed8936';
+    } else {
+      pct = 25;
+      label = '❌ 弱';
+      color = '#e53e3e';
+    }
+
+    // Cap for very short passwords
+    if (len < 4) { pct = 0; label = '—'; color = '#e2e8f0'; }
+
+    strengthFill.style.width = pct + '%';
+    strengthFill.style.background = color;
+    strengthLabel.textContent = label;
+    strengthLabel.style.color = color;
+  }
+
+  function doGenerate() {
+    var pwd = generatePassword();
+    if (pwd === null) {
+      passwordOutput.value = '';
+      updateStrength(null);
+      return;
+    }
+    passwordOutput.value = pwd;
+    updateStrength(pwd);
+  }
+
+  function showToast(msg) {
+    var toast = document.getElementById('copyToast');
+    toast.textContent = msg;
+    toast.classList.add('show');
+    setTimeout(function() {
+      toast.classList.remove('show');
+    }, 2000);
+  }
+
+  function copyToClipboard(text) {
+    if (!text) {
+      showToast('⚠️ 请先生成密码');
+      return;
+    }
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(function() {
+        showToast('✅ 已复制!');
+      }).catch(function() {
+        fallbackCopy(text);
+      });
+    } else {
+      fallbackCopy(text);
+    }
+  }
+
+  function fallbackCopy(text) {
+    var ta = document.createElement('textarea');
+    ta.value = text;
+    ta.style.position = 'fixed';
+    ta.style.left = '-9999px';
+    document.body.appendChild(ta);
+    ta.select();
+    try {
+      document.execCommand('copy');
+      showToast('✅ 已复制!');
+    } catch(e) {
+      showToast('⚠️ 复制失败，请手动复制');
+    }
+    document.body.removeChild(ta);
+  }
+
+  function doBatchGenerate() {
+    var count = parseInt(batchCount.value, 10);
+    if (isNaN(count) || count < 1) count = 1;
+    if (count > 20) count = 20;
+    batchCount.value = count;
+
+    var requiredPools = getRequiredPools();
+    if (requiredPools.length === 0) {
+      charTypeError.style.display = 'block';
+      return;
+    }
+    charTypeError.style.display = 'none';
+
+    batchResults.innerHTML = '';
+    for (var i = 0; i < count; i++) {
+      var pwd = generatePassword();
+      if (pwd === null) break;
+
+      var item = document.createElement('div');
+      item.className = 'batch-item';
+
+      var idxSpan = document.createElement('span');
+      idxSpan.className = 'batch-index';
+      idxSpan.textContent = (i + 1) + '.';
+
+      var pwdSpan = document.createElement('span');
+      pwdSpan.className = 'batch-pwd';
+      pwdSpan.textContent = pwd;
+
+      var copyBtnSmall = document.createElement('button');
+      copyBtnSmall.className = 'batch-copy-btn';
+      copyBtnSmall.textContent = '复制';
+      (function(p) {
+        copyBtnSmall.addEventListener('click', function() {
+          copyToClipboard(p);
+        });
+      })(pwd);
+
+      item.appendChild(idxSpan);
+      item.appendChild(pwdSpan);
+      item.appendChild(copyBtnSmall);
+      batchResults.appendChild(item);
+    }
+  }
+
+  // Event listeners
+  generateBtn.addEventListener('click', doGenerate);
+  copyBtn.addEventListener('click', function() {
+    copyToClipboard(passwordOutput.value);
+  });
+  batchGenerateBtn.addEventListener('click', doBatchGenerate);
+
+  // Regenerate on any option change
+  lengthSlider.addEventListener('input', function() {
+    updateLengthDisplay();
+    doGenerate();
+  });
+  chkUpper.addEventListener('change', doGenerate);
+  chkLower.addEventListener('change', doGenerate);
+  chkDigit.addEventListener('change', doGenerate);
+  chkSymbol.addEventListener('change', doGenerate);
+  excludeAmbiguous.addEventListener('change', doGenerate);
+
+  // Initial generation
+  doGenerate();
+})();
+</script>
+
+<script src="/i18n/translations.js"></script>
+    <script src="/i18n/i18n.js" defer></script>
+    <script src="/i18n/tracker.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    if (typeof createLanguageSelector === 'function') {
+      createLanguageSelector('lang-selector');
+    }
+  });
+</script>
+</body>
+</html>

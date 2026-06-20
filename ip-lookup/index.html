@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IP地址查询 - 在线免费IP归属地查询工具 | 白给工具</title>
+    <meta name="description" content="免费在线IP地址查询工具。自动检测本机IP，查询IP归属地和运营商信息。纯浏览器端处理，保护您的隐私安全。">
+    <link rel="canonical" href="https://wdnmd.vip/ip-lookup/">
+    <link rel="manifest" href="/manifest.json">
+    <link rel="icon" type="image/svg+xml" href="/icon.svg">
+    <meta property="og:title" content="IP地址查询 - 在线免费IP归属地查询工具 | 白给工具">
+    <meta property="og:description" content="免费在线IP地址查询工具。自动检测本机IP，查询IP归属地和运营商信息。纯浏览器端处理，保护您的隐私安全。">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://wdnmd.vip/ip-lookup/">
+    <meta property="og:locale" content="zh_CN">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+            min-height: 100vh;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+        }
+        .header {
+            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.3);
+        }
+        .header .brand {
+            font-size: 24px;
+            font-weight: 700;
+            color: #fff;
+            text-decoration: none;
+            letter-spacing: 2px;
+        }
+        .header .brand span {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .header-nav {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+        #lang-selector {
+            padding: 6px 12px;
+            border-radius: 6px;
+            border: 1px solid rgba(255,255,255,0.2);
+            background: rgba(255,255,255,0.1);
+            color: #fff;
+            font-size: 14px;
+            cursor: pointer;
+            outline: none;
+            backdrop-filter: blur(10px);
+        }
+        #lang-selector option {
+            background: #302b63;
+            color: #fff;
+        }
+        .hero {
+            text-align: center;
+            padding: 60px 20px 40px;
+            position: relative;
+        }
+        .hero h1 {
+            font-size: 36px;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 12px;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+        .hero p {
+            font-size: 16px;
+            color: rgba(255,255,255,0.7);
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 20px;
+            flex: 1;
+        }
+        .back-link {
+            display: inline-block;
+            margin: 10px 0 20px;
+            color: rgba(255,255,255,0.8);
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.2s;
+        }
+        .back-link:hover {
+            color: #fff;
+        }
+        .card {
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 24px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.15);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        .card h2 {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: #302b63;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .card h2::before {
+            content: '';
+            display: inline-block;
+            width: 4px;
+            height: 20px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 2px;
+        }
+        .input-group {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        .input-group input {
+            flex: 1;
+            min-width: 200px;
+            padding: 12px 16px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 16px;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+        .input-group input:focus {
+            border-color: #667eea;
+        }
+        .btn {
+            padding: 12px 28px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: #fff;
+        }
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(102,126,234,0.4);
+        }
+        .btn:active {
+            transform: translateY(0);
+        }
+        .result-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .result-table tr {
+            border-bottom: 1px solid #f0f0f0;
+        }
+        .result-table tr:last-child {
+            border-bottom: none;
+        }
+        .result-table td {
+            padding: 12px 8px;
+            vertical-align: top;
+        }
+        .result-table td:first-child {
+            font-weight: 600;
+            color: #666;
+            width: 100px;
+            white-space: nowrap;
+        }
+        .result-table td:last-child {
+            color: #333;
+            word-break: break-all;
+        }
+        .result-table .isp-badge {
+            display: inline-block;
+            padding: 3px 10px;
+            border-radius: 4px;
+            font-size: 13px;
+            font-weight: 600;
+        }
+        .isp-电信 {
+            background: #e3f2fd;
+            color: #1565c0;
+        }
+        .isp-联通 {
+            background: #f3e5f5;
+            color: #7b1fa2;
+        }
+        .isp-移动 {
+            background: #e8f5e9;
+            color: #2e7d32;
+        }
+        .isp-铁通 {
+            background: #fff3e0;
+            color: #e65100;
+        }
+        .isp-未知 {
+            background: #f5f5f5;
+            color: #999;
+        }
+        .myip-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 16px;
+        }
+        .myip-item {
+            background: #f8f9ff;
+            border-radius: 10px;
+            padding: 16px;
+            text-align: center;
+            border: 1px solid #eee;
+        }
+        .myip-item .label {
+            font-size: 13px;
+            color: #999;
+            margin-bottom: 6px;
+        }
+        .myip-item .value {
+            font-size: 15px;
+            font-weight: 600;
+            color: #302b63;
+            word-break: break-all;
+        }
+        .myip-item .value.ip-addr {
+            font-size: 20px;
+            color: #667eea;
+        }
+        .status-msg {
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 16px;
+            font-size: 14px;
+        }
+        .status-msg.loading {
+            background: #fff3e0;
+            color: #e65100;
+        }
+        .status-msg.success {
+            background: #e8f5e9;
+            color: #2e7d32;
+        }
+        .status-msg.error {
+            background: #fce4ec;
+            color: #c62828;
+        }
+        .whois-placeholder {
+            background: #f8f9ff;
+            border-radius: 8px;
+            padding: 16px;
+            text-align: center;
+            color: #999;
+            font-size: 14px;
+            border: 1px dashed #ddd;
+        }
+        .footer {
+            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+            color: rgba(255,255,255,0.6);
+            text-align: center;
+            padding: 24px 20px;
+            margin-top: 40px;
+            font-size: 13px;
+        }
+        .footer a {
+            color: rgba(255,255,255,0.8);
+            text-decoration: none;
+        }
+        .footer a:hover {
+            color: #fff;
+        }
+        @media (max-width: 600px) {
+            .header {
+                padding: 14px 16px;
+            }
+            .header .brand {
+                font-size: 18px;
+            }
+            .hero h1 {
+                font-size: 26px;
+            }
+            .hero p {
+                font-size: 14px;
+            }
+            .card {
+                padding: 20px 16px;
+            }
+            .input-group input {
+                min-width: 100%;
+            }
+            .btn {
+                width: 100%;
+            }
+            .result-table td:first-child {
+                width: 80px;
+                font-size: 14px;
+            }
+            .myip-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        @media (max-width: 400px) {
+            .myip-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        .error-text {
+            color: #c62828;
+            font-size: 14px;
+            margin-top: 8px;
+        }
+        .tag {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            margin-left: 6px;
+        }
+        .tag-ipv4 {
+            background: #e3f2fd;
+            color: #1565c0;
+        }
+        .tag-ipv6 {
+            background: #fce4ec;
+            color: #c62828;
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <a href="/" class="brand"><span>白给工具</span></a>
+        <div class="header-nav">
+            <select id="lang-selector">
+                <option value="zh">中文</option>
+                <option value="en">English</option>
+                <option value="ja">日本語</option>
+            </select>
+        </div>
+    </header>
+
+    <div class="hero">
+        <h1>IP地址查询</h1>
+        <p>在线免费IP归属地查询 · 自动检测本机IP · 纯浏览器端处理</p>
+    </div>
+
+    <div class="container">
+        <a href="/?lang=zh" class="back-link">← 返回首页 / 白给工具</a>
+
+        <div class="card">
+            <h2>IP地址查询</h2>
+            <div class="input-group">
+                <input type="text" id="ip-input" placeholder="请输入IP地址，如 8.8.8.8" />
+                <button class="btn" onclick="lookupIP()">查询</button>
+            </div>
+            <div id="status" class="status-msg loading">正在检测本机IP地址...</div>
+            <table class="result-table" id="result-table" style="display:none;">
+                <tr><td>IP地址</td><td id="r-ip">-</td></tr>
+                <tr><td>IP类型</td><td id="r-type">-</td></tr>
+                <tr><td>运营商</td><td id="r-isp">-</td></tr>
+                <tr><td>归属地</td><td id="r-location">-</td></tr>
+                <tr><td>WhoIS</td><td><div class="whois-placeholder">WhoIS 信息查询功能即将上线</div></td></tr>
+            </table>
+        </div>
+
+        <div class="card">
+            <h2>我的IP信息</h2>
+            <div class="myip-grid" id="myip-grid">
+                <div class="myip-item">
+                    <div class="label">我的IP</div>
+                    <div class="value ip-addr" id="myip-ip">检测中...</div>
+                </div>
+                <div class="myip-item">
+                    <div class="label">浏览器</div>
+                    <div class="value" id="myip-browser">检测中...</div>
+                </div>
+                <div class="myip-item">
+                    <div class="label">操作系统</div>
+                    <div class="value" id="myip-os">检测中...</div>
+                </div>
+                <div class="myip-item">
+                    <div class="label">屏幕分辨率</div>
+                    <div class="value" id="myip-resolution">检测中...</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <p>© 2026 白给工具 · 所有处理均在浏览器本地完成，您的数据不会上传到服务器</p>
+    </footer>
+
+    <script>
+        const IP_DATABASE = [
+    { start: "1.2.3.0", end: "1.2.3.255", startNum: 16909056, endNum: 16909311, isp: "电信", province: "北京", city: "北京" },
+    { start: "1.2.4.0", end: "1.2.7.255", startNum: 16909312, endNum: 16910335, isp: "电信", province: "北京", city: "北京" },
+    { start: "61.48.0.0", end: "61.63.255.255", startNum: 1026555904, endNum: 1027604479, isp: "电信", province: "北京", city: "北京" },
+    { start: "114.240.0.0", end: "114.247.255.255", startNum: 1928331264, endNum: 1928855551, isp: "电信", province: "北京", city: "北京" },
+    { start: "124.64.0.0", end: "124.67.255.255", startNum: 2084569088, endNum: 2084831231, isp: "电信", province: "北京", city: "北京" },
+    { start: "202.96.0.0", end: "202.99.255.255", startNum: 3395289088, endNum: 3395551231, isp: "电信", province: "北京", city: "北京" },
+    { start: "219.236.0.0", end: "219.239.255.255", startNum: 3689676800, endNum: 3689938943, isp: "电信", province: "北京", city: "北京" },
+    { start: "222.128.0.0", end: "222.131.255.255", startNum: 3732930560, endNum: 3733192703, isp: "电信", province: "北京", city: "北京" },
+    { start: "61.148.0.0", end: "61.148.255.255", startNum: 1033109504, endNum: 1033175039, isp: "联通", province: "北京", city: "北京" },
+    { start: "61.149.0.0", end: "61.149.255.255", startNum: 1033175040, endNum: 1033240575, isp: "联通", province: "北京", city: "北京" },
+    { start: "61.51.0.0", end: "61.51.255.255", startNum: 1026752512, endNum: 1026818047, isp: "联通", province: "北京", city: "北京" },
+    { start: "123.112.0.0", end: "123.127.255.255", startNum: 2070937600, endNum: 2071986175, isp: "联通", province: "北京", city: "北京" },
+    { start: "124.192.0.0", end: "124.207.255.255", startNum: 2092957696, endNum: 2094006271, isp: "联通", province: "北京", city: "北京" },
+    { start: "202.106.0.0", end: "202.109.255.255", startNum: 3395944448, endNum: 3396206591, isp: "联通", province: "北京", city: "北京" },
+    { start: "221.216.0.0", end: "221.223.255.255", startNum: 3721920512, endNum: 3722444799, isp: "联通", province: "北京", city: "北京" },
+    { start: "111.192.0.0", end: "111.207.255.255", startNum: 1874853888, endNum: 1875902463, isp: "移动", province: "北京", city: "北京" },
+    { start: "111.208.0.0", end: "111.223.255.255", startNum: 1875902464, endNum: 1876951039, isp: "移动", province: "北京", city: "北京" },
+    { start: "117.136.0.0", end: "117.136.127.255", startNum: 1971847168, endNum: 1971879935, isp: "移动", province: "北京", city: "北京" },
+    { start: "211.160.0.0", end: "211.160.255.255", startNum: 3550478336, endNum: 3550543871, isp: "移动", province: "北京", city: "北京" },
+    { start: "218.240.0.0", end: "218.240.63.255", startNum: 3673161728, endNum: 3673178111, isp: "移动", province: "北京", city: "北京" },
+    { start: "211.100.0.0", end: "211.100.255.255", startNum: 3546546176, endNum: 3546611711, isp: "铁通", province: "北京", city: "北京" },
+    { start: "211.101.0.0", end: "211.101.255.255", startNum: 3546611712, endNum: 3546677247, isp: "铁通", province: "北京", city: "北京" },
+    { start: "211.102.0.0", end: "211.102.255.255", startNum: 3546677248, endNum: 3546742783, isp: "铁通", province: "北京", city: "北京" },
+    { start: "211.103.0.0", end: "211.103.255.255", startNum: 3546742784, endNum: 3546808319, isp: "铁通", province: "北京", city: "北京" },
+    { start: "58.32.0.0", end: "58.47.255.255", startNum: 975175680, endNum: 976224255, isp: "电信", province: "上海", city: "上海" },
+    { start: "58.48.0.0", end: "58.63.255.255", startNum: 976224256, endNum: 977272831, isp: "电信", province: "上海", city: "上海" },
+    { start: "101.80.0.0", end: "101.95.255.255", startNum: 1699741696, endNum: 1700790271, isp: "电信", province: "上海", city: "上海" },
+    { start: "114.80.0.0", end: "114.95.255.255", startNum: 1917845504, endNum: 1918894079, isp: "电信", province: "上海", city: "上海" },
+    { start: "116.224.0.0", end: "116.239.255.255", startNum: 1960837120, endNum: 1961885695, isp: "电信", province: "上海", city: "上海" },
+    { start: "124.72.0.0", end: "124.79.255.255", startNum: 2085093376, endNum: 2085617663, isp: "电信", province: "上海", city: "上海" },
+    { start: "180.152.0.0", end: "180.159.255.255", startNum: 3029860352, endNum: 3030384639, isp: "电信", province: "上海", city: "上海" },
+    { start: "202.96.128.0", end: "202.96.255.255", startNum: 3395321856, endNum: 3395354623, isp: "电信", province: "上海", city: "上海" },
+    { start: "222.64.0.0", end: "222.73.255.255", startNum: 3728736256, endNum: 3729391615, isp: "电信", province: "上海", city: "上海" },
+    { start: "112.64.0.0", end: "112.95.255.255", startNum: 1883242496, endNum: 1885339647, isp: "联通", province: "上海", city: "上海" },
+    { start: "124.160.0.0", end: "124.175.255.255", startNum: 2090860544, endNum: 2091909119, isp: "联通", province: "上海", city: "上海" },
+    { start: "139.226.0.0", end: "139.227.255.255", startNum: 2346844160, endNum: 2346975231, isp: "联通", province: "上海", city: "上海" },
+    { start: "210.14.64.0", end: "210.14.127.255", startNum: 3524149248, endNum: 3524165631, isp: "联通", province: "上海", city: "上海" },
+    { start: "221.228.0.0", end: "221.231.255.255", startNum: 3722706944, endNum: 3722969087, isp: "联通", province: "上海", city: "上海" },
+    { start: "221.232.0.0", end: "221.239.255.255", startNum: 3722969088, endNum: 3723493375, isp: "联通", province: "上海", city: "上海" },
+    { start: "111.160.0.0", end: "111.175.255.255", startNum: 1872756736, endNum: 1873805311, isp: "移动", province: "上海", city: "上海" },
+    { start: "112.0.0.0", end: "112.15.255.255", startNum: 1879048192, endNum: 1880096767, isp: "移动", province: "上海", city: "上海" },
+    { start: "112.16.0.0", end: "112.31.255.255", startNum: 1880096768, endNum: 1881145343, isp: "移动", province: "上海", city: "上海" },
+    { start: "117.144.0.0", end: "117.144.127.255", startNum: 1972371456, endNum: 1972404223, isp: "移动", province: "上海", city: "上海" },
+    { start: "211.144.0.0", end: "211.144.63.255", startNum: 3549429760, endNum: 3549446143, isp: "移动", province: "上海", city: "上海" },
+    { start: "211.136.0.0", end: "211.136.127.255", startNum: 3548905472, endNum: 3548938239, isp: "铁通", province: "上海", city: "上海" },
+    { start: "211.137.0.0", end: "211.137.255.255", startNum: 3548971008, endNum: 3549036543, isp: "铁通", province: "上海", city: "上海" },
+    { start: "211.138.0.0", end: "211.138.255.255", startNum: 3549036544, endNum: 3549102079, isp: "铁通", province: "上海", city: "上海" },
+    { start: "14.112.0.0", end: "14.127.255.255", startNum: 242221056, endNum: 243269631, isp: "电信", province: "广东", city: "广州" },
+    { start: "58.248.0.0", end: "58.255.255.255", startNum: 989331456, endNum: 989855743, isp: "电信", province: "广东", city: "广州" },
+    { start: "61.140.0.0", end: "61.147.255.255", startNum: 1032585216, endNum: 1033109503, isp: "电信", province: "广东", city: "广州" },
+    { start: "113.64.0.0", end: "113.79.255.255", startNum: 1900019712, endNum: 1901068287, isp: "电信", province: "广东", city: "深圳" },
+    { start: "116.16.0.0", end: "116.31.255.255", startNum: 1947205632, endNum: 1948254207, isp: "电信", province: "广东", city: "广州" },
+    { start: "121.8.0.0", end: "121.15.255.255", startNum: 2030567424, endNum: 2031091711, isp: "电信", province: "广东", city: "深圳" },
+    { start: "183.0.0.0", end: "183.15.255.255", startNum: 3070230528, endNum: 3071279103, isp: "电信", province: "广东", city: "广州" },
+    { start: "183.16.0.0", end: "183.31.255.255", startNum: 3071279104, endNum: 3072327679, isp: "电信", province: "广东", city: "深圳" },
+    { start: "202.96.64.0", end: "202.96.127.255", startNum: 3395305472, endNum: 3395321855, isp: "电信", province: "广东", city: "广州" },
+    { start: "218.18.0.0", end: "218.18.255.255", startNum: 3658612736, endNum: 3658678271, isp: "电信", province: "广东", city: "东莞" },
+    { start: "219.128.0.0", end: "219.143.255.255", startNum: 3682598912, endNum: 3683647487, isp: "电信", province: "广东", city: "广州" },
+    { start: "61.144.0.0", end: "61.144.255.255", startNum: 1032847360, endNum: 1032912895, isp: "电信", province: "广东", city: "深圳" },
+    { start: "61.145.0.0", end: "61.145.255.255", startNum: 1032912896, endNum: 1032978431, isp: "电信", province: "广东", city: "佛山" },
+    { start: "221.4.0.0", end: "221.7.255.255", startNum: 3708026880, endNum: 3708289023, isp: "联通", province: "广东", city: "广州" },
+    { start: "221.8.0.0", end: "221.11.255.255", startNum: 3708289024, endNum: 3708551167, isp: "联通", province: "广东", city: "深圳" },
+    { start: "221.12.0.0", end: "221.15.255.255", startNum: 3708551168, endNum: 3708813311, isp: "联通", province: "广东", city: "东莞" },
+    { start: "58.248.0.0", end: "58.251.255.255", startNum: 989331456, endNum: 989593599, isp: "联通", province: "广东", city: "广州" },
+    { start: "210.77.0.0", end: "210.77.63.255", startNum: 3528261632, endNum: 3528278015, isp: "联通", province: "广东", city: "广州" },
+    { start: "211.96.0.0", end: "211.99.255.255", startNum: 3546284032, endNum: 3546546175, isp: "联通", province: "广东", city: "深圳" },
+    { start: "220.196.0.0", end: "220.197.255.255", startNum: 3703832576, endNum: 3703963647, isp: "联通", province: "广东", city: "广州" },
+    { start: "111.0.0.0", end: "111.15.255.255", startNum: 1862270976, endNum: 1863319551, isp: "移动", province: "广东", city: "广州" },
+    { start: "111.64.0.0", end: "111.79.255.255", startNum: 1866465280, endNum: 1867513855, isp: "移动", province: "广东", city: "深圳" },
+    { start: "120.192.0.0", end: "120.223.255.255", startNum: 2025848832, endNum: 2027945983, isp: "移动", province: "广东", city: "广州" },
+    { start: "183.224.0.0", end: "183.255.255.255", startNum: 3084910592, endNum: 3087007743, isp: "移动", province: "广东", city: "深圳" },
+    { start: "211.139.0.0", end: "211.139.255.255", startNum: 3549102080, endNum: 3549167615, isp: "移动", province: "广东", city: "广州" },
+    { start: "211.142.0.0", end: "211.142.255.255", startNum: 3549298688, endNum: 3549364223, isp: "移动", province: "广东", city: "佛山" },
+    { start: "211.96.0.0", end: "211.96.255.255", startNum: 3546284032, endNum: 3546349567, isp: "铁通", province: "广东", city: "广州" },
+    { start: "211.97.0.0", end: "211.97.255.255", startNum: 3546349568, endNum: 3546415103, isp: "铁通", province: "广东", city: "深圳" },
+    { start: "211.98.0.0", end: "211.98.255.255", startNum: 3546415104, endNum: 3546480639, isp: "铁通", province: "广东", city: "东莞" },
+    { start: "60.176.0.0", end: "60.191.255.255", startNum: 1018167296, endNum: 1019215871, isp: "电信", province: "浙江", city: "杭州" },
+    { start: "61.152.0.0", end: "61.152.255.255", startNum: 1033371648, endNum: 1033437183, isp: "电信", province: "浙江", city: "杭州" },
+    { start: "61.153.0.0", end: "61.153.255.255", startNum: 1033437184, endNum: 1033502719, isp: "电信", province: "浙江", city: "宁波" },
+    { start: "61.164.0.0", end: "61.164.255.255", startNum: 1034158080, endNum: 1034223615, isp: "电信", province: "浙江", city: "温州" },
+    { start: "115.192.0.0", end: "115.207.255.255", startNum: 1941962752, endNum: 1943011327, isp: "电信", province: "浙江", city: "杭州" },
+    { start: "122.224.0.0", end: "122.239.255.255", startNum: 2061500416, endNum: 2062548991, isp: "电信", province: "浙江", city: "杭州" },
+    { start: "124.88.0.0", end: "124.95.255.255", startNum: 2086141952, endNum: 2086666239, isp: "电信", province: "浙江", city: "宁波" },
+    { start: "183.240.0.0", end: "183.241.255.255", startNum: 3085959168, endNum: 3086090239, isp: "电信", province: "浙江", city: "杭州" },
+    { start: "202.96.96.0", end: "202.96.127.255", startNum: 3395313664, endNum: 3395321855, isp: "电信", province: "浙江", city: "杭州" },
+    { start: "218.72.0.0", end: "218.75.255.255", startNum: 3662151680, endNum: 3662413823, isp: "电信", province: "浙江", city: "宁波" },
+    { start: "220.188.0.0", end: "220.191.255.255", startNum: 3703308288, endNum: 3703570431, isp: "电信", province: "浙江", city: "温州" },
+    { start: "112.16.0.0", end: "112.17.255.255", startNum: 1880096768, endNum: 1880227839, isp: "联通", province: "浙江", city: "杭州" },
+    { start: "124.160.0.0", end: "124.160.255.255", startNum: 2090860544, endNum: 2090926079, isp: "联通", province: "浙江", city: "杭州" },
+    { start: "221.0.0.0", end: "221.0.255.255", startNum: 3707764736, endNum: 3707830271, isp: "联通", province: "浙江", city: "宁波" },
+    { start: "221.1.0.0", end: "221.1.255.255", startNum: 3707830272, endNum: 3707895807, isp: "联通", province: "浙江", city: "温州" },
+    { start: "221.12.0.0", end: "221.12.255.255", startNum: 3708551168, endNum: 3708616703, isp: "联通", province: "浙江", city: "杭州" },
+    { start: "111.160.0.0", end: "111.161.255.255", startNum: 1872756736, endNum: 1872887807, isp: "移动", province: "浙江", city: "杭州" },
+    { start: "112.0.0.0", end: "112.0.255.255", startNum: 1879048192, endNum: 1879113727, isp: "移动", province: "浙江", city: "宁波" },
+    { start: "112.17.0.0", end: "112.17.255.255", startNum: 1880162304, endNum: 1880227839, isp: "移动", province: "浙江", city: "杭州" },
+    { start: "117.136.64.0", end: "117.136.127.255", startNum: 1971863552, endNum: 1971879935, isp: "移动", province: "浙江", city: "杭州" },
+    { start: "211.138.0.0", end: "211.138.255.255", startNum: 3549036544, endNum: 3549102079, isp: "移动", province: "浙江", city: "杭州" },
+    { start: "218.205.0.0", end: "218.205.255.255", startNum: 3670867968, endNum: 3670933503, isp: "移动", province: "浙江", city: "宁波" },
+    { start: "211.99.0.0", end: "211.99.127.255", startNum: 3546480640, endNum: 3546513407, isp: "铁通", province: "浙江", city: "杭州" },
+    { start: "211.99.128.0", end: "211.99.255.255", startNum: 3546513408, endNum: 3546546175, isp: "铁通", province: "浙江", city: "宁波" },
+    { start: "49.64.0.0", end: "49.95.255.255", startNum: 826277888, endNum: 828375039, isp: "电信", province: "江苏", city: "南京" },
+    { start: "58.208.0.0", end: "58.223.255.255", startNum: 986710016, endNum: 987758591, isp: "电信", province: "江苏", city: "南京" },
+    { start: "61.155.0.0", end: "61.155.255.255", startNum: 1033568256, endNum: 1033633791, isp: "电信", province: "江苏", city: "苏州" },
+    { start: "61.160.0.0", end: "61.160.255.255", startNum: 1033895936, endNum: 1033961471, isp: "电信", province: "江苏", city: "南京" },
+    { start: "114.224.0.0", end: "114.239.255.255", startNum: 1927282688, endNum: 1928331263, isp: "电信", province: "江苏", city: "南京" },
+    { start: "121.224.0.0", end: "121.239.255.255", startNum: 2044723200, endNum: 2045771775, isp: "电信", province: "江苏", city: "苏州" },
+    { start: "180.96.0.0", end: "180.99.255.255", startNum: 3026190336, endNum: 3026452479, isp: "电信", province: "江苏", city: "无锡" },
+    { start: "180.100.0.0", end: "180.103.255.255", startNum: 3026452480, endNum: 3026714623, isp: "电信", province: "江苏", city: "常州" },
+    { start: "183.208.0.0", end: "183.215.255.255", startNum: 3083862016, endNum: 3084386303, isp: "电信", province: "江苏", city: "南京" },
+    { start: "222.186.0.0", end: "222.189.255.255", startNum: 3736731648, endNum: 3736993791, isp: "电信", province: "江苏", city: "苏州" },
+    { start: "222.92.0.0", end: "222.95.255.255", startNum: 3730571264, endNum: 3730833407, isp: "电信", province: "江苏", city: "南京" },
+    { start: "112.80.0.0", end: "112.87.255.255", startNum: 1884291072, endNum: 1884815359, isp: "联通", province: "江苏", city: "南京" },
+    { start: "124.164.0.0", end: "124.167.255.255", startNum: 2091122688, endNum: 2091384831, isp: "联通", province: "江苏", city: "苏州" },
+    { start: "210.51.0.0", end: "210.51.255.255", startNum: 3526557696, endNum: 3526623231, isp: "联通", province: "江苏", city: "南京" },
+    { start: "221.6.0.0", end: "221.6.255.255", startNum: 3708157952, endNum: 3708223487, isp: "联通", province: "江苏", city: "无锡" },
+    { start: "221.130.0.0", end: "221.130.255.255", startNum: 3716284416, endNum: 3716349951, isp: "联通", province: "江苏", city: "常州" },
+    { start: "111.8.0.0", end: "111.15.255.255", startNum: 1862795264, endNum: 1863319551, isp: "移动", province: "江苏", city: "南京" },
+    { start: "112.24.0.0", end: "112.27.255.255", startNum: 1880621056, endNum: 1880883199, isp: "移动", province: "江苏", city: "南京" },
+    { start: "112.28.0.0", end: "112.31.255.255", startNum: 1880883200, endNum: 1881145343, isp: "移动", province: "江苏", city: "苏州" },
+    { start: "117.144.128.0", end: "117.144.255.255", startNum: 1972404224, endNum: 1972436991, isp: "移动", province: "江苏", city: "南京" },
+    { start: "211.138.128.0", end: "211.138.191.255", startNum: 3549069312, endNum: 3549085695, isp: "移动", province: "江苏", city: "南京" },
+    { start: "211.139.128.0", end: "211.139.255.255", startNum: 3549134848, endNum: 3549167615, isp: "移动", province: "江苏", city: "苏州" },
+    { start: "218.205.0.0", end: "218.205.127.255", startNum: 3670867968, endNum: 3670900735, isp: "移动", province: "江苏", city: "无锡" },
+    { start: "211.100.128.0", end: "211.100.255.255", startNum: 3546578944, endNum: 3546611711, isp: "铁通", province: "江苏", city: "南京" },
+    { start: "211.101.0.0", end: "211.101.127.255", startNum: 3546611712, endNum: 3546644479, isp: "铁通", province: "江苏", city: "苏州" },
+    { start: "110.184.0.0", end: "110.191.255.255", startNum: 1857552384, endNum: 1858076671, isp: "电信", province: "四川", city: "成都" },
+    { start: "118.112.0.0", end: "118.127.255.255", startNum: 1987051520, endNum: 1988100095, isp: "电信", province: "四川", city: "成都" },
+    { start: "119.0.0.0", end: "119.7.255.255", startNum: 1996488704, endNum: 1997012991, isp: "电信", province: "四川", city: "绵阳" },
+    { start: "125.64.0.0", end: "125.71.255.255", startNum: 2101346304, endNum: 2101870591, isp: "电信", province: "四川", city: "成都" },
+    { start: "171.208.0.0", end: "171.215.255.255", startNum: 2882535424, endNum: 2883059711, isp: "电信", province: "四川", city: "成都" },
+    { start: "182.128.0.0", end: "182.143.255.255", startNum: 3061841920, endNum: 3062890495, isp: "电信", province: "四川", city: "成都" },
+    { start: "220.166.0.0", end: "220.167.255.255", startNum: 3701866496, endNum: 3701997567, isp: "电信", province: "四川", city: "成都" },
+    { start: "221.10.0.0", end: "221.11.255.255", startNum: 3708420096, endNum: 3708551167, isp: "电信", province: "四川", city: "德阳" },
+    { start: "222.208.0.0", end: "222.215.255.255", startNum: 3738173440, endNum: 3738697727, isp: "电信", province: "四川", city: "成都" },
+    { start: "61.139.0.0", end: "61.139.255.255", startNum: 1032519680, endNum: 1032585215, isp: "电信", province: "四川", city: "成都" },
+    { start: "119.6.0.0", end: "119.7.255.255", startNum: 1996881920, endNum: 1997012991, isp: "联通", province: "四川", city: "成都" },
+    { start: "124.162.0.0", end: "124.162.255.255", startNum: 2090991616, endNum: 2091057151, isp: "联通", province: "四川", city: "成都" },
+    { start: "210.51.128.0", end: "210.51.191.255", startNum: 3526590464, endNum: 3526606847, isp: "联通", province: "四川", city: "成都" },
+    { start: "221.10.0.0", end: "221.10.255.255", startNum: 3708420096, endNum: 3708485631, isp: "联通", province: "四川", city: "绵阳" },
+    { start: "221.12.64.0", end: "221.12.127.255", startNum: 3708567552, endNum: 3708583935, isp: "联通", province: "四川", city: "成都" },
+    { start: "221.13.64.0", end: "221.13.127.255", startNum: 3708633088, endNum: 3708649471, isp: "联通", province: "四川", city: "宜宾" },
+    { start: "111.8.64.0", end: "111.8.127.255", startNum: 1862811648, endNum: 1862828031, isp: "移动", province: "四川", city: "成都" },
+    { start: "111.11.0.0", end: "111.11.255.255", startNum: 1862991872, endNum: 1863057407, isp: "移动", province: "四川", city: "成都" },
+    { start: "112.40.0.0", end: "112.43.255.255", startNum: 1881669632, endNum: 1881931775, isp: "移动", province: "四川", city: "成都" },
+    { start: "117.136.88.0", end: "117.136.95.255", startNum: 1971869696, endNum: 1971871743, isp: "移动", province: "四川", city: "成都" },
+    { start: "183.220.0.0", end: "183.223.255.255", startNum: 3084648448, endNum: 3084910591, isp: "移动", province: "四川", city: "成都" },
+    { start: "211.139.0.0", end: "211.139.127.255", startNum: 3549102080, endNum: 3549134847, isp: "移动", province: "四川", city: "成都" },
+    { start: "218.205.128.0", end: "218.205.191.255", startNum: 3670900736, endNum: 3670917119, isp: "移动", province: "四川", city: "成都" },
+    { start: "211.137.128.0", end: "211.137.255.255", startNum: 3549003776, endNum: 3549036543, isp: "铁通", province: "四川", city: "成都" },
+    { start: "211.138.0.0", end: "211.138.63.255", startNum: 3549036544, endNum: 3549052927, isp: "铁通", province: "四川", city: "绵阳" },
+    { start: "211.139.64.0", end: "211.139.127.255", startNum: 3549118464, endNum: 3549134847, isp: "铁通", province: "四川", city: "成都" },
+    { start: "1.0.0.0", end: "1.255.255.255", startNum: 16777216, endNum: 33554431, isp: "电信", province: "其他", city: "全国骨干网" },
+    { start: "14.0.0.0", end: "14.127.255.255", startNum: 234881024, endNum: 243269631, isp: "电信", province: "其他", city: "全国骨干网" },
+    { start: "27.8.0.0", end: "27.255.255.255", startNum: 453509120, endNum: 469762047, isp: "电信", province: "其他", city: "全国骨干网" },
+    { start: "42.48.0.0", end: "42.127.255.255", startNum: 707788800, endNum: 713031679, isp: "电信", province: "其他", city: "全国骨干网" },
+    { start: "58.0.0.0", end: "58.63.255.255", startNum: 973078528, endNum: 977272831, isp: "电信", province: "其他", city: "全国骨干网" },
+    { start: "59.32.0.0", end: "59.63.255.255", startNum: 991952896, endNum: 994050047, isp: "电信", province: "其他", city: "全国骨干网" },
+    { start: "59.64.0.0", end: "59.255.255.255", startNum: 994050048, endNum: 1006632959, isp: "电信", province: "其他", city: "全国骨干网" },
+    { start: "60.160.0.0", end: "60.191.255.255", startNum: 1017118720, endNum: 1019215871, isp: "电信", province: "其他", city: "全国骨干网" },
+    { start: "61.128.0.0", end: "61.147.255.255", startNum: 1031798784, endNum: 1033109503, isp: "电信", province: "其他", city: "全国骨干网" },
+    { start: "101.64.0.0", end: "101.95.255.255", startNum: 1698693120, endNum: 1700790271, isp: "电信", province: "其他", city: "全国骨干网" },
+    { start: "110.80.0.0", end: "110.95.255.255", startNum: 1850736640, endNum: 1851785215, isp: "电信", province: "其他", city: "全国骨干网" },
+    { start: "113.64.0.0", end: "113.111.255.255", startNum: 1900019712, endNum: 1903165439, isp: "电信", province: "其他", city: "全国骨干网" },
+    { start: "114.80.0.0", end: "114.127.255.255", startNum: 1917845504, endNum: 1920991231, isp: "电信", province: "其他", city: "全国骨干网" },
+    { start: "115.192.0.0", end: "115.223.255.255", startNum: 1941962752, endNum: 1944059903, isp: "电信", province: "其他", city: "全国骨干网" },
+    { start: "116.224.0.0", end: "116.239.255.255", startNum: 1960837120, endNum: 1961885695, isp: "电信", province: "其他", city: "全国骨干网" },
+    { start: "110.240.0.0", end: "110.255.255.255", startNum: 1861222400, endNum: 1862270975, isp: "联通", province: "其他", city: "全国骨干网" },
+    { start: "112.64.0.0", end: "112.95.255.255", startNum: 1883242496, endNum: 1885339647, isp: "联通", province: "其他", city: "全国骨干网" },
+    { start: "113.44.0.0", end: "113.63.255.255", startNum: 1898708992, endNum: 1900019711, isp: "联通", province: "其他", city: "全国骨干网" },
+    { start: "114.160.0.0", end: "114.207.255.255", startNum: 1923088384, endNum: 1926234111, isp: "联通", province: "其他", city: "全国骨干网" },
+    { start: "116.112.0.0", end: "116.119.255.255", startNum: 1953497088, endNum: 1954021375, isp: "联通", province: "其他", city: "全国骨干网" },
+    { start: "120.80.0.0", end: "120.87.255.255", startNum: 2018508800, endNum: 2019033087, isp: "联通", province: "其他", city: "全国骨干网" },
+    { start: "123.112.0.0", end: "123.159.255.255", startNum: 2070937600, endNum: 2074083327, isp: "联通", province: "其他", city: "全国骨干网" },
+    { start: "124.160.0.0", end: "124.191.255.255", startNum: 2090860544, endNum: 2092957695, isp: "联通", province: "其他", city: "全国骨干网" },
+    { start: "139.200.0.0", end: "139.223.255.255", startNum: 2345140224, endNum: 2346713087, isp: "联通", province: "其他", city: "全国骨干网" },
+    { start: "210.72.0.0", end: "210.79.255.255", startNum: 3527933952, endNum: 3528458239, isp: "联通", province: "其他", city: "全国骨干网" },
+    { start: "221.0.0.0", end: "221.15.255.255", startNum: 3707764736, endNum: 3708813311, isp: "联通", province: "其他", city: "全国骨干网" },
+    { start: "221.192.0.0", end: "221.223.255.255", startNum: 3720347648, endNum: 3722444799, isp: "联通", province: "其他", city: "全国骨干网" },
+    { start: "111.0.0.0", end: "111.31.255.255", startNum: 1862270976, endNum: 1864368127, isp: "移动", province: "其他", city: "全国骨干网" },
+    { start: "111.160.0.0", end: "111.175.255.255", startNum: 1872756736, endNum: 1873805311, isp: "移动", province: "其他", city: "全国骨干网" },
+    { start: "112.0.0.0", end: "112.31.255.255", startNum: 1879048192, endNum: 1881145343, isp: "移动", province: "其他", city: "全国骨干网" },
+    { start: "112.32.0.0", end: "112.63.255.255", startNum: 1881145344, endNum: 1883242495, isp: "移动", province: "其他", city: "全国骨干网" },
+    { start: "117.128.0.0", end: "117.143.255.255", startNum: 1971322880, endNum: 1972371455, isp: "移动", province: "其他", city: "全国骨干网" },
+    { start: "120.192.0.0", end: "120.255.255.255", startNum: 2025848832, endNum: 2030043135, isp: "移动", province: "其他", city: "全国骨干网" },
+    { start: "183.192.0.0", end: "183.207.255.255", startNum: 3082813440, endNum: 3083862015, isp: "移动", province: "其他", city: "全国骨干网" },
+    { start: "183.224.0.0", end: "183.255.255.255", startNum: 3084910592, endNum: 3087007743, isp: "移动", province: "其他", city: "全国骨干网" },
+    { start: "211.136.0.0", end: "211.143.255.255", startNum: 3548905472, endNum: 3549429759, isp: "移动", province: "其他", city: "全国骨干网" },
+    { start: "218.200.0.0", end: "218.207.255.255", startNum: 3670540288, endNum: 3671064575, isp: "移动", province: "其他", city: "全国骨干网" },
+    { start: "211.160.0.0", end: "211.161.255.255", startNum: 3550478336, endNum: 3550609407, isp: "移动", province: "其他", city: "全国骨干网" },
+    { start: "211.96.0.0", end: "211.103.255.255", startNum: 3546284032, endNum: 3546808319, isp: "铁通", province: "其他", city: "全国骨干网" },
+    { start: "211.128.0.0", end: "211.143.255.255", startNum: 3548381184, endNum: 3549429759, isp: "铁通", province: "其他", city: "全国骨干网" },
+    { start: "218.240.0.0", end: "218.255.255.255", startNum: 3673161728, endNum: 3674210303, isp: "铁通", province: "其他", city: "全国骨干网" }
+];
+        function ipToNum(ip) {
+            const parts = ip.split('.');
+            if (parts.length !== 4) return -1;
+            for (let i = 0; i < 4; i++) {
+                parts[i] = parseInt(parts[i], 10);
+                if (isNaN(parts[i]) || parts[i] < 0 || parts[i] > 255) return -1;
+            }
+            return ((parts[0] << 24) | (parts[1] << 16) | (parts[2] << 8) | parts[3]) >>> 0;
+        }
+
+        function lookupIPInDB(ip) {
+            const num = ipToNum(ip);
+            if (num === -1) return null;
+            for (const entry of IP_DATABASE) {
+                if (num >= entry.startNum && num <= entry.endNum) return entry;
+            }
+            return null;
+        }
+
+        function getIPType(ip) {
+            if (ip.includes(':')) return '<span class="tag tag-ipv6">IPv6</span>';
+            const parts = ip.split('.');
+            if (parts.length === 4) return '<span class="tag tag-ipv4">IPv4</span>';
+            return '未知';
+        }
+
+        function detectBrowser() {
+            const ua = navigator.userAgent;
+            if (ua.includes('Chrome') && !ua.includes('Edg')) return 'Chrome';
+            if (ua.includes('Firefox')) return 'Firefox';
+            if (ua.includes('Safari') && !ua.includes('Chrome')) return 'Safari';
+            if (ua.includes('Edg')) return 'Edge';
+            if (ua.includes('OPR') || ua.includes('Opera')) return 'Opera';
+            return 'Unknown';
+        }
+
+        function detectOS() {
+            const ua = navigator.userAgent;
+            if (ua.includes('Windows')) return 'Windows';
+            if (ua.includes('Mac OS')) return 'macOS';
+            if (ua.includes('Linux') && !ua.includes('Android')) return 'Linux';
+            if (ua.includes('Android')) return 'Android';
+            if (ua.includes('iPhone') || ua.includes('iPad')) return 'iOS';
+            return 'Unknown';
+        }
+
+        function getMyIPInfo() {
+            document.getElementById('myip-browser').textContent = detectBrowser();
+            document.getElementById('myip-os').textContent = detectOS();
+            document.getElementById('myip-resolution').textContent = screen.width + ' x ' + screen.height;
+        }
+
+        function formatLocation(entry) {
+            if (!entry) return '未知';
+            let loc = entry.province;
+            if (entry.city && entry.city !== entry.province) loc += ' ' + entry.city;
+            return loc;
+        }
+
+        function formatISP(entry) {
+            if (!entry) return '<span class="isp-badge isp-未知">未知</span>';
+            const isp = entry.isp;
+            let cls = 'isp-未知';
+            if (isp.includes('电信')) cls = 'isp-电信';
+            else if (isp.includes('联通')) cls = 'isp-联通';
+            else if (isp.includes('移动')) cls = 'isp-移动';
+            else if (isp.includes('铁通')) cls = 'isp-铁通';
+            return '<span class="isp-badge ' + cls + '">' + isp + '</span>';
+        }
+
+        function lookupIP() {
+            const ip = document.getElementById('ip-input').value.trim();
+            if (!ip) {
+                document.getElementById('status').textContent = '请输入IP地址';
+                document.getElementById('status').className = 'status-msg error';
+                return;
+            }
+            const entry = lookupIPInDB(ip);
+            document.getElementById('r-ip').textContent = ip;
+            document.getElementById('r-type').innerHTML = getIPType(ip);
+            document.getElementById('r-isp').innerHTML = formatISP(entry);
+            document.getElementById('r-location').textContent = formatLocation(entry);
+            document.getElementById('result-table').style.display = '';
+            document.getElementById('status').className = 'status-msg success';
+            document.getElementById('status').textContent = '查询完成';
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('ip-input').addEventListener('keyup', function(e) {
+                if (e.key === 'Enter') lookupIP();
+            });
+        });
+
+        (function autoDetectIP() {
+            getMyIPInfo();
+            fetch('https://api64.ipify.org?format=json')
+                .then(function(res) { return res.json(); })
+                .then(function(data) {
+                    if (data && data.ip) {
+                        var ip = data.ip;
+                        document.getElementById('myip-ip').textContent = ip;
+                        document.getElementById('ip-input').value = ip;
+                        document.getElementById('status').textContent = '已自动检测到本机IP';
+                        document.getElementById('status').className = 'status-msg success';
+                        var entry = lookupIPInDB(ip);
+                        document.getElementById('r-ip').textContent = ip;
+                        document.getElementById('r-type').innerHTML = getIPType(ip);
+                        document.getElementById('r-isp').innerHTML = formatISP(entry);
+                        document.getElementById('r-location').textContent = formatLocation(entry);
+                        document.getElementById('result-table').style.display = '';
+                    } else {
+                        document.getElementById('status').textContent = '无法自动检测，请手动输入IP地址';
+                        document.getElementById('status').className = 'status-msg error';
+                    }
+                })
+                .catch(function() {
+                    document.getElementById('status').textContent = '无法自动检测，请手动输入IP地址';
+                    document.getElementById('status').className = 'status-msg error';
+                });
+        })();
+    </script>
+    <script src="/i18n/translations.js"></script>
+    <script src="/i18n/i18n.js" defer></script>
+    <script src="/i18n/tracker.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            if (typeof createLanguageSelector === 'function') {
+                createLanguageSelector('lang-selector');
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>个税计算器2025-2026 - 在线免费个人所得税计算 | 白给工具</title>
+    <meta name="description" content="免费在线个税计算器，基于2025-2026最新累进税率表。支持社保公积金扣除、专项附加扣除、年终奖计税对比。纯浏览器端计算，安全无上传。">
+    <link rel="canonical" href="https://wdnmd.vip/tax-calculator/">
+    <meta property="og:title" content="个税计算器2025-2026 - 在线免费个人所得税计算 | 白给工具">
+    <meta property="og:description" content="免费在线个税计算器，基于2025-2026最新累进税率表。支持社保公积金扣除、专项附加扣除、年终奖计税对比。纯浏览器端计算，安全无上传。">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://wdnmd.vip/tax-calculator/">
+    <meta property="og:locale" content="zh_CN">
+    <link rel="manifest" href="/manifest.json">
+    <link rel="icon" type="image/svg+xml" href="/icon.svg">
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif; background: #f0f2f5; color: #333; line-height: 1.6; min-height: 100vh; display: flex; flex-direction: column; }
+        .hero { background: linear-gradient(135deg, #0f0c29, #302b63, #24243e); color: #fff; padding: 20px 0; }
+        .hero-top { display: flex; justify-content: space-between; align-items: center; max-width: 1100px; margin: 0 auto; padding: 0 20px; }
+        .brand { font-size: 20px; font-weight: 700; color: #a78bfa; letter-spacing: 1px; }
+        #lang-selector { font-size: 14px; padding: 6px 12px; border-radius: 6px; border: 1px solid rgba(255,255,255,0.3); background: rgba(255,255,255,0.1); color: #fff; cursor: pointer; }
+        #lang-selector option { color: #333; background: #fff; }
+        .hero-content { max-width: 1100px; margin: 0 auto; padding: 30px 20px 40px; }
+        .hero-content h1 { font-size: 32px; font-weight: 700; margin-bottom: 8px; }
+        .hero-content p { font-size: 15px; opacity: 0.85; }
+        .back-link { display: inline-block; margin-top: 12px; color: rgba(255,255,255,0.75); text-decoration: none; font-size: 14px; transition: color 0.2s; }
+        .back-link:hover { color: #a78bfa; }
+        .container { max-width: 1100px; margin: 0 auto; padding: 30px 20px; flex: 1; }
+        .card { background: rgba(255,255,255,0.85); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-radius: 16px; box-shadow: 0 8px 32px rgba(0,0,0,0.08); border: 1px solid rgba(255,255,255,0.5); padding: 32px; margin-bottom: 24px; }
+        .card-title { font-size: 20px; font-weight: 600; margin-bottom: 20px; color: #1a1a2e; }
+        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+        .form-group { display: flex; flex-direction: column; }
+        .form-group.full { grid-column: 1 / -1; }
+        .form-group label { font-size: 14px; font-weight: 500; margin-bottom: 4px; color: #555; }
+        .form-group input, .form-group select { padding: 10px 14px; border: 1px solid #d1d5db; border-radius: 8px; font-size: 15px; outline: none; transition: border-color 0.2s, box-shadow 0.2s; background: #fff; }
+        .form-group input:focus, .form-group select:focus { border-color: #7c3aed; box-shadow: 0 0 0 3px rgba(124,58,237,0.12); }
+        .form-group input[type="number"] { -moz-appearance: textfield; }
+        .form-group input[type="number"]::-webkit-inner-spin-button, .form-group input[type="number"]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
+        .input-hint { font-size: 12px; color: #888; margin-top: 2px; }
+        .checkbox-group { display: flex; flex-wrap: wrap; gap: 10px; }
+        .checkbox-item { display: flex; align-items: center; gap: 6px; font-size: 14px; cursor: pointer; }
+        .checkbox-item input[type="checkbox"] { width: 16px; height: 16px; accent-color: #7c3aed; cursor: pointer; }
+        .deduction-section { margin-top: 6px; }
+        .deduction-section .sub-label { font-size: 13px; color: #666; margin-bottom: 4px; }
+        .inline-flex { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+        .btn { padding: 10px 28px; border: none; border-radius: 8px; font-size: 15px; font-weight: 600; cursor: pointer; transition: transform 0.15s, box-shadow 0.15s; }
+        .btn:hover { transform: translateY(-1px); box-shadow: 0 4px 14px rgba(124,58,237,0.25); }
+        .btn-primary { background: linear-gradient(135deg, #7c3aed, #6d28d9); color: #fff; }
+        .btn-secondary { background: #e5e7eb; color: #333; }
+        .btn-group { display: flex; gap: 12px; margin-top: 20px; }
+        .toggle-group { display: inline-flex; border: 1px solid #d1d5db; border-radius: 8px; overflow: hidden; }
+        .toggle-group button { padding: 8px 18px; border: none; background: #fff; font-size: 14px; cursor: pointer; transition: background 0.2s, color 0.2s; color: #555; }
+        .toggle-group button.active { background: #7c3aed; color: #fff; }
+        .toggle-group button:not(:last-child) { border-right: 1px solid #d1d5db; }
+        .results-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px; margin-bottom: 20px; }
+        .result-item { background: linear-gradient(135deg, #faf5ff, #f3e8ff); border-radius: 12px; padding: 18px; text-align: center; }
+        .result-item .label { font-size: 13px; color: #666; margin-bottom: 4px; }
+        .result-item .value { font-size: 24px; font-weight: 700; color: #1a1a2e; }
+        .result-item .value.highlight { color: #7c3aed; }
+        .result-item .value.positive { color: #10b981; }
+        .result-item .value.negative { color: #ef4444; }
+        .comparison-table { width: 100%; border-collapse: collapse; margin-top: 16px; font-size: 14px; }
+        .comparison-table th, .comparison-table td { padding: 10px 14px; text-align: center; border-bottom: 1px solid #e5e7eb; }
+        .comparison-table th { background: #f9fafb; font-weight: 600; color: #555; }
+        .comparison-table tr:hover td { background: #faf5ff; }
+        .comparison-table .best { background: #ecfdf5 !important; font-weight: 600; color: #059669; }
+        .rate-table { width: 100%; border-collapse: collapse; margin-top: 12px; font-size: 13px; }
+        .rate-table th, .rate-table td { padding: 8px 12px; text-align: center; border: 1px solid #e5e7eb; }
+        .rate-table th { background: #f9fafb; font-weight: 600; color: #555; }
+        .rate-table tr.active-row { background: #fef3c7; font-weight: 600; }
+        .rate-table tr.active-row td { border-color: #f59e0b; }
+        .footer { background: linear-gradient(135deg, #0f0c29, #302b63, #24243e); color: rgba(255,255,255,0.7); text-align: center; padding: 24px 20px; font-size: 13px; margin-top: auto; }
+        .hidden { display: none !important; }
+        .mt-20 { margin-top: 20px; }
+        .mb-16 { margin-bottom: 16px; }
+        @media (max-width: 768px) { .form-grid { grid-template-columns: 1fr; } .hero-content h1 { font-size: 24px; } .card { padding: 20px; } .results-grid { grid-template-columns: 1fr 1fr; } }
+        @media (max-width: 480px) { .results-grid { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+    <div class="hero">
+        <div class="hero-top">
+            <div class="brand">白给工具</div>
+            <select id="lang-selector">
+                <option value="zh">中文</option>
+                <option value="en">English</option>
+            </select>
+        </div>
+        <div class="hero-content">
+            <h1>个税计算器 2025-2026</h1>
+            <p>基于最新累进税率表，支持社保公积金扣除、专项附加扣除、年终奖计税对比</p>
+            <a href="/?lang=zh" class="back-link">← 返回首页 / 白给工具</a>
+        </div>
+    </div>
+    <div class="container">
+        <div class="card">
+            <div class="card-title">收入与扣除信息</div>
+            <div class="form-grid">
+                <div class="form-group">
+                    <label>税前月薪（元）</label>
+                    <input type="number" id="monthly-salary" value="15000" min="0" step="1000">
+                    <span class="input-hint">请输入您的月税前工资</span>
+                </div>
+                <div class="form-group">
+                    <label>社保公积金（元/月）</label>
+                    <input type="number" id="social-insurance" value="0" min="0" step="100">
+                    <span class="input-hint">点击下方快速计算或手动输入</span>
+                </div>
+                <div class="form-group full">
+                    <label>快速计算社保公积金</label>
+                    <div class="inline-flex">
+                        <input type="number" id="quick-salary-base" placeholder="社保基数" style="width:160px;" min="0" step="1000">
+                        <select id="quick-social-rate" style="width:100px;">
+                            <option value="0.105">社保 10.5%</option>
+                        </select>
+                        <select id="quick-housing-rate" style="width:130px;">
+                            <option value="0.05">公积金 5%</option>
+                            <option value="0.06">公积金 6%</option>
+                            <option value="0.07">公积金 7%</option>
+                            <option value="0.08">公积金 8%</option>
+                            <option value="0.09">公积金 9%</option>
+                            <option value="0.10">公积金 10%</option>
+                            <option value="0.11">公积金 11%</option>
+                            <option value="0.12" selected>公积金 12%</option>
+                        </select>
+                        <button class="btn btn-secondary" onclick="applyQuickSocial()" style="padding:8px 16px;font-size:13px;">应用</button>
+                    </div>
+                </div>
+                <div class="form-group full">
+                    <label>专项附加扣除（每月）</label>
+                    <div class="deduction-section">
+                        <div class="sub-label">子女教育</div>
+                        <div class="inline-flex">
+                            <label class="checkbox-item"><input type="checkbox" id="ded-child-edu"> 启用</label>
+                            <input type="number" id="ded-child-edu-count" value="1" min="1" max="10" style="width:60px;padding:6px 8px;border:1px solid #d1d5db;border-radius:6px;font-size:13px;">
+                            <span style="font-size:13px;color:#666;">孩 × 1,000元/月</span>
+                        </div>
+                    </div>
+                    <div class="deduction-section">
+                        <div class="sub-label">继续教育</div>
+                        <label class="checkbox-item"><input type="checkbox" id="ded-cont-edu"> 400元/月</label>
+                    </div>
+                    <div class="deduction-section">
+                        <div class="sub-label">住房贷款利息</div>
+                        <label class="checkbox-item"><input type="checkbox" id="ded-mortgage"> 1,000元/月</label>
+                    </div>
+                    <div class="deduction-section">
+                        <div class="sub-label">住房租金</div>
+                        <select id="ded-rent" style="width:200px;padding:8px 12px;border:1px solid #d1d5db;border-radius:8px;font-size:14px;outline:none;">
+                            <option value="0">不启用</option>
+                            <option value="800">800元/月（其他城市）</option>
+                            <option value="1100">1,100元/月（直辖市/省会/计划单列市）</option>
+                            <option value="1500">1,500元/月（北上广深）</option>
+                        </select>
+                    </div>
+                    <div class="deduction-section">
+                        <div class="sub-label">赡养老人</div>
+                        <label class="checkbox-item"><input type="checkbox" id="ded-elderly"> 2,000元/月</label>
+                    </div>
+                    <div class="deduction-section">
+                        <div class="sub-label">3岁以下婴幼儿照护</div>
+                        <div class="inline-flex">
+                            <label class="checkbox-item"><input type="checkbox" id="ded-infant"> 启用</label>
+                            <input type="number" id="ded-infant-count" value="1" min="1" max="10" style="width:60px;padding:6px 8px;border:1px solid #d1d5db;border-radius:6px;font-size:13px;">
+                            <span style="font-size:13px;color:#666;">孩 × 1,000元/月</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group full">
+                    <label>年终奖（元，可选）</label>
+                    <div class="inline-flex">
+                        <input type="number" id="year-end-bonus" value="0" min="0" step="1000" style="width:200px;">
+                        <span style="font-size:13px;color:#666;">计税方式：</span>
+                        <div class="toggle-group" id="bonus-toggle">
+                            <button class="active" data-mode="combined" onclick="setBonusMode('combined')">并入综合所得</button>
+                            <button data-mode="separate" onclick="setBonusMode('separate')">单独计税</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="btn-group">
+                <button class="btn btn-primary" onclick="calculate()">计算</button>
+                <button class="btn btn-secondary" onclick="resetForm()">重置</button>
+            </div>
+        </div>
+        <div id="results-section" class="card hidden">
+            <div class="card-title">计算结果</div>
+            <div class="results-grid">
+                <div class="result-item">
+                    <div class="label">应纳税所得额（年）</div>
+                    <div class="value" id="result-taxable-income">0 元</div>
+                </div>
+                <div class="result-item">
+                    <div class="label">应缴个税（月）</div>
+                    <div class="value highlight" id="result-monthly-tax">0 元</div>
+                </div>
+                <div class="result-item">
+                    <div class="label">税后月薪</div>
+                    <div class="value positive" id="result-after-tax">0 元</div>
+                </div>
+                <div class="result-item">
+                    <div class="label">全年税负</div>
+                    <div class="value negative" id="result-yearly-tax">0 元</div>
+                </div>
+                <div class="result-item">
+                    <div class="label">实际税率</div>
+                    <div class="value" id="result-effective-rate">0%</div>
+                </div>
+            </div>
+            <div id="bonus-comparison-section" class="hidden mt-20">
+                <h3 style="font-size:16px;font-weight:600;margin-bottom:8px;color:#1a1a2e;">年终奖计税对比</h3>
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>计税方式</th>
+                            <th>应纳税所得额（年）</th>
+                            <th>全年应缴个税</th>
+                            <th>全年税负率</th>
+                            <th>推荐</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr id="combined-row">
+                            <td>并入综合所得</td>
+                            <td id="combined-income">-</td>
+                            <td id="combined-tax">-</td>
+                            <td id="combined-rate">-</td>
+                            <td id="combined-recommend"></td>
+                        </tr>
+                        <tr id="separate-row">
+                            <td>单独计税</td>
+                            <td id="separate-income">-</td>
+                            <td id="separate-tax">-</td>
+                            <td id="separate-rate">-</td>
+                            <td id="separate-recommend"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div id="rate-table-section" class="card hidden">
+            <div class="card-title">累进税率表</div>
+            <p style="font-size:13px;color:#888;margin-bottom:10px;">全年应纳税所得额 = 年收入 - 60,000（起征点）- 社保公积金 - 专项附加扣除<span id="bonus-rate-note"></span></p>
+            <table class="rate-table">
+                <thead>
+                    <tr>
+                        <th>级数</th>
+                        <th>应纳税所得额（全年）</th>
+                        <th>税率</th>
+                        <th>速算扣除数</th>
+                    </tr>
+                </thead>
+                <tbody id="rate-table-body">
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p>© 2026 白给工具 · 所有处理均在浏览器本地完成，您的数据不会上传到服务器</p>
+    </div>
+
+    <script>
+        let bonusMode = 'combined';
+
+        const TAX_BRACKETS = [
+            { min: 0, max: 36000, rate: 0.03, quickDeduction: 0 },
+            { min: 36000, max: 144000, rate: 0.10, quickDeduction: 2520 },
+            { min: 144000, max: 300000, rate: 0.20, quickDeduction: 16920 },
+            { min: 300000, max: 420000, rate: 0.25, quickDeduction: 31920 },
+            { min: 420000, max: 660000, rate: 0.30, quickDeduction: 52920 },
+            { min: 660000, max: 960000, rate: 0.35, quickDeduction: 85920 },
+            { min: 960000, max: Infinity, rate: 0.45, quickDeduction: 181920 }
+        ];
+
+        const MONTHLY_BONUS_BRACKETS = [
+            { min: 0, max: 3000, rate: 0.03, quickDeduction: 0 },
+            { min: 3000, max: 12000, rate: 0.10, quickDeduction: 210 },
+            { min: 12000, max: 25000, rate: 0.20, quickDeduction: 1410 },
+            { min: 25000, max: 35000, rate: 0.25, quickDeduction: 2660 },
+            { min: 35000, max: 55000, rate: 0.30, quickDeduction: 4410 },
+            { min: 55000, max: 80000, rate: 0.35, quickDeduction: 7160 },
+            { min: 80000, max: Infinity, rate: 0.45, quickDeduction: 15160 }
+        ];
+
+        function setBonusMode(mode) {
+            bonusMode = mode;
+            document.querySelectorAll('#bonus-toggle button').forEach(function(btn) {
+                btn.classList.toggle('active', btn.dataset.mode === mode);
+            });
+        }
+
+        function applyQuickSocial() {
+            var base = parseFloat(document.getElementById('quick-salary-base').value) || 0;
+            var socialRate = parseFloat(document.getElementById('quick-social-rate').value);
+            var housingRate = parseFloat(document.getElementById('quick-housing-rate').value);
+            var total = base * (socialRate + housingRate);
+            document.getElementById('social-insurance').value = Math.round(total * 100) / 100;
+        }
+
+        function formatNumber(n) {
+            return n.toLocaleString('zh-CN');
+        }
+
+        function formatMoney(n) {
+            return formatNumber(Math.round(n)) + ' 元';
+        }
+
+        function calcAnnualTax(taxableIncome) {
+            if (taxableIncome <= 0) return 0;
+            for (var i = TAX_BRACKETS.length - 1; i >= 0; i--) {
+                if (taxableIncome > TAX_BRACKETS[i].min) {
+                    var b = TAX_BRACKETS[i];
+                    return taxableIncome * b.rate - b.quickDeduction;
+                }
+            }
+            return 0;
+        }
+
+        function calcBonusTaxSeparate(bonus) {
+            if (bonus <= 0) return 0;
+            var monthly = bonus / 12;
+            for (var i = MONTHLY_BONUS_BRACKETS.length - 1; i >= 0; i--) {
+                if (monthly > MONTHLY_BONUS_BRACKETS[i].min) {
+                    var b = MONTHLY_BONUS_BRACKETS[i];
+                    return bonus * b.rate - b.quickDeduction;
+                }
+            }
+            return 0;
+        }
+
+        function getDeductions() {
+            var total = 0;
+            if (document.getElementById('ded-child-edu').checked) {
+                var count = parseInt(document.getElementById('ded-child-edu-count').value) || 1;
+                total += 1000 * count;
+            }
+            if (document.getElementById('ded-cont-edu').checked) total += 400;
+            if (document.getElementById('ded-mortgage').checked) total += 1000;
+            total += parseInt(document.getElementById('ded-rent').value) || 0;
+            if (document.getElementById('ded-elderly').checked) total += 2000;
+            if (document.getElementById('ded-infant').checked) {
+                var count = parseInt(document.getElementById('ded-infant-count').value) || 1;
+                total += 1000 * count;
+            }
+            return total;
+        }
+
+        function calculate() {
+            var monthlySalary = parseFloat(document.getElementById('monthly-salary').value) || 0;
+            var socialInsurance = parseFloat(document.getElementById('social-insurance').value) || 0;
+            var monthlyDeductions = getDeductions();
+            var bonus = parseFloat(document.getElementById('year-end-bonus').value) || 0;
+
+            var yearlySalary = monthlySalary * 12;
+            var yearlySocial = socialInsurance * 12;
+            var yearlyDeductions = monthlyDeductions * 12;
+            var basicDeduction = 60000;
+
+            var yearlyTotalIncome = yearlySalary + (bonusMode === 'combined' ? bonus : 0);
+            var taxableIncome = yearlyTotalIncome - basicDeduction - yearlySocial - yearlyDeductions;
+            if (taxableIncome < 0) taxableIncome = 0;
+
+            var annualTax = calcAnnualTax(taxableIncome);
+            var monthlyTax = annualTax / 12;
+            var afterTaxMonthly = monthlySalary - socialInsurance - monthlyTax;
+            var effectiveRate = yearlySalary > 0 ? (annualTax / (yearlySalary + (bonusMode === 'combined' ? bonus : 0)) * 100) : 0;
+
+            document.getElementById('result-taxable-income').innerHTML = formatMoney(taxableIncome);
+            document.getElementById('result-monthly-tax').innerHTML = formatMoney(monthlyTax);
+            document.getElementById('result-after-tax').innerHTML = formatMoney(afterTaxMonthly);
+            document.getElementById('result-yearly-tax').innerHTML = formatMoney(annualTax);
+            document.getElementById('result-effective-rate').innerHTML = effectiveRate.toFixed(2) + '%';
+
+            var resultsSection = document.getElementById('results-section');
+            resultsSection.classList.remove('hidden');
+            resultsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+            if (bonus > 0) {
+                renderBonusComparison(yearlySalary, yearlySocial, yearlyDeductions, basicDeduction, bonus, monthlyDeductions, socialInsurance);
+            } else {
+                document.getElementById('bonus-comparison-section').classList.add('hidden');
+            }
+
+            renderRateTable(taxableIncome);
+            document.getElementById('rate-table-section').classList.remove('hidden');
+            var note = document.getElementById('bonus-rate-note');
+            if (bonus > 0 && bonusMode === 'combined') {
+                note.innerHTML = '（含年终奖）';
+            } else if (bonus > 0 && bonusMode === 'separate') {
+                note.innerHTML = '（年终奖单独计税）';
+            } else {
+                note.innerHTML = '';
+            }
+        }
+        function renderBonusComparison(yearlySalary, yearlySocial, yearlyDeductions, basicDeduction, bonus, monthlyDeductions, socialInsurance) {
+            var section = document.getElementById('bonus-comparison-section');
+            section.classList.remove('hidden');
+
+            var combinedIncome = yearlySalary + bonus - basicDeduction - yearlySocial - yearlyDeductions;
+            if (combinedIncome < 0) combinedIncome = 0;
+            var combinedTax = calcAnnualTax(combinedIncome);
+            var combinedRate = (yearlySalary + bonus) > 0 ? (combinedTax / (yearlySalary + bonus) * 100) : 0;
+
+            var salaryOnlyIncome = yearlySalary - basicDeduction - yearlySocial - yearlyDeductions;
+            if (salaryOnlyIncome < 0) salaryOnlyIncome = 0;
+            var salaryOnlyTax = calcAnnualTax(salaryOnlyIncome);
+            var bonusTax = calcBonusTaxSeparate(bonus);
+            var separateTotalTax = salaryOnlyTax + bonusTax;
+            var separateRate = (yearlySalary + bonus) > 0 ? (separateTotalTax / (yearlySalary + bonus) * 100) : 0;
+
+            document.getElementById('combined-income').innerHTML = formatMoney(combinedIncome);
+            document.getElementById('combined-tax').innerHTML = formatMoney(combinedTax);
+            document.getElementById('combined-rate').innerHTML = combinedRate.toFixed(2) + '%';
+
+            document.getElementById('separate-income').innerHTML = formatMoney(salaryOnlyIncome) + '（工资）<br>' + formatMoney(bonus) + '（年终奖）';
+            document.getElementById('separate-tax').innerHTML = formatMoney(separateTotalTax);
+            document.getElementById('separate-rate').innerHTML = separateRate.toFixed(2) + '%';
+
+            var combinedRow = document.getElementById('combined-row');
+            var separateRow = document.getElementById('separate-row');
+            combinedRow.classList.remove('best');
+            separateRow.classList.remove('best');
+            document.getElementById('combined-recommend').innerHTML = '';
+            document.getElementById('separate-recommend').innerHTML = '';
+
+            if (combinedTax < separateTotalTax) {
+                combinedRow.classList.add('best');
+                document.getElementById('combined-recommend').innerHTML = '✓ 推荐';
+            } else if (separateTotalTax < combinedTax) {
+                separateRow.classList.add('best');
+                document.getElementById('separate-recommend').innerHTML = '✓ 推荐';
+            } else {
+                combinedRow.classList.add('best');
+                separateRow.classList.add('best');
+                document.getElementById('combined-recommend').innerHTML = '✓ 相同';
+                document.getElementById('separate-recommend').innerHTML = '✓ 相同';
+            }
+        }
+
+        function renderRateTable(taxableIncome) {
+            var tbody = document.getElementById('rate-table-body');
+            tbody.innerHTML = '';
+            var bracketLabels = ['不超过36,000元', '36,001~144,000元', '144,001~300,000元', '300,001~420,000元', '420,001~660,000元', '660,001~960,000元', '超过960,000元'];
+            var activeIndex = -1;
+            for (var i = 0; i < TAX_BRACKETS.length; i++) {
+                var b = TAX_BRACKETS[i];
+                if (taxableIncome > b.min && taxableIncome <= b.max) {
+                    activeIndex = i;
+                    break;
+                }
+            }
+            if (taxableIncome > 960000) activeIndex = 6;
+
+            for (var i = 0; i < TAX_BRACKETS.length; i++) {
+                var b = TAX_BRACKETS[i];
+                var tr = document.createElement('tr');
+                if (i === activeIndex) tr.className = 'active-row';
+                tr.innerHTML = '<td>' + (i + 1) + '</td><td>' + bracketLabels[i] + '</td><td>' + (b.rate * 100) + '%</td><td>' + formatNumber(b.quickDeduction) + '</td>';
+                tbody.appendChild(tr);
+            }
+        }
+
+        function resetForm() {
+            document.getElementById('monthly-salary').value = '15000';
+            document.getElementById('social-insurance').value = '0';
+            document.getElementById('quick-salary-base').value = '';
+            document.getElementById('year-end-bonus').value = '0';
+            document.getElementById('ded-child-edu').checked = false;
+            document.getElementById('ded-child-edu-count').value = '1';
+            document.getElementById('ded-cont-edu').checked = false;
+            document.getElementById('ded-mortgage').checked = false;
+            document.getElementById('ded-rent').value = '0';
+            document.getElementById('ded-elderly').checked = false;
+            document.getElementById('ded-infant').checked = false;
+            document.getElementById('ded-infant-count').value = '1';
+            setBonusMode('combined');
+            document.getElementById('results-section').classList.add('hidden');
+            document.getElementById('bonus-comparison-section').classList.add('hidden');
+            document.getElementById('rate-table-section').classList.add('hidden');
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('monthly-salary').addEventListener('keydown', function(e) {
+                if (e.key === 'Enter') calculate();
+            });
+            document.getElementById('social-insurance').addEventListener('keydown', function(e) {
+                if (e.key === 'Enter') calculate();
+            });
+            document.getElementById('year-end-bonus').addEventListener('keydown', function(e) {
+                if (e.key === 'Enter') calculate();
+            });
+            calculate();
+        });
+    </script>
+    <script src="/i18n/translations.js"></script>
+    <script src="/i18n/i18n.js" defer></script>
+    <script src="/i18n/tracker.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            if (typeof createLanguageSelector === 'function') {
+                createLanguageSelector('lang-selector');
+            }
+        });
+    </script>
+</body>
+</html>

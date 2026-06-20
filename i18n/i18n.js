@@ -229,6 +229,11 @@
   // --- Language tools catalog ---
   var toolsCatalog = {
     zh: [
+      { icon: '🔐', name: '随机密码生成器', desc: '在线生成高强度随机密码。支持自定义长度、字符类型、批量生成。纯浏览器端生成，安全可靠。', url: '/password-generator/' },
+      { icon: '🆔', name: '身份证查询验证', desc: '18位身份证号码校验、提取出生日期、性别、年龄、发证地信息。ISO 7064 校验算法，精准可靠。', url: '/id-card-validator/' },
+      { icon: '🏠', name: '房贷计算器', desc: '商业贷款、公积金贷款、组合贷款计算。等额本息和等额本金双模式对比，含详细还款计划表。', url: '/mortgage-calculator/' },
+      { icon: '📍', name: 'IP地址查询', desc: '自动检测本机 IP 地址，查询 IP 归属地和运营商信息。纯浏览器端处理，保护隐私安全。', url: '/ip-lookup/' },
+      { icon: '💰', name: '个税计算器', desc: '基于 2025-2026 最新累进税率表，支持社保公积金扣除、专项附加扣除、年终奖计税对比。', url: '/tax-calculator/' },
       { icon: '🖼️', name: '在线图片压缩', desc: '支持 JPG、PNG、WebP 格式压缩。智能保持画质，可批量处理多张图片，压缩率最高达 80%。所有处理在浏览器本地完成，无需上传。', url: '/image-tools/' },
       { icon: '📄', name: '在线PDF工具', desc: 'PDF 合并、拆分、压缩、格式转换一站完成。支持 PDF 与 Word、Excel、图片互转，无需安装任何软件。', url: '/pdf-tools/' },
       { icon: '✍️', name: '在线文字处理工具', desc: '文字去重、排序、替换、统计字数、格式转换。支持正则表达式，批量处理文本文件，编程者和写作者的效率利器。', url: '/text-tools/' },

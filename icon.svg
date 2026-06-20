@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512">
+  <!-- Background circle -->
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#667eea"/>
+      <stop offset="100%" style="stop-color:#764ba2"/>
+    </linearGradient>
+  </defs>
+  <circle cx="256" cy="256" r="256" fill="url(#bg)"/>
+  <!-- Gear icon -->
+  <g transform="translate(256,256)" fill="none" stroke="white" stroke-width="20" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="0" cy="0" r="60"/>
+    <path d="M0,-95 L0,-75 M0,75 L0,95 M-95,0 L-75,0 M75,0 L95,0 M-67,-67 L-53,-53 M53,53 L67,67 M-67,67 L-53,53 M53,-53 L67,-67" stroke-width="16"/>
+    <circle cx="0" cy="0" r="40" fill="white" stroke="none"/>
+  </g>
+  <!-- Wrench overlay -->
+  <g transform="translate(300,180) rotate(45)" fill="none" stroke="white" stroke-width="14" stroke-linecap="round">
+    <rect x="-10" y="-50" width="20" height="70" rx="5"/>
+    <path d="M-25,-50 A25,25 0 0,1 25,-50 L20,-40 A15,15 0 0,0 -20,-40 Z"/>
+  </g>
+</svg>
