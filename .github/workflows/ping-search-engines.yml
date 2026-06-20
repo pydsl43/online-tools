@@ -6,6 +6,11 @@ on:
     - cron: '0 6 * * *'
   workflow_dispatch:
     # Allow manual trigger
+  push:
+    branches: [main]
+    paths:
+      - 'sitemap.xml'
+      - '**/index.html'
 
 permissions:
   contents: read
@@ -14,29 +19,26 @@ jobs:
   ping:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v4
+
       - name: Ping Google
         run: |
-          curl -s -o /dev/null -w "%{http_code}" \
+          curl -s -o /dev/null -w "%{http_code}\n" \
             "https://www.google.com/ping?sitemap=https://wdnmd.vip/sitemap.xml"
           
       - name: Ping Bing
         run: |
-          curl -s -o /dev/null -w "%{http_code}" \
+          curl -s -o /dev/null -w "%{http_code}\n" \
             "https://www.bing.com/ping?sitemap=https://wdnmd.vip/sitemap.xml"
 
-      - name: Ping Baidu
+      - name: Baidu API Push (all URLs from sitemap)
         run: |
-          curl -s -o /dev/null -w "%{http_code}" \
-            "http://data.zz.baidu.com/urls?site=wdnmd.vip&token=6oMAGbJv1JJXIUVI" \
-            -d "$(cat <<'URLS'
-https://wdnmd.vip/
-https://wdnmd.vip/image-tools/
-https://wdnmd.vip/pdf-tools/
-https://wdnmd.vip/text-tools/
-https://wdnmd.vip/password-generator/
-https://wdnmd.vip/id-card-validator/
-https://wdnmd.vip/mortgage-calculator/
-https://wdnmd.vip/ip-lookup/
-https://wdnmd.vip/tax-calculator/
-URLS
-)"
+          # Extract all URLs from sitemap.xml and push via Baidu API
+          # API push works without ICP filing (unlike sitemap tool)
+          URLS=$(rg '<loc>\s*(https://wdnmd\.vip[^<]+)' sitemap.xml -r '$1' --no-filename || true)
+          if [ -n "$URLS" ]; then
+            echo "$URLS" | curl -s \
+              -H 'Content-Type:text/plain' \
+              --data-binary @- \
+              "http://data.zz.baidu.com/urls?site=wdnmd.vip&token=6oMAGbJv1JJXIUVI"
+          fi

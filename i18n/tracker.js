@@ -30,5 +30,22 @@
     if (!localStorage.getItem(storageKey)) {
       localStorage.setItem(storageKey, '1');
     }
+
+    // Baidu auto-push: notify Baidu of this page URL via API (only once per page per session)
+    // This works without ICP filing - API push is not restricted like sitemap
+    if (!sessionStorage.getItem('baigei_baidu_pushed_' + toolSlug)) {
+      sessionStorage.setItem('baigei_baidu_pushed_' + toolSlug, '1');
+      // Delay slightly to not impact page load
+      setTimeout(function() {
+        var img = new Image();
+        img.src = 'https://www.baidu.com/s?wd=' + encodeURIComponent(window.location.href);
+        // Also try the older ping method
+        try {
+          navigator.sendBeacon && navigator.sendBeacon(
+            'https://www.baidu.com/ping?sitemap=' + encodeURIComponent(window.location.href)
+          );
+        } catch(e) {}
+      }, 3000);
+    }
   }
 })();
