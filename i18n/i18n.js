@@ -130,11 +130,10 @@
     // 9. Update <html lang="...">
     document.documentElement.setAttribute('lang', lang + (lang === 'zh' ? '-CN' : ''));
 
-    // 10. Update language selector if present
-    var selector = document.getElementById('baigei-lang-select');
-    if (selector) {
-      selector.value = lang;
-    }
+    // 10. Update language selector button states if present
+    document.querySelectorAll('.baigei-lang-btn').forEach(function (btn) {
+      btn.classList.toggle('active', btn.getAttribute('data-lang') === lang);
+    });
   }
 
   /**
@@ -178,51 +177,52 @@
     // Create wrapper
     var wrapper = document.createElement('div');
     wrapper.className = 'baigei-lang-selector';
-    wrapper.style.cssText =
-      'display:inline-flex;align-items:center;gap:6px;font-size:0.875rem;';
 
-    // Create label
-    var label = document.createElement('span');
-    label.setAttribute('data-i18n', 'language_label');
-    label.textContent = translations.zh.language_label;
-    wrapper.appendChild(label);
+    // Create style element for CSS
+    var style = document.createElement('style');
+    style.textContent =
+      '.baigei-lang-selector{display:inline-flex;align-items:center;gap:2px;}' +
+      '.baigei-lang-btn{padding:4px 8px;font-size:0.75rem;font-weight:500;border:1px solid rgba(255,255,255,0.2);' +
+      'background:rgba(255,255,255,0.08);color:rgba(255,255,255,0.7);cursor:pointer;' +
+      'transition:all 0.2s ease;font-family:inherit;letter-spacing:0.02em;}' +
+      '.baigei-lang-btn:first-child{border-radius:6px 0 0 6px;}' +
+      '.baigei-lang-btn:last-child{border-radius:0 6px 6px 0;}' +
+      '.baigei-lang-btn:not(:last-child){border-right:none;}' +
+      '.baigei-lang-btn:hover{background:rgba(255,255,255,0.15);color:#fff;}' +
+      '.baigei-lang-btn.active{background:linear-gradient(135deg,#667eea,#764ba2);color:#fff;border-color:transparent;}' +
+      '.baigei-lang-btn.active:hover{background:linear-gradient(135deg,#7b8ef0,#8a5db8);}' +
+      '.hero-gradient .baigei-lang-btn{color:rgba(255,255,255,0.6);}' +
+      '.hero-gradient .baigei-lang-btn.active{color:#fff;}';
+    document.head.appendChild(style);
 
-    // Create select
-    var select = document.createElement('select');
-    select.id = 'baigei-lang-select';
-    select.style.cssText =
-      'padding:6px 10px;border:1px solid #d1d5db;border-radius:8px;' +
-      'font-size:0.875rem;background:white;color:#374151;' +
-      'cursor:pointer;outline:none;transition:border-color 0.2s;';
-
-    // Add focus style
-    select.addEventListener('focus', function () {
-      this.style.borderColor = '#667eea';
-      this.style.boxShadow = '0 0 0 3px rgba(102,126,234,0.15)';
-    });
-    select.addEventListener('blur', function () {
-      this.style.borderColor = '#d1d5db';
-      this.style.boxShadow = 'none';
-    });
-
-    // Populate options
+    // Create buttons for each language
     SUPPORTED_LANGS.forEach(function (code) {
-      var option = document.createElement('option');
-      option.value = code;
-      option.textContent = langNames[code] || code;
-      select.appendChild(option);
+      var btn = document.createElement('button');
+      btn.className = 'baigei-lang-btn';
+      btn.textContent = langNames[code] || code;
+      btn.setAttribute('data-lang', code);
+      if (code === currentLang) {
+        btn.classList.add('active');
+      }
+      btn.addEventListener('click', function () {
+        // Update active state
+        wrapper.querySelectorAll('.baigei-lang-btn').forEach(function (b) {
+          b.classList.remove('active');
+        });
+        this.classList.add('active');
+        setLanguage(code);
+        document.dispatchEvent(new CustomEvent('languageChanged', { detail: { lang: code } }));
+      });
+      wrapper.appendChild(btn);
     });
 
-    select.value = currentLang;
-
-    // Handle change
-    select.addEventListener('change', function () {
-      setLanguage(this.value);
-      // Dispatch a custom event so other scripts can react
-      document.dispatchEvent(new CustomEvent('languageChanged', { detail: { lang: this.value } }));
+    // Listen for language changes to update button states
+    document.addEventListener('languageChanged', function (e) {
+      wrapper.querySelectorAll('.baigei-lang-btn').forEach(function (b) {
+        b.classList.toggle('active', b.getAttribute('data-lang') === e.detail.lang);
+      });
     });
 
-    wrapper.appendChild(select);
     container.appendChild(wrapper);
   }
 
