@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Conversor de moedas BRL ↔ USD. Converta Real Brasileiro para Dólar Americano, Euro, Libra, Peso Argentino. Taxas indicativas.">
+    <meta name="keywords" content="conversor moedas, BRL, USD, real, dólar, câmbio, cotação, conversão moeda, euro, libra, peso argentino">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://wdnmd.vip/pt/currency-converter/">
+    <meta property="og:title" content="Conversor de Moedas BRL ↔ USD - Câmbio Online | BaiGei Tools">
+    <meta property="og:description" content="Converta Real Brasileiro (BRL) para Dólar Americano (USD), Euro (EUR), Libra (GBP) e Peso Argentino (ARS). Taxas indicativas.">
+    <meta property="og:url" content="https://wdnmd.vip/pt/currency-converter/">
+    <meta property="og:type" content="website">
+    <title>Conversor de Moedas BRL ↔ USD - Câmbio Online | BaiGei Tools</title>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2082456546225568" crossorigin="anonymous"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    animation: {
+                        'gradient': 'gradient 8s ease infinite',
+                    },
+                    keyframes: {
+                        gradient: {
+                            '0%, 100%': { backgroundPosition: '0% 50%' },
+                            '50%': { backgroundPosition: '100% 50%' },
+                        },
+                    },
+                },
+            },
+        }
+    </script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        .gradient-header {
+            background: linear-gradient(-45deg, #667eea, #764ba2, #f093fb, #4facfe, #00f2fe);
+            background-size: 400% 400%;
+            animation: gradient 8s ease infinite;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            transition: all 0.3s ease;
+        }
+        .glass-card:hover {
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+        .footer-gradient {
+            background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
+        }
+        .hero-gradient {
+            background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
+        }
+        input, select {
+            outline: none;
+        }
+        input:focus, select:focus {
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.2);
+        }
+        .fade-in {
+            animation: fadeIn 0.4s ease forwards;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .currency-card {
+            transition: all 0.3s ease;
+        }
+        .currency-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.08);
+        }
+        .swap-btn {
+            transition: all 0.3s ease;
+        }
+        .swap-btn:hover {
+            transform: rotate(180deg);
+        }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen flex flex-col font-sans">
+
+    <!-- Navigation -->
+    <nav class="hero-gradient text-white py-3 px-4 shadow-lg">
+        <div class="max-w-6xl mx-auto flex items-center justify-between">
+            <a href="https://wdnmd.vip/" class="text-lg font-bold hover:text-purple-300 transition">BaiGei Tools</a>
+            <div class="flex gap-4 text-sm">
+                <a href="https://wdnmd.vip/" class="hover:text-purple-300 transition">Início</a>
+                <a href="/pt/currency-converter/" class="text-purple-300 font-semibold">Câmbio</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Header -->
+    <header class="gradient-header text-white py-12 px-4 text-center">
+        <div class="max-w-4xl mx-auto">
+            <h1 class="text-4xl md:text-5xl font-bold mb-4">Conversor de Moedas</h1>
+            <p class="text-lg md:text-xl opacity-90">Converta Real Brasileiro (BRL) para diversas moedas</p>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-1 max-w-2xl mx-auto w-full px-4 py-8">
+        <!-- Ad -->
+        <div class="glass-card rounded-2xl p-4 mb-6 text-center text-gray-400 text-sm">
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-2082456546225568"
+                 data-ad-slot="1234567890"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+            <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+        </div>
+
+        <!-- Converter Card -->
+        <div class="glass-card rounded-2xl p-6 md:p-8 mb-6">
+            <div class="flex flex-col md:flex-row items-center gap-4 mb-6">
+                <!-- From -->
+                <div class="flex-1 w-full">
+                    <label class="block text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">De</label>
+                    <select id="fromCurrency" class="w-full px-4 py-3 rounded-xl border border-gray-200 text-gray-700 font-medium bg-white" onchange="convert()">
+                        <option value="BRL">BRL - Real Brasileiro</option>
+                        <option value="USD">USD - Dólar Americano</option>
+                        <option value="EUR">EUR - Euro</option>
+                        <option value="GBP">GBP - Libra Esterlina</option>
+                        <option value="ARS">ARS - Peso Argentino</option>
+                    </select>
+                </div>
+
+                <!-- Swap button -->
+                <button onclick="swapCurrencies()" class="swap-btn mt-5 w-12 h-12 rounded-full bg-purple-100 text-purple-600 flex items-center justify-center shadow-md hover:bg-purple-200 transition-all flex-shrink-0">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4" />
+                    </svg>
+                </button>
+
+                <!-- To -->
+                <div class="flex-1 w-full">
+                    <label class="block text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">Para</label>
+                    <select id="toCurrency" class="w-full px-4 py-3 rounded-xl border border-gray-200 text-gray-700 font-medium bg-white" onchange="convert()">
+                        <option value="USD">USD - Dólar Americano</option>
+                        <option value="BRL">BRL - Real Brasileiro</option>
+                        <option value="EUR">EUR - Euro</option>
+                        <option value="GBP">GBP - Libra Esterlina</option>
+                        <option value="ARS">ARS - Peso Argentino</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Amount Input -->
+            <div class="mb-6">
+                <label class="block text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">Valor</label>
+                <div class="relative">
+                    <span class="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 font-semibold" id="fromSymbol">R$</span>
+                    <input type="number" id="amountInput" class="w-full pl-12 pr-4 py-3 rounded-xl border border-gray-200 focus:border-purple-400 transition text-lg" placeholder="0,00" step="0.01" min="0" oninput="convert()">
+                </div>
+            </div>
+
+            <!-- Result -->
+            <div id="resultContainer" class="hidden fade-in">
+                <div class="p-6 rounded-xl bg-gradient-to-br from-purple-50 to-blue-50 border border-purple-100 text-center">
+                    <p class="text-sm text-gray-500 mb-1" id="resultLabel">1 BRL = 0,18 USD</p>
+                    <p class="text-3xl font-bold text-gray-800" id="resultValue">R$ 0,00</p>
+                    <p class="text-xs text-gray-400 mt-2">* Taxas indicativas. Os valores reais podem variar.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Other rates -->
+        <div class="glass-card rounded-2xl p-6 mb-6">
+            <h3 class="text-sm font-bold text-gray-700 mb-4 uppercase tracking-wide">Outras Taxas de Referência</h3>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3" id="otherRates">
+                <div class="currency-card rounded-xl p-4 bg-gradient-to-r from-blue-50 to-blue-100 border border-blue-200">
+                    <p class="text-xs text-blue-500 font-semibold">BRL → EUR</p>
+                    <p id="rateBRLtoEUR" class="text-lg font-bold text-blue-700">-</p>
+                </div>
+                <div class="currency-card rounded-xl p-4 bg-gradient-to-r from-green-50 to-green-100 border border-green-200">
+                    <p class="text-xs text-green-500 font-semibold">BRL → GBP</p>
+                    <p id="rateBRLtoGBP" class="text-lg font-bold text-green-700">-</p>
+                </div>
+                <div class="currency-card rounded-xl p-4 bg-gradient-to-r from-yellow-50 to-yellow-100 border border-yellow-200">
+                    <p class="text-xs text-yellow-600 font-semibold">BRL → ARS</p>
+                    <p id="rateBRLtoARS" class="text-lg font-bold text-yellow-700">-</p>
+                </div>
+                <div class="currency-card rounded-xl p-4 bg-gradient-to-r from-purple-50 to-purple-100 border border-purple-200">
+                    <p class="text-xs text-purple-500 font-semibold">USD → BRL</p>
+                    <p id="rateUSDtoBRL" class="text-lg font-bold text-purple-700">-</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Info -->
+        <div class="glass-card rounded-2xl p-6 text-sm text-gray-500 leading-relaxed">
+            <h3 class="font-bold text-gray-700 mb-2">Aviso</h3>
+            <p>As taxas de câmbio exibidas são aproximadas e têm caráter meramente informativo. Para transações reais, consulte seu banco ou uma casa de câmbio autorizada. Taxas atualizadas em Junho de 2026.</p>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer-gradient text-white py-8 px-4">
+        <div class="max-w-6xl mx-auto text-center">
+            <p class="mb-2">&copy; 2026 BaiGei Tools</p>
+            <a href="https://wdnmd.vip/" class="text-purple-300 hover:text-purple-200 text-sm transition">Voltar ao Início</a>
+        </div>
+    </footer>
+
+    <script>
+        // Fixed approximate rates (BRL as base reference)
+        const rates = {
+            BRL: 1.0,
+            USD: 1 / 5.50,    // 1 USD = 5.50 BRL
+            EUR: 1 / 5.90,    // 1 EUR = 5.90 BRL (approx)
+            GBP: 1 / 7.00,    // 1 GBP = 7.00 BRL (approx)
+            ARS: 1 / 0.006,   // 1 ARS = 0.006 BRL (approx) → ~167 ARS per BRL
+        };
+
+        const symbols = {
+            BRL: 'R$',
+            USD: '$',
+            EUR: '€',
+            GBP: '£',
+            ARS: 'ARS$',
+        };
+
+        const names = {
+            BRL: 'Real Brasileiro',
+            USD: 'Dólar Americano',
+            EUR: 'Euro',
+            GBP: 'Libra Esterlina',
+            ARS: 'Peso Argentino',
+        };
+
+        function formatCurrency(value, currency) {
+            const symbol = symbols[currency] || '';
+            if (currency === 'ARS') {
+                return symbol + ' ' + value.toFixed(2).replace('.', ',');
+            }
+            return symbol + ' ' + value.toFixed(2).replace('.', ',');
+        }
+
+        function convert() {
+            const from = document.getElementById('fromCurrency').value;
+            const to = document.getElementById('toCurrency').value;
+            const amount = parseFloat(document.getElementById('amountInput').value);
+            const container = document.getElementById('resultContainer');
+            const resultValue = document.getElementById('resultValue');
+            const resultLabel = document.getElementById('resultLabel');
+
+            if (!amount || isNaN(amount) || amount <= 0) {
+                container.classList.add('hidden');
+                return;
+            }
+
+            // Convert: amount in FROM currency → BRL → TO currency
+            const amountInBRL = amount / rates[from];
+            const convertedAmount = amountInBRL * rates[to];
+
+            const fromSymbol = symbols[from];
+            const toSymbol = symbols[to];
+
+            resultLabel.textContent = `1 ${from} = ${formatCurrency(rates[to] / rates[from], to)}`;
+            resultValue.textContent = `${toSymbol} ${convertedAmount.toFixed(2).replace('.', ',')}`;
+
+            container.classList.remove('hidden');
+            container.classList.add('fade-in');
+
+            updateOtherRates();
+        }
+
+        function updateOtherRates() {
+            const pairs = [
+                { id: 'rateBRLtoEUR', from: 'BRL', to: 'EUR' },
+                { id: 'rateBRLtoGBP', from: 'BRL', to: 'GBP' },
+                { id: 'rateBRLtoARS', from: 'BRL', to: 'ARS' },
+                { id: 'rateUSDtoBRL', from: 'USD', to: 'BRL' },
+            ];
+
+            pairs.forEach(pair => {
+                const rate = rates[pair.to] / rates[pair.from];
+                const el = document.getElementById(pair.id);
+                if (el) {
+                    el.textContent = `1 ${pair.from} = ${formatCurrency(rate, pair.to)}`;
+                }
+            });
+        }
+
+        function swapCurrencies() {
+            const from = document.getElementById('fromCurrency');
+            const to = document.getElementById('toCurrency');
+            const temp = from.value;
+            from.value = to.value;
+            to.value = temp;
+            convert();
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            (adsbygoogle = window.adsbygoogle || []).push({});
+            // Set default: BRL → USD
+            document.getElementById('fromCurrency').value = 'BRL';
+            document.getElementById('toCurrency').value = 'USD';
+            updateOtherRates();
+            document.getElementById('amountInput').addEventListener('keydown', function(e) {
+                if (e.key === 'Enter') convert();
+            });
+        });
+    </script>
+</body>
+</html>

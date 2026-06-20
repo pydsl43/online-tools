@@ -3,17 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="关于白给工具 - 免费在线工具平台，所有工具均在浏览器本地运行，保护用户隐私。了解我们的使命、技术栈和团队。">
+    <meta name="description" content="关于白给工具 - 免费在线工具平台，所有工具均在浏览器本地运行，保护用户隐私。了解我们的使命、技术栈和团队。" data-i18n-meta-content="meta_desc_about">
     <meta name="keywords" content="关于我们,在线工具,免费工具,本地处理,隐私保护,技术栈">
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://wdnmd.vip/about.html">
 
-    <meta property="og:title" content="关于我们 - 白给工具">
-    <meta property="og:description" content="了解白给工具的使命、技术栈和团队。免费、安全、保护隐私的在线工具平台。">
+    <meta property="og:title" content="关于我们 - 白给工具" data-i18n-meta-content="og_title_about">
+    <meta property="og:description" content="了解白给工具的使命、技术栈和团队。免费、安全、保护隐私的在线工具平台。" data-i18n-meta-content="meta_desc_about">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://wdnmd.vip/about.html">
 
-    <title>关于我们 - 白给工具</title>
+    <title data-i18n-title-tag="page_title_about">关于我们 - 白给工具</title>
 
     <!-- Tailwind CSS via CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -187,8 +187,11 @@
     <!-- Navigation -->
     <nav class="hero-gradient px-6 py-4">
         <div class="max-w-4xl mx-auto flex items-center justify-between">
-            <a href="https://wdnmd.vip/" class="text-white text-xl font-bold tracking-tight">🛠️ 白给工具</a>
-            <span class="text-white/60 text-sm">关于我们</span>
+            <a href="https://wdnmd.vip/" class="text-white text-xl font-bold tracking-tight" data-i18n="brand_name">🛠️ 白给工具</a>
+            <div class="flex items-center gap-4">
+                <span class="text-white/60 text-sm" data-i18n="page_title_about">关于我们</span>
+                <div id="lang-selector"></div>
+            </div>
         </div>
     </nav>
 
@@ -202,10 +205,10 @@
         <div class="max-w-4xl mx-auto text-center relative z-10">
             <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 text-white/80 text-sm mb-8">
                 <span class="w-2 h-2 rounded-full bg-green-400 animate-pulse"></span>
-                免费 · 安全 · 快速
+                <span data-i18n="header_tagline">免费 · 安全 · 快速</span>
             </div>
-            <h1 class="section-title text-4xl md:text-6xl font-extrabold mb-6">关于我们</h1>
-            <p class="text-xl text-white/70 max-w-2xl mx-auto font-light">
+            <h1 class="section-title text-4xl md:text-6xl font-extrabold mb-6" data-i18n="about_title">关于我们</h1>
+            <p class="text-xl text-white/70 max-w-2xl mx-auto font-light" data-i18n="about_subtitle">
                 让每个人都拥有免费、安全、高效的在线工具
             </p>
         </div>
@@ -215,8 +218,8 @@
     <section class="py-16 px-6 bg-white">
         <div class="max-w-4xl mx-auto">
             <div class="text-center mb-12">
-                <h2 class="section-title text-3xl md:text-4xl font-extrabold mb-4">我们的使命</h2>
-                <p class="text-gray-500 text-lg max-w-2xl mx-auto">
+                <h2 class="section-title text-3xl md:text-4xl font-extrabold mb-4" data-i18n="about_mission_title">我们的使命</h2>
+                <p class="text-gray-500 text-lg max-w-2xl mx-auto" data-i18n="about_mission_text">
                     打造一个完全免费、无需注册、保护隐私的在线工具平台，让每个人都能轻松完成日常工作
                 </p>
             </div>
@@ -224,22 +227,22 @@
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <div class="value-card bg-gray-50 rounded-2xl p-8 text-center border border-gray-100">
                     <div class="text-5xl mb-4">🎯</div>
-                    <h3 class="text-xl font-bold text-gray-800 mb-3">完全免费</h3>
-                    <p class="text-gray-500 leading-relaxed text-sm">
+                    <h3 class="text-xl font-bold text-gray-800 mb-3" data-i18n="about_feature1_title">完全免费</h3>
+                    <p class="text-gray-500 leading-relaxed text-sm" data-i18n="about_feature1_text">
                         所有工具永久免费使用，没有任何隐藏费用、功能限制或付费墙。
                     </p>
                 </div>
                 <div class="value-card bg-gray-50 rounded-2xl p-8 text-center border border-gray-100">
                     <div class="text-5xl mb-4">🔒</div>
-                    <h3 class="text-xl font-bold text-gray-800 mb-3">隐私优先</h3>
-                    <p class="text-gray-500 leading-relaxed text-sm">
+                    <h3 class="text-xl font-bold text-gray-800 mb-3" data-i18n="about_feature2_title">隐私优先</h3>
+                    <p class="text-gray-500 leading-relaxed text-sm" data-i18n="about_feature2_text">
                         所有文件在浏览器本地处理，绝不上传到服务器，您的数据完全由您掌控。
                     </p>
                 </div>
                 <div class="value-card bg-gray-50 rounded-2xl p-8 text-center border border-gray-100">
                     <div class="text-5xl mb-4">⚡</div>
-                    <h3 class="text-xl font-bold text-gray-800 mb-3">高效便捷</h3>
-                    <p class="text-gray-500 leading-relaxed text-sm">
+                    <h3 class="text-xl font-bold text-gray-800 mb-3" data-i18n="about_feature3_title">高效便捷</h3>
+                    <p class="text-gray-500 leading-relaxed text-sm" data-i18n="about_feature3_text">
                         纯前端实现，无需等待服务器响应，打开即用，操作简单快捷。
                     </p>
                 </div>
@@ -282,8 +285,8 @@
     <section class="py-16 px-6 bg-white">
         <div class="max-w-4xl mx-auto">
             <div class="text-center mb-12">
-                <h2 class="section-title text-3xl md:text-4xl font-extrabold mb-4">技术栈</h2>
-                <p class="text-gray-500">纯前端技术栈，保障安全与效率</p>
+                <h2 class="section-title text-3xl md:text-4xl font-extrabold mb-4" data-i18n="about_tech_title">技术栈</h2>
+                <p class="text-gray-500" data-i18n="about_tech_text">纯前端技术栈，保障安全与效率</p>
             </div>
 
             <div class="flex flex-wrap justify-center gap-4">
@@ -397,21 +400,21 @@
         <div class="max-w-4xl mx-auto">
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
                 <div>
-                    <span class="text-xl font-bold">🛠️ 白给工具</span>
-                    <p class="text-white/50 mt-3 text-sm leading-relaxed">
+                    <span class="text-xl font-bold" data-i18n="brand_name">🛠️ 白给工具</span>
+                    <p class="text-white/50 mt-3 text-sm leading-relaxed" data-i18n="footer_brand_desc">
                         白给工具 · 完全免费 · 本地处理 · 保护隐私。所有工具均在浏览器本地运行。
                     </p>
                 </div>
                 <div>
-                    <h4 class="font-semibold mb-3 text-white/80">快速链接</h4>
+                    <h4 class="font-semibold mb-3 text-white/80" data-i18n="footer_links_title">快速链接</h4>
                     <ul class="space-y-2 text-sm text-white/50">
-                        <li><a href="https://wdnmd.vip/" class="hover:text-white transition-colors">返回首页</a></li>
+                        <li><a href="https://wdnmd.vip/" class="hover:text-white transition-colors" data-i18n="back_to_home">返回首页</a></li>
                         <li><a href="https://wdnmd.vip/privacy.html" class="hover:text-white transition-colors">隐私政策</a></li>
                         <li><a href="https://wdnmd.vip/contact.html" class="hover:text-white transition-colors">联系我们</a></li>
                     </ul>
                 </div>
                 <div>
-                    <h4 class="font-semibold mb-3 text-white/80">工具链接</h4>
+                    <h4 class="font-semibold mb-3 text-white/80" data-i18n="footer_links_title">工具链接</h4>
                     <ul class="space-y-2 text-sm text-white/50">
                         <li><a href="https://wdnmd.vip/image-tools/" class="hover:text-white transition-colors">在线图片压缩</a></li>
                         <li><a href="https://wdnmd.vip/pdf-tools/" class="hover:text-white transition-colors">在线PDF工具</a></li>
@@ -420,7 +423,7 @@
                 </div>
             </div>
             <div class="border-t border-white/10 pt-6 text-center text-sm text-white/40">
-                <p>&copy; 2026 白给工具 · 保留所有权利</p>
+                <p data-i18n="footer_copyright">&copy; 2026 白给工具 · 保留所有权利</p>
             </div>
         </div>
     </footer>
@@ -450,6 +453,12 @@
             "url": "https://wdnmd.vip/"
         }
     }
+    </script>
+
+    <script src="/i18n/translations.js"></script>
+    <script src="/i18n/i18n.js" defer></script>
+    <script>
+        createLanguageSelector('lang-selector');
     </script>
 </body>
 </html>

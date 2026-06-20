@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>在线图片压缩 - 免费批量压缩PNG/JPG/WebP图片工具</title>
-<meta name="description" content="在线图片压缩工具，免费、快速、安全地压缩PNG、JPG、JPEG、WebP、BMP、GIF等格式图片。支持批量上传，压缩质量可调，所有处理均在浏览器本地完成，保护您的隐私安全。">
+<title data-i18n-title-tag="img_title">在线图片压缩 - 免费批量压缩PNG/JPG/WebP图片工具</title>
+<meta name="description" data-i18n-meta-content="img_description" content="在线图片压缩工具，免费、快速、安全地压缩PNG、JPG、JPEG、WebP、BMP、GIF等格式图片。支持批量上传，压缩质量可调，所有处理均在浏览器本地完成，保护您的隐私安全。">
 <meta name="keywords" content="在线图片压缩,图片压缩工具,免费压缩图片,批量压缩图片,PNG压缩,JPG压缩,WebP压缩,图片缩小">
 <meta name="robots" content="index, follow">
 <meta name="baidu-site-verification" content="codeva-0LodSOu7oa" />
@@ -12,8 +12,8 @@
 <link rel="canonical" href="https://wdnmd.vip/image-tools/">
 
 <!-- Open Graph -->
-<meta property="og:title" content="在线图片压缩 - 免费批量图片压缩工具">
-<meta property="og:description" content="免费、快速、安全的在线图片压缩工具，支持批量处理，保护隐私。">
+<meta property="og:title" data-i18n-meta-content="img_og_title" content="在线图片压缩 - 免费批量图片压缩工具">
+<meta property="og:description" data-i18n-meta-content="img_og_desc" content="免费、快速、安全的在线图片压缩工具，支持批量处理，保护隐私。">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://wdnmd.vip/image-tools/">
 <meta property="og:image" content="https://wdnmd.vip/image-tools/og-image.png">
@@ -189,20 +189,21 @@ input[type="range"]::-moz-range-thumb { width: 22px; height: 22px; background: w
       <div class="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-blue-500 to-purple-600 shadow-lg mb-4">
         <span class="text-3xl">🖼️</span>
       </div>
-      <h1 class="text-4xl md:text-5xl font-extrabold bg-gradient-to-r from-blue-600 via-purple-600 to-pink-500 bg-clip-text text-transparent mb-3">
+      <h1 class="text-4xl md:text-5xl font-extrabold bg-gradient-to-r from-blue-600 via-purple-600 to-pink-500 bg-clip-text text-transparent mb-3" data-i18n="img_heading">
         在线图片压缩
       </h1>
-      <p class="text-lg md:text-xl text-gray-500 font-medium mb-2">免费 · 快速 · 安全 · 本地处理</p>
+      <p class="text-lg md:text-xl text-gray-500 font-medium mb-2" data-i18n="img_subtitle">免费 · 快速 · 安全 · 本地处理</p>
       <p class="text-sm text-gray-400">无需上传，所有处理仅在您的浏览器中进行</p>
+      <div id="lang-selector" class="mt-4"></div>
     </div>
   </header>
 
   <!-- ===== Stats ===== -->
   <section class="max-w-3xl mx-auto px-4 mt-8">
     <div class="grid grid-cols-3 gap-3 md:gap-6">
-      <div class="stat-card"><div class="stat-number" id="imagesProcessed">0</div><div class="stat-label">已处理图片</div></div>
-      <div class="stat-card"><div class="stat-number" id="totalSaved">0 B</div><div class="stat-label">累计节省</div></div>
-      <div class="stat-card"><div class="stat-number" id="compressionAvg">0%</div><div class="stat-label">平均压缩率</div></div>
+      <div class="stat-card"><div class="stat-number" id="imagesProcessed">0</div><div class="stat-label" data-i18n="img_processed_label">已处理图片</div></div>
+      <div class="stat-card"><div class="stat-number" id="totalSaved">0 B</div><div class="stat-label" data-i18n="img_saved_label">累计节省</div></div>
+      <div class="stat-card"><div class="stat-number" id="compressionAvg">0%</div><div class="stat-label" data-i18n="img_avg_ratio_label">平均压缩率</div></div>
     </div>
   </section>
 
@@ -233,9 +234,9 @@ input[type="range"]::-moz-range-thumb { width: 22px; height: 22px; background: w
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/>
             </svg>
           </div>
-          <p class="text-lg font-medium text-gray-700 mb-2">将图片拖拽到此处</p>
-          <p class="text-sm text-gray-400 mb-4">或点击选择文件</p>
-          <button type="button" class="btn-primary text-sm" onclick="document.getElementById('fileInput').click()">
+          <p class="text-lg font-medium text-gray-700 mb-2" data-i18n="img_dropzone_text">将图片拖拽到此处</p>
+          <p class="text-sm text-gray-400 mb-4" data-i18n="img_dropzone_hint">或点击选择文件</p>
+          <button type="button" class="btn-primary text-sm" onclick="document.getElementById('fileInput').click()" data-i18n="img_upload_button">
             选择图片
           </button>
           <p class="text-xs text-gray-400 mt-4">
@@ -262,20 +263,20 @@ input[type="range"]::-moz-range-thumb { width: 22px; height: 22px; background: w
       <div class="flex flex-col md:flex-row md:items-center gap-6">
         <div class="flex-1">
           <div class="flex items-center justify-between mb-2">
-            <label class="text-sm font-medium text-gray-700">压缩质量</label>
+            <label class="text-sm font-medium text-gray-700" data-i18n="img_quality_label">压缩质量</label>
             <span class="text-sm font-semibold text-blue-600" id="qualityLabel">80%</span>
           </div>
           <input type="range" id="qualitySlider" min="1" max="100" value="80" class="w-full">
           <div class="flex justify-between text-xs text-gray-400 mt-1">
-            <span>最小体积</span>
-            <span>最佳质量</span>
+            <span data-i18n="img_quality_min">最小体积</span>
+            <span data-i18n="img_quality_max">最佳质量</span>
           </div>
         </div>
         <div class="flex gap-3">
-          <button type="button" id="compressAllBtn" class="btn-primary text-sm whitespace-nowrap">
+          <button type="button" id="compressAllBtn" class="btn-primary text-sm whitespace-nowrap" data-i18n="img_compress_button">
             压缩全部
           </button>
-          <button type="button" id="clearAllBtn" class="btn-secondary text-sm whitespace-nowrap">
+          <button type="button" id="clearAllBtn" class="btn-secondary text-sm whitespace-nowrap" data-i18n="img_clear_all">
             清空全部
           </button>
         </div>
@@ -289,7 +290,7 @@ input[type="range"]::-moz-range-thumb { width: 22px; height: 22px; background: w
       <!-- Batch list -->
       <div class="lg:col-span-1">
         <div class="image-card p-4">
-          <h3 class="text-sm font-semibold text-gray-700 mb-3">上传列表 (<span id="batchCount">0</span>)</h3>
+          <h3 class="text-sm font-semibold text-gray-700 mb-3"><span data-i18n="img_batch_list_title">上传列表</span> (<span id="batchCount">0</span>)</h3>
           <div class="space-y-2 max-h-[500px] overflow-y-auto pr-1" id="batchList"></div>
         </div>
       </div>
@@ -301,7 +302,7 @@ input[type="range"]::-moz-range-thumb { width: 22px; height: 22px; background: w
             <svg class="w-12 h-12 mx-auto mb-3 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
             </svg>
-            <p>点击左侧图片查看详情与对比</p>
+            <p data-i18n="img_no_files">点击左侧图片查看详情与对比</p>
           </div>
         </div>
       </div>
@@ -324,56 +325,56 @@ input[type="range"]::-moz-range-thumb { width: 22px; height: 22px; background: w
   <!-- ===== FAQ Section ===== -->
   <section class="max-w-3xl mx-auto px-4 mt-12">
     <div class="image-card p-6 md:p-8">
-      <h2 class="text-2xl font-bold text-gray-800 mb-6 text-center">常见问题</h2>
+      <h2 class="text-2xl font-bold text-gray-800 mb-6 text-center" data-i18n="img_faq_title">常见问题</h2>
       <div class="space-y-0">
         <div class="faq-item">
           <div class="faq-question" onclick="toggleFaq(this)">
-            <span>这个工具是免费的吗？</span>
+            <span data-i18n="img_faq_q1">这个工具是免费的吗？</span>
             <span class="faq-icon">▼</span>
           </div>
-          <div class="faq-answer">是的，完全免费！本工具无需注册，无需付费，您可以无限制地使用所有功能。</div>
+          <div class="faq-answer" data-i18n="img_faq_a1">是的，完全免费！本工具无需注册，无需付费，您可以无限制地使用所有功能。</div>
         </div>
         <div class="faq-item">
           <div class="faq-question" onclick="toggleFaq(this)">
-            <span>我的图片会上传到服务器吗？</span>
+            <span data-i18n="img_faq_q2">我的图片会上传到服务器吗？</span>
             <span class="faq-icon">▼</span>
           </div>
-          <div class="faq-answer">绝对不会！所有图片处理仅在您的浏览器本地进行，不会上传到任何服务器。您可以放心处理敏感图片。</div>
+          <div class="faq-answer" data-i18n="img_faq_a2">绝对不会！所有图片处理仅在您的浏览器本地进行，不会上传到任何服务器。您可以放心处理敏感图片。</div>
         </div>
         <div class="faq-item">
           <div class="faq-question" onclick="toggleFaq(this)">
-            <span>支持哪些图片格式？</span>
+            <span data-i18n="img_faq_q3">支持哪些图片格式？</span>
             <span class="faq-icon">▼</span>
           </div>
-          <div class="faq-answer">支持 PNG、JPG、JPEG、WebP、BMP、GIF 等常见图片格式。但请注意，GIF 动画压缩后可能丢失动画效果。</div>
+          <div class="faq-answer" data-i18n="img_faq_a3">支持 PNG、JPG、JPEG、WebP、BMP、GIF 等常见图片格式。但请注意，GIF 动画压缩后可能丢失动画效果。</div>
         </div>
         <div class="faq-item">
           <div class="faq-question" onclick="toggleFaq(this)">
-            <span>图片大小有限制吗？</span>
+            <span data-i18n="img_faq_q4">图片大小有限制吗？</span>
             <span class="faq-icon">▼</span>
           </div>
-          <div class="faq-answer">单张图片建议不超过 20MB。由于所有处理在浏览器中进行，超大文件可能会影响处理速度和浏览器性能。</div>
+          <div class="faq-answer" data-i18n="img_faq_a4">单张图片建议不超过 20MB。由于所有处理在浏览器中进行，超大文件可能会影响处理速度和浏览器性能。</div>
         </div>
         <div class="faq-item">
           <div class="faq-question" onclick="toggleFaq(this)">
-            <span>压缩后图片质量会变差吗？</span>
+            <span data-i18n="img_faq_q5">压缩后图片质量会变差吗？</span>
             <span class="faq-icon">▼</span>
           </div>
-          <div class="faq-answer">您可以通过质量滑块（1-100）自由控制压缩程度。质量值越高，图片质量越好但文件更大；反之文件更小但质量可能下降。建议从 80% 开始尝试。</div>
+          <div class="faq-answer" data-i18n="img_faq_a5">您可以通过质量滑块（1-100）自由控制压缩程度。质量值越高，图片质量越好但文件更大；反之文件更小但质量可能下降。建议从 80% 开始尝试。</div>
         </div>
         <div class="faq-item">
           <div class="faq-question" onclick="toggleFaq(this)">
-            <span>支持批量上传吗？</span>
+            <span data-i18n="img_faq_q6">支持批量上传吗？</span>
             <span class="faq-icon">▼</span>
           </div>
-          <div class="faq-answer">支持！您一次可以选择多张图片上传，然后一键压缩所有图片，也可以单独查看每张图片的压缩效果。</div>
+          <div class="faq-answer" data-i18n="img_faq_a6">支持！您一次可以选择多张图片上传，然后一键压缩所有图片，也可以单独查看每张图片的压缩效果。</div>
         </div>
         <div class="faq-item">
           <div class="faq-question" onclick="toggleFaq(this)">
-            <span>压缩后的图片如何下载？</span>
+            <span data-i18n="img_faq_q7">压缩后的图片如何下载？</span>
             <span class="faq-icon">▼</span>
           </div>
-          <div class="faq-answer">您可以点击单张图片的下载按钮单独下载，也可以点击"全部下载"一键下载所有压缩后的图片（将逐个下载）。</div>
+          <div class="faq-answer" data-i18n="img_faq_a7">您可以点击单张图片的下载按钮单独下载，也可以点击"全部下载"一键下载所有压缩后的图片（将逐个下载）。</div>
         </div>
       </div>
     </div>
@@ -382,7 +383,7 @@ input[type="range"]::-moz-range-thumb { width: 22px; height: 22px; background: w
   <!-- ===== Privacy Note ===== -->
   <section class="max-w-3xl mx-auto px-4 mt-6">
     <div class="bg-gradient-to-r from-blue-50 to-purple-50 border border-blue-100 rounded-xl p-5 text-center">
-      <p class="text-sm text-gray-600">
+      <p class="text-sm text-gray-600" data-i18n-html="img_privacy_note">
         <span class="font-semibold">🔒 隐私声明：</span>
         所有图片处理仅在您的浏览器中进行，不会上传到任何服务器。您的图片安全由您自己掌控。
       </p>
@@ -407,11 +408,11 @@ input[type="range"]::-moz-range-thumb { width: 22px; height: 22px; background: w
     <div class="border-t border-gray-200 pt-8">
       <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center md:text-left">
         <div>
-          <h4 class="font-semibold text-gray-700 mb-3">在线图片压缩</h4>
-          <p class="text-sm text-gray-400 leading-relaxed">免费、快速、安全的在线图片压缩工具。所有处理均在本地浏览器完成，保护您的隐私安全。</p>
+          <h4 class="font-semibold text-gray-700 mb-3" data-i18n="img_footer_brand_title">在线图片压缩</h4>
+          <p class="text-sm text-gray-400 leading-relaxed" data-i18n="img_footer_brand_desc">免费、快速、安全的在线图片压缩工具。所有处理均在本地浏览器完成，保护您的隐私安全。</p>
         </div>
         <div>
-          <h4 class="font-semibold text-gray-700 mb-3">支持的格式</h4>
+          <h4 class="font-semibold text-gray-700 mb-3" data-i18n="img_footer_formats_title">支持的格式</h4>
           <div class="flex flex-wrap gap-2 justify-center md:justify-start">
             <span class="badge badge-blue">PNG</span>
             <span class="badge badge-blue">JPG</span>
@@ -422,15 +423,15 @@ input[type="range"]::-moz-range-thumb { width: 22px; height: 22px; background: w
           </div>
         </div>
         <div>
-          <h4 class="font-semibold text-gray-700 mb-3">关于</h4>
-          <p class="text-sm text-gray-400 leading-relaxed">
+          <h4 class="font-semibold text-gray-700 mb-3" data-i18n="img_footer_about_title">关于</h4>
+          <p class="text-sm text-gray-400 leading-relaxed" data-i18n-html="img_footer_about_desc">
             本工具致力于为用户提供便捷、安全的图片压缩服务。<br>
             如果您有任何问题或建议，欢迎联系我们。
           </p>
         </div>
       </div>
       <div class="text-center mt-8 pt-6 border-t border-gray-100">
-        <p class="text-sm text-gray-400">&copy; 2026 在线图片压缩. All rights reserved.</p>
+        <p class="text-sm text-gray-400" data-i18n-html="footer_copyright">&copy; 2026 在线图片压缩. All rights reserved.</p>
       </div>
     </div>
   </footer>
@@ -881,18 +882,18 @@ function renderBatchList() {
     let statusHtml = '';
     switch (img.status) {
       case 'waiting':
-        statusHtml = '<span class="badge badge-blue batch-item-status">待压缩</span>';
+        statusHtml = '<span class="badge badge-blue batch-item-status" data-i18n="img_status_waiting">待压缩</span>';
         break;
       case 'compressing':
-        statusHtml = '<span class="batch-item-status" style="color:#3b82f6;font-weight:500;">压缩中...</span>';
+        statusHtml = '<span class="batch-item-status" style="color:#3b82f6;font-weight:500;" data-i18n="img_processing">压缩中...</span>';
         break;
       case 'done':
         const saved = img.originalSize - img.compressedSize;
         const ratio = ((1 - img.compressedSize / img.originalSize) * 100).toFixed(1);
-        statusHtml = '<span class="badge badge-green batch-item-status">已压缩 ' + ratio + '%</span>';
+        statusHtml = '<span class="badge badge-green batch-item-status"><span data-i18n="img_status_done">已压缩</span> ' + ratio + '%</span>';
         break;
       case 'error':
-        statusHtml = '<span class="badge badge-red batch-item-status">压缩失败</span>';
+        statusHtml = '<span class="badge badge-red batch-item-status" data-i18n="img_error">压缩失败</span>';
         break;
     }
 
@@ -907,7 +908,7 @@ function renderBatchList() {
           <div class="batch-item-size">${sizeStr}</div>
           ${statusHtml}
         </div>
-        <button type="button" class="remove-btn" onclick="event.stopPropagation(); removeImage('${img.id}')" title="移除">
+        <button type="button" class="remove-btn" onclick="event.stopPropagation(); removeImage('${img.id}')" title="移除" data-i18n-title="img_remove_tooltip">
           ✕
         </button>
       </div>
@@ -994,55 +995,55 @@ function updateDetailView() {
           <img src="${img.thumbUrl}" alt="原始图片" style="display:block;width:100%;height:auto;">
         </div>
         <div class="comparison-slider" id="comparisonSlider"></div>
-        <div class="comparison-label original">原图</div>
-        <div class="comparison-label compressed">压缩后</div>
+        <div class="comparison-label original" data-i18n="img_original_label">原图</div>
+        <div class="comparison-label compressed" data-i18n="img_compressed_label">压缩后</div>
       </div>
     </div>
 
     <div class="grid grid-cols-3 gap-4 text-center mb-4">
       <div class="bg-gray-50 rounded-lg p-3">
-        <div class="text-xs text-gray-500">原图大小</div>
+        <div class="text-xs text-gray-500" data-i18n="img_original_size_label">原图大小</div>
         <div class="text-sm font-semibold text-gray-700">${originalSizeStr}</div>
       </div>
       <div class="bg-gray-50 rounded-lg p-3">
-        <div class="text-xs text-gray-500">压缩后</div>
+        <div class="text-xs text-gray-500" data-i18n="img_compressed_size">压缩后</div>
         <div class="text-sm font-semibold text-green-600">${compressedSizeStr}</div>
       </div>
       <div class="bg-gray-50 rounded-lg p-3">
-        <div class="text-xs text-gray-500">节省 / 压缩率</div>
+        <div class="text-xs text-gray-500" data-i18n="img_savings">节省 / 压缩率</div>
         <div class="text-sm font-semibold text-blue-600">${savedStr} / ${ratioStr}</div>
       </div>
     </div>
     ` : img.status === 'compressing' ? `
     <div class="text-center py-12">
       <div class="spinner mx-auto mb-4"></div>
-      <p class="text-gray-500">正在压缩...</p>
+      <p class="text-gray-500" data-i18n="img_processing">正在压缩...</p>
     </div>
     ` : img.status === 'error' ? `
     <div class="text-center py-12">
       <svg class="w-16 h-16 mx-auto mb-3 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L4.082 16.5c-.77.833.192 2.5 1.732 2.5z"/>
       </svg>
-      <p class="text-red-500 mb-2">压缩失败</p>
-      <button class="btn-primary text-xs" onclick="recompressImage('${img.id}')">重新压缩</button>
+      <p class="text-red-500 mb-2" data-i18n="img_error">压缩失败</p>
+      <button class="btn-primary text-xs" onclick="recompressImage('${img.id}')" data-i18n="img_recompress">重新压缩</button>
     </div>
     ` : `
     <div class="text-center py-12">
       <div class="mb-4">
         <img src="${img.thumbUrl}" alt="${escapeHtml(img.name)}" class="max-h-64 mx-auto rounded-lg shadow-sm">
       </div>
-      <div class="text-sm text-gray-500 mb-1">大小：${originalSizeStr}</div>
-      <p class="text-gray-400">等待压缩</p>
+      <div class="text-sm text-gray-500 mb-1"><span data-i18n="img_file_size">大小</span>：${originalSizeStr}</div>
+      <p class="text-gray-400" data-i18n="img_status_waiting">等待压缩</p>
     </div>
     `}
 
     <div class="flex gap-3 justify-end pt-3 border-t border-gray-100">
       ${hasCompressed ? `
-      <button type="button" class="btn-primary text-sm" onclick="downloadImage(state.images.find(i=>i.id==='${img.id}'))">
+      <button type="button" class="btn-primary text-sm" onclick="downloadImage(state.images.find(i=>i.id==='${img.id}'))" data-i18n="img_download">
         下载压缩图片
       </button>
       ` : ''}
-      <button type="button" class="btn-secondary text-sm" onclick="removeImage('${img.id}')">移除</button>
+      <button type="button" class="btn-secondary text-sm" onclick="removeImage('${img.id}')" data-i18n="img_remove">移除</button>
     </div>
   `;
 
@@ -1182,7 +1183,7 @@ function setupProgressBar() {
   if (!qualityDiv) return;
   progressDiv.innerHTML = `
     <div class="flex items-center gap-3">
-      <span class="text-xs text-gray-500 whitespace-nowrap">压缩进度</span>
+      <span class="text-xs text-gray-500 whitespace-nowrap" data-i18n="img_progress_label">压缩进度</span>
       <div class="progress-bar flex-1">
         <div class="progress-bar-fill" id="progressFill"></div>
       </div>
@@ -1233,6 +1234,17 @@ document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('controls').style.display = 'none';
   document.getElementById('results').style.display = 'none';
 });
+</script>
+
+<!-- ===== i18n ===== -->
+<script src="/i18n/translations.js"></script>
+<script src="/i18n/i18n.js" defer></script>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    if (window.createLanguageSelector) {
+      createLanguageSelector('lang-selector');
+    }
+  });
 </script>
 </body>
 </html>

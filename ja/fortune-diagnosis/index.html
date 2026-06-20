@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>名前診断 - あなたの名前で運勢占い</title>
+    <meta name="description" content="あなたの名前を入力するだけで運勢を診断！大吉・中吉・小吉・吉・末吉の5段階で結果をお知らせします。">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2082456546225568" crossorigin="anonymous"></script>
+    <style>
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        @keyframes sparkle {
+            0%, 100% { opacity: 0; transform: scale(0); }
+            50% { opacity: 1; transform: scale(1); }
+        }
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes pulse-glow {
+            0%, 100% { box-shadow: 0 0 20px rgba(255, 215, 0, 0.3); }
+            50% { box-shadow: 0 0 40px rgba(255, 215, 0, 0.6); }
+        }
+        .result-card {
+            animation: slideUp 0.6s ease-out, pulse-glow 2s ease-in-out infinite;
+        }
+        .sparkle {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            background: gold;
+            border-radius: 50%;
+            animation: sparkle 1.5s ease-in-out infinite;
+        }
+        .result-大吉 { background: linear-gradient(135deg, #ffd700, #ff6b00); }
+        .result-中吉 { background: linear-gradient(135deg, #f0e68c, #ffa500); }
+        .result-小吉 { background: linear-gradient(135deg, #98fb98, #32cd32); }
+        .result-吉 { background: linear-gradient(135deg, #87ceeb, #4169e1); }
+        .result-末吉 { background: linear-gradient(135deg, #dda0dd, #9370db); }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-purple-900 via-indigo-900 to-blue-900 min-h-screen">
+    <div class="container mx-auto px-4 py-8 max-w-lg">
+        <a href="https://wdnmd.vip/" class="text-white/60 hover:text-white text-sm mb-4 inline-block">&larr; トップへ戻る</a>
+        
+        <div class="text-center mb-8">
+            <h1 class="text-3xl font-bold text-white mb-2">🔮 名前診断</h1>
+            <p class="text-purple-200">あなたの名前で運勢を占います</p>
+        </div>
+
+        <div class="bg-white/10 backdrop-blur-lg rounded-2xl p-8 shadow-xl">
+            <div class="mb-6">
+                <label for="nameInput" class="block text-white text-lg mb-2 font-medium">あなたの名前（ひらがな・漢字）</label>
+                <input type="text" id="nameInput" placeholder="例: たろう、太郎" class="w-full px-4 py-3 rounded-xl bg-white/20 text-white placeholder-purple-300 border border-white/30 focus:border-yellow-400 focus:outline-none text-lg">
+            </div>
+            <button id="fortuneBtn" class="w-full py-4 rounded-xl font-bold text-xl text-white bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-400 hover:to-orange-400 transition-all transform hover:scale-105 shadow-lg">
+                運勢を診断する
+            </button>
+        </div>
+
+        <div id="resultArea" class="mt-6 hidden">
+            <div class="result-card rounded-2xl p-8 text-center text-white relative overflow-hidden" id="resultCard">
+                <div class="sparkle" style="top:10%;left:10%;animation-delay:0s;"></div>
+                <div class="sparkle" style="top:20%;right:15%;animation-delay:0.3s;"></div>
+                <div class="sparkle" style="top:60%;left:20%;animation-delay:0.6s;"></div>
+                <div class="sparkle" style="bottom:20%;right:10%;animation-delay:0.9s;"></div>
+                <div class="sparkle" style="top:40%;left:5%;animation-delay:1.2s;"></div>
+                <div class="sparkle" style="bottom:30%;right:25%;animation-delay:1.5s;"></div>
+                
+                <p class="text-lg opacity-80 mb-2" id="inputNameDisplay"></p>
+                <p class="text-sm opacity-60 mb-4">の今日の運勢は...</p>
+                <div class="text-6xl font-bold mb-4" id="resultText">大吉</div>
+                <div class="text-3xl mb-4" id="resultEmoji">🌟</div>
+                <div class="bg-white/20 rounded-xl px-4 py-3">
+                    <p class="text-sm opacity-80">運勢スコア</p>
+                    <p class="text-2xl font-bold" id="scoreDisplay">85</p>
+                </div>
+                <button id="shareBtn" class="mt-4 px-6 py-2 bg-white/20 hover:bg-white/30 rounded-full text-sm transition">結果をシェア</button>
+            </div>
+        </div>
+
+        <div class="mt-8 text-center text-white/40 text-xs">
+            <p>※ この診断は娯楽目的です</p>
+        </div>
+    </div>
+
+    <footer class="text-center py-6 text-white/40 text-sm">
+        <a href="https://wdnmd.vip/" class="hover:text-white/60 transition">トップページ</a>
+        <span class="mx-2">|</span>
+        © 2026 BaiGei Tools
+    </footer>
+
+    <script>
+        const fortunes = [
+            { text: '大吉', emoji: '🌟', scoreRange: [90, 100] },
+            { text: '中吉', emoji: '✨', scoreRange: [70, 89] },
+            { text: '小吉', emoji: '🌸', scoreRange: [50, 69] },
+            { text: '吉', emoji: '🍀', scoreRange: [30, 49] },
+            { text: '末吉', emoji: '🎋', scoreRange: [0, 29] }
+        ];
+
+        const messages = {
+            '大吉': '最高の一日！すべてがうまくいきます！',
+            '中吉': '良いことがたくさんありそうです！',
+            '小吉': '小さな幸せを見つけられそう！',
+            '吉': '穏やかな一日になるでしょう！',
+            '末吉': '最後には良いことが待っています！'
+        };
+
+        function calculateFortune(name) {
+            if (!name.trim()) return null;
+            let sum = 0;
+            for (let i = 0; i < name.length; i++) {
+                sum += name.charCodeAt(i);
+            }
+            const mod = sum % 5;
+            const result = fortunes[mod];
+            // Extract a "score" within the range for display
+            const score = result.scoreRange[0] + (sum % (result.scoreRange[1] - result.scoreRange[0] + 1));
+            return { ...result, score, message: messages[result.text] };
+        }
+
+        const nameInput = document.getElementById('nameInput');
+        const fortuneBtn = document.getElementById('fortuneBtn');
+        const resultArea = document.getElementById('resultArea');
+        const resultCard = document.getElementById('resultCard');
+        const inputNameDisplay = document.getElementById('inputNameDisplay');
+        const resultText = document.getElementById('resultText');
+        const resultEmoji = document.getElementById('resultEmoji');
+        const scoreDisplay = document.getElementById('scoreDisplay');
+        const shareBtn = document.getElementById('shareBtn');
+
+        fortuneBtn.addEventListener('click', () => {
+            const name = nameInput.value.trim();
+            if (!name) {
+                nameInput.classList.add('border-red-400');
+                setTimeout(() => nameInput.classList.remove('border-red-400'), 1000);
+                return;
+            }
+            
+            const result = calculateFortune(name);
+            if (!result) return;
+
+            // Remove previous color class and add new one
+            resultCard.className = resultCard.className.replace(/result-\S+/g, '');
+            resultCard.classList.add('result-card', `result-${result.text}`, 'rounded-2xl', 'p-8', 'text-center', 'text-white', 'relative', 'overflow-hidden');
+            
+            inputNameDisplay.textContent = `「${name}」`;
+            resultText.textContent = result.text;
+            resultEmoji.textContent = result.emoji;
+            scoreDisplay.textContent = result.score;
+            
+            resultArea.classList.remove('hidden');
+            
+            // Re-trigger animation
+            resultCard.style.animation = 'none';
+            void resultCard.offsetHeight;
+            resultCard.style.animation = '';
+        });
+
+        nameInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') fortuneBtn.click();
+        });
+
+        shareBtn.addEventListener('click', () => {
+            const name = nameInput.value.trim();
+            const text = encodeURIComponent(`🔮 【名前診断】「${name}」の今日の運勢は「${resultText.textContent}」です！\n✨ 運勢スコア: ${scoreDisplay.textContent}点\n\nhttps://wdnmd.vip/ja/fortune-diagnosis/`);
+            window.open(`https://twitter.com/intent/tweet?text=${text}`, '_blank');
+        });
+    </script>
+</body>
+</html>

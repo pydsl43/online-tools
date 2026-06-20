@@ -3,19 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="白给工具 - 免费在线图片压缩、PDF处理、文字处理工具。无需注册，本地处理，保护隐私。">
-    <meta name="keywords" content="在线工具,图片压缩,PDF工具,文字处理,免费工具,在线处理">
+    <meta name="description" content="白给工具 - 免费在线图片压缩、PDF处理、文字处理工具。无需注册，本地处理，保护隐私。" data-i18n-meta-content="meta_description">
+    <meta name="keywords" content="在线工具,图片压缩,PDF工具,文字处理,免费工具,在线处理" data-i18n-meta-content="meta_keywords">
     <meta name="robots" content="index, follow">
     <meta name="baidu-site-verification" content="codeva-0LodSOu7oa" />
     <meta name="google-site-verification" content="google5040b860c25716ee" />
     <link rel="canonical" href="https://wdnmd.vip/">
 
-    <meta property="og:title" content="白给工具 - 免费图片压缩、PDF处理、文字处理">
-    <meta property="og:description" content="白给工具 - 免费在线图片压缩、PDF处理、文字处理工具。无需注册，本地处理，保护隐私。">
+    <meta property="og:title" content="白给工具 - 免费图片压缩、PDF处理、文字处理" data-i18n-meta-content="og_title">
+    <meta property="og:description" content="白给工具 - 免费在线图片压缩、PDF处理、文字处理工具。无需注册，本地处理，保护隐私。" data-i18n-meta-content="og_description">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://wdnmd.vip/">
 
-    <title>白给工具 - 免费图片压缩、PDF处理、文字处理</title>
+    <title data-i18n-title-tag="page_title">白给工具 - 免费图片压缩、PDF处理、文字处理</title>
 
     <!-- Tailwind CSS via CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -252,8 +252,11 @@
         <!-- Navigation Bar -->
         <nav class="absolute top-0 left-0 right-0 z-10 px-6 py-4">
             <div class="max-w-6xl mx-auto flex items-center justify-between">
-                <span class="text-white text-xl font-bold tracking-tight">🛠️ 白给工具</span>
-                <span class="text-white/60 text-sm">白给 · 安全 · 快速</span>
+                <span class="text-white text-xl font-bold tracking-tight" data-i18n="brand_name">🛠️ 白给工具</span>
+                <div class="flex items-center gap-4">
+                    <span class="text-white/60 text-sm" data-i18n="header_tagline">白给 · 安全 · 快速</span>
+                    <div id="lang-selector"></div>
+                </div>
             </div>
         </nav>
 
@@ -261,26 +264,26 @@
         <div class="relative z-10 max-w-6xl mx-auto px-6 py-20 text-center">
             <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 text-white/80 text-sm mb-8">
                 <span class="w-2 h-2 rounded-full bg-green-400 animate-pulse"></span>
-                白给工具 · 完全免费 · 本地处理 · 保护隐私
+                <span data-i18n="hero_badge">白给工具 · 完全免费 · 本地处理 · 保护隐私</span>
             </div>
 
-            <h1 class="text-5xl md:text-7xl font-extrabold text-white mb-6 leading-tight">
+            <h1 class="text-5xl md:text-7xl font-extrabold text-white mb-6 leading-tight" data-i18n="hero_title">
                 白给工具
             </h1>
 
-            <p class="text-xl md:text-2xl text-white/70 mb-4 max-w-2xl mx-auto font-light">
+            <p class="text-xl md:text-2xl text-white/70 mb-4 max-w-2xl mx-auto font-light" data-i18n="hero_subtitle">
                 图片压缩 · PDF处理 · 文字处理 · 全部白给
             </p>
 
-            <p class="text-lg text-white/50 mb-12 max-w-xl mx-auto">
+            <p class="text-lg text-white/50 mb-12 max-w-xl mx-auto" data-i18n="hero_description">
                 所有工具均在浏览器本地运行，您的文件不会上传到服务器，安全无忧。
             </p>
 
             <div class="flex flex-wrap justify-center gap-4">
-                <a href="#tools" class="btn-primary px-8 py-4 rounded-xl text-white font-semibold text-lg shadow-lg">
+                <a href="#tools" class="btn-primary px-8 py-4 rounded-xl text-white font-semibold text-lg shadow-lg" data-i18n="cta_button">
                     开始使用 →
                 </a>
-                <a href="#faq" class="px-8 py-4 rounded-xl text-white/80 font-semibold text-lg border border-white/30 hover:bg-white/10 transition-all">
+                <a href="#faq" class="px-8 py-4 rounded-xl text-white/80 font-semibold text-lg border border-white/30 hover:bg-white/10 transition-all" data-i18n="faq_button">
                     常见问题
                 </a>
             </div>
@@ -298,8 +301,8 @@
     <section id="tools" class="py-24 px-6 bg-gray-50">
         <div class="max-w-6xl mx-auto">
             <div class="text-center mb-16">
-                <h2 class="section-title text-4xl md:text-5xl font-extrabold mb-4">白给工具</h2>
-                <p class="text-gray-500 text-lg">精选高频实用工具，全部免费使用</p>
+                <h2 class="section-title text-4xl md:text-5xl font-extrabold mb-4" data-i18n="tools_section_title">白给工具</h2>
+                <p class="text-gray-500 text-lg" data-i18n="tools_section_subtitle">精选高频实用工具，全部免费使用</p>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -307,13 +310,13 @@
                 <a href="https://wdnmd.vip/image-tools/" class="glass-card rounded-3xl p-8 cursor-pointer block group">
                     <div class="card-icon text-5xl mb-6 inline-block">🖼️</div>
                     <div class="flex items-center gap-2 mb-3">
-                        <h3 class="text-2xl font-bold text-gray-800">在线图片压缩</h3>
-                        <span class="badge badge-success">✅ 在线可用</span>
+                        <h3 class="text-2xl font-bold text-gray-800" data-i18n="tool1_name">在线图片压缩</h3>
+                        <span class="badge badge-success" data-i18n="tool1_badge">✅ 在线可用</span>
                     </div>
-                    <p class="text-gray-500 leading-relaxed mb-6">
+                    <p class="text-gray-500 leading-relaxed mb-6" data-i18n="tool1_desc">
                         支持 JPG、PNG、WebP 格式压缩。智能保持画质，可批量处理多张图片，压缩率最高达 80%。所有处理在浏览器本地完成，无需上传。
                     </p>
-                    <div class="flex items-center text-indigo-500 font-semibold group-hover:gap-2 transition-all">
+                    <div class="flex items-center text-indigo-500 font-semibold group-hover:gap-2 transition-all" data-i18n="tool_cta">
                         立即使用 →
                     </div>
                 </a>
@@ -322,13 +325,13 @@
                 <a href="https://wdnmd.vip/pdf-tools/" class="glass-card rounded-3xl p-8 cursor-pointer block group">
                     <div class="card-icon text-5xl mb-6 inline-block">📄</div>
                     <div class="flex items-center gap-2 mb-3">
-                        <h3 class="text-2xl font-bold text-gray-800">在线PDF工具</h3>
-                        <span class="badge badge-success">✅ 在线可用</span>
+                        <h3 class="text-2xl font-bold text-gray-800" data-i18n="tool2_name">在线PDF工具</h3>
+                        <span class="badge badge-success" data-i18n="tool1_badge">✅ 在线可用</span>
                     </div>
-                    <p class="text-gray-500 leading-relaxed mb-6">
+                    <p class="text-gray-500 leading-relaxed mb-6" data-i18n="tool2_desc">
                         PDF 合并、拆分、压缩、格式转换一站完成。支持 PDF 与 Word、Excel、图片互转，无需安装任何软件。
                     </p>
-                    <div class="flex items-center text-indigo-500 font-semibold group-hover:gap-2 transition-all">
+                    <div class="flex items-center text-indigo-500 font-semibold group-hover:gap-2 transition-all" data-i18n="tool_cta">
                         立即使用 →
                     </div>
                 </a>
@@ -337,13 +340,13 @@
                 <a href="https://wdnmd.vip/text-tools/" class="glass-card rounded-3xl p-8 cursor-pointer block group">
                     <div class="card-icon text-5xl mb-6 inline-block">✍️</div>
                     <div class="flex items-center gap-2 mb-3">
-                        <h3 class="text-2xl font-bold text-gray-800">在线文字处理工具</h3>
-                        <span class="badge badge-success">✅ 在线可用</span>
+                        <h3 class="text-2xl font-bold text-gray-800" data-i18n="tool3_name">在线文字处理工具</h3>
+                        <span class="badge badge-success" data-i18n="tool1_badge">✅ 在线可用</span>
                     </div>
-                    <p class="text-gray-500 leading-relaxed mb-6">
+                    <p class="text-gray-500 leading-relaxed mb-6" data-i18n="tool3_desc">
                         文字去重、排序、替换、统计字数、格式转换。支持正则表达式，批量处理文本文件，编程者和写作者的效率利器。
                     </p>
-                    <div class="flex items-center text-indigo-500 font-semibold group-hover:gap-2 transition-all">
+                    <div class="flex items-center text-indigo-500 font-semibold group-hover:gap-2 transition-all" data-i18n="tool_cta">
                         立即使用 →
                     </div>
                 </a>
@@ -355,22 +358,22 @@
     <section class="gradient-bg py-20 px-6 relative overflow-hidden">
         <div class="max-w-6xl mx-auto relative z-10">
             <div class="text-center mb-12">
-                <h2 class="text-3xl md:text-4xl font-extrabold text-white mb-2">我们的数据</h2>
-                <p class="text-white/70">用户信赖的选择</p>
+                <h2 class="text-3xl md:text-4xl font-extrabold text-white mb-2" data-i18n="stats_title">我们的数据</h2>
+                <p class="text-white/70" data-i18n="stats_subtitle">用户信赖的选择</p>
             </div>
 
             <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
                 <div class="stat-card rounded-2xl p-8 text-center">
                     <div class="text-4xl font-extrabold text-white mb-2" data-target="152384">0</div>
-                    <div class="text-white/60 text-sm">图片已压缩</div>
+                    <div class="text-white/60 text-sm" data-i18n="stat1">图片已压缩</div>
                 </div>
                 <div class="stat-card rounded-2xl p-8 text-center">
                     <div class="text-4xl font-extrabold text-white mb-2" data-target="87321">0</div>
-                    <div class="text-white/60 text-sm">PDF已处理</div>
+                    <div class="text-white/60 text-sm" data-i18n="stat2">PDF已处理</div>
                 </div>
                 <div class="stat-card rounded-2xl p-8 text-center">
                     <div class="text-4xl font-extrabold text-white mb-2" data-target="45679">0</div>
-                    <div class="text-white/60 text-sm">文字已处理</div>
+                    <div class="text-white/60 text-sm" data-i18n="stat3">文字已处理</div>
                 </div>
             </div>
         </div>
@@ -379,42 +382,42 @@
     <!-- ======== SEO Content Section ======== -->
     <section class="py-24 px-6 bg-white">
         <div class="max-w-4xl mx-auto">
-            <h2 class="section-title text-4xl font-extrabold text-center mb-12">为什么选择白给工具？</h2>
+            <h2 class="section-title text-4xl font-extrabold text-center mb-12" data-i18n="seo_title">为什么选择白给工具？</h2>
             <div class="seo-content">
-                <p>
+                <p data-i18n-html="seo_p1">
                     在当今数字化时代，高效的文件处理工具是每个人工作生活中不可或缺的助手。白给工具汇聚了最常用的文件处理功能，包括<strong>在线图片压缩</strong>、<strong>PDF工具</strong>和<strong>文字处理工具</strong>，帮助您轻松应对日常工作中的各种文件处理需求。
                 </p>
 
-                <h2>安全可靠的在线处理体验</h2>
-                <p>
+                <h2 data-i18n="seo_h2_safe">安全可靠的在线处理体验</h2>
+                <p data-i18n-html="seo_p2">
                     我们深知数据安全的重要性。所有工具均采用<strong>浏览器端本地处理</strong>技术，您的文件不会被上传至任何服务器。这意味着您的敏感信息和隐私数据始终掌握在自己手中，无需担心数据泄露风险。
                 </p>
 
-                <h2>三大核心工具</h2>
+                <h2 data-i18n="seo_h2_core">三大核心工具</h2>
 
-                <h3>在线图片压缩工具</h3>
-                <p>
+                <h3 data-i18n="seo_h3_image">在线图片压缩工具</h3>
+                <p data-i18n-html="seo_p3">
                     支持 JPEG、PNG、WebP 等主流图片格式的压缩。智能压缩算法在保证图片质量的前提下，最大可减少 80% 的文件大小。无论是网站优化、邮件附件还是存储空间管理，都能轻松应对。
                 </p>
 
-                <h3>在线PDF处理工具</h3>
-                <p>
+                <h3 data-i18n="seo_h3_pdf">在线PDF处理工具</h3>
+                <p data-i18n-html="seo_p4">
                     PDF 是办公场景中最常用的文档格式。我们的 PDF 工具集提供了合并、拆分、压缩、格式转换等完整功能链，满足您从创建到编辑的所有需求。无需安装 Adobe Acrobat 等付费软件。
                 </p>
 
-                <h3>在线文字处理工具</h3>
-                <p>
+                <h3 data-i18n="seo_h3_text">在线文字处理工具</h3>
+                <p data-i18n-html="seo_p5">
                     面向开发者和文字工作者的高效文本处理工具。支持文字去重、排序、正则替换、字数统计、格式转换等操作，批量处理能力让繁琐的文本整理工作变得轻松快捷。
                 </p>
 
-                <h2>我们的优势</h2>
+                <h2 data-i18n="seo_h2_advantage">我们的优势</h2>
                 <ul>
-                    <li><strong>完全免费</strong> - 所有功能永久免费使用，无隐藏收费</li>
-                    <li><strong>无需注册</strong> - 打开即用，无需创建账号</li>
-                    <li><strong>本地处理</strong> - 文件在浏览器本地处理，保护隐私安全</li>
-                    <li><strong>响应快速</strong> - 纯前端实现，无需等待服务器响应</li>
-                    <li><strong>移动适配</strong> - 手机、平板、桌面都能流畅使用</li>
-                    <li><strong>持续更新</strong> - 不断新增功能和优化用户体验</li>
+                    <li data-i18n-html="adv_1"><strong>完全免费</strong> - 所有功能永久免费使用，无隐藏收费</li>
+                    <li data-i18n-html="adv_2"><strong>无需注册</strong> - 打开即用，无需创建账号</li>
+                    <li data-i18n-html="adv_3"><strong>本地处理</strong> - 文件在浏览器本地处理，保护隐私安全</li>
+                    <li data-i18n-html="adv_4"><strong>响应快速</strong> - 纯前端实现，无需等待服务器响应</li>
+                    <li data-i18n-html="adv_5"><strong>移动适配</strong> - 手机、平板、桌面都能流畅使用</li>
+                    <li data-i18n-html="adv_6"><strong>持续更新</strong> - 不断新增功能和优化用户体验</li>
                 </ul>
             </div>
         </div>
@@ -423,68 +426,68 @@
     <!-- ======== FAQ Section ======== -->
     <section id="faq" class="py-24 px-6 bg-gray-50">
         <div class="max-w-3xl mx-auto">
-            <h2 class="section-title text-4xl font-extrabold text-center mb-12">常见问题</h2>
+            <h2 class="section-title text-4xl font-extrabold text-center mb-12" data-i18n="faq_section_title">常见问题</h2>
 
             <div class="space-y-4">
                 <details class="faq-item bg-white rounded-2xl p-6 shadow-sm border border-gray-100 group open:shadow-md transition-all cursor-pointer">
-                    <summary class="flex items-center justify-between text-lg font-semibold text-gray-800 list-none">
+                    <summary class="flex items-center justify-between text-lg font-semibold text-gray-800 list-none" data-i18n="faq_q1">
                         这些工具真的免费吗？
                     </summary>
-                    <p class="mt-4 text-gray-500 leading-relaxed">
+                    <p class="mt-4 text-gray-500 leading-relaxed" data-i18n="faq_a1">
                         是的，完全免费！所有工具永久免费使用，没有任何隐藏费用、使用次数限制或功能付费墙。
                     </p>
                 </details>
 
                 <details class="faq-item bg-white rounded-2xl p-6 shadow-sm border border-gray-100 group open:shadow-md transition-all cursor-pointer">
-                    <summary class="flex items-center justify-between text-lg font-semibold text-gray-800 list-none">
+                    <summary class="flex items-center justify-between text-lg font-semibold text-gray-800 list-none" data-i18n="faq_q2">
                         我的文件会上传到服务器吗？
                     </summary>
-                    <p class="mt-4 text-gray-500 leading-relaxed">
+                    <p class="mt-4 text-gray-500 leading-relaxed" data-i18n="faq_a2">
                         不会。所有文件处理都在您的浏览器本地完成，没有任何文件会被上传到服务器。即使断网，已加载的工具仍可正常使用。
                     </p>
                 </details>
 
                 <details class="faq-item bg-white rounded-2xl p-6 shadow-sm border border-gray-100 group open:shadow-md transition-all cursor-pointer">
-                    <summary class="flex items-center justify-between text-lg font-semibold text-gray-800 list-none">
+                    <summary class="flex items-center justify-between text-lg font-semibold text-gray-800 list-none" data-i18n="faq_q3">
                         支持哪些浏览器？
                     </summary>
-                    <p class="mt-4 text-gray-500 leading-relaxed">
+                    <p class="mt-4 text-gray-500 leading-relaxed" data-i18n="faq_a3">
                         支持所有现代浏览器，包括 Chrome、Firefox、Safari、Edge。建议使用最新版本获得最佳体验。
                     </p>
                 </details>
 
                 <details class="faq-item bg-white rounded-2xl p-6 shadow-sm border border-gray-100 group open:shadow-md transition-all cursor-pointer">
-                    <summary class="flex items-center justify-between text-lg font-semibold text-gray-800 list-none">
+                    <summary class="flex items-center justify-between text-lg font-semibold text-gray-800 list-none" data-i18n="faq_q4">
                         图片压缩会影响画质吗？
                     </summary>
-                    <p class="mt-4 text-gray-500 leading-relaxed">
+                    <p class="mt-4 text-gray-500 leading-relaxed" data-i18n="faq_a4">
                         我们采用智能压缩算法，在显著减小文件大小的同时尽可能保持画质。您也可以选择不同的压缩级别，在文件大小和画质之间找到最佳平衡。
                     </p>
                 </details>
 
                 <details class="faq-item bg-white rounded-2xl p-6 shadow-sm border border-gray-100 group open:shadow-md transition-all cursor-pointer">
-                    <summary class="flex items-center justify-between text-lg font-semibold text-gray-800 list-none">
+                    <summary class="flex items-center justify-between text-lg font-semibold text-gray-800 list-none" data-i18n="faq_q5">
                         PDF工具支持哪些格式转换？
                     </summary>
-                    <p class="mt-4 text-gray-500 leading-relaxed">
+                    <p class="mt-4 text-gray-500 leading-relaxed" data-i18n="faq_a5">
                         支持 PDF 与 Word、Excel、图片（JPG/PNG）之间的互相转换，以及 PDF 合并、拆分、压缩、页面提取等操作。
                     </p>
                 </details>
 
                 <details class="faq-item bg-white rounded-2xl p-6 shadow-sm border border-gray-100 group open:shadow-md transition-all cursor-pointer">
-                    <summary class="flex items-center justify-between text-lg font-semibold text-gray-800 list-none">
+                    <summary class="flex items-center justify-between text-lg font-semibold text-gray-800 list-none" data-i18n="faq_q6">
                         有文件大小限制吗？
                     </summary>
-                    <p class="mt-4 text-gray-500 leading-relaxed">
+                    <p class="mt-4 text-gray-500 leading-relaxed" data-i18n="faq_a6">
                         由于所有处理在浏览器本地进行，理论上限取决于您的设备内存。对于大多数日常使用场景（数百 MB 以内），都可以顺畅处理。
                     </p>
                 </details>
 
                 <details class="faq-item bg-white rounded-2xl p-6 shadow-sm border border-gray-100 group open:shadow-md transition-all cursor-pointer">
-                    <summary class="flex items-center justify-between text-lg font-semibold text-gray-800 list-none">
+                    <summary class="flex items-center justify-between text-lg font-semibold text-gray-800 list-none" data-i18n="faq_q7">
                         文字处理工具支持正则表达式吗？
                     </summary>
-                    <p class="mt-4 text-gray-500 leading-relaxed">
+                    <p class="mt-4 text-gray-500 leading-relaxed" data-i18n="faq_a7">
                         支持！我们的文字处理工具内置正则表达式引擎，支持高级查找替换、模式匹配等操作，满足开发者和高级用户的需求。
                     </p>
                 </details>
@@ -497,31 +500,31 @@
         <div class="max-w-6xl mx-auto">
             <div class="grid grid-cols-1 md:grid-cols-3 gap-12 mb-12">
                 <div>
-                    <span class="text-2xl font-bold">🛠️ 白给工具</span>
-                    <p class="text-white/50 mt-4 text-sm leading-relaxed">
+                    <span class="text-2xl font-bold" data-i18n="brand_name">🛠️ 白给工具</span>
+                    <p class="text-white/50 mt-4 text-sm leading-relaxed" data-i18n="footer_brand_desc">
                         白给工具 · 完全免费 · 本地处理 · 保护隐私。提供图片压缩、PDF处理、文字处理等实用工具。
                     </p>
                 </div>
                 <div>
-                    <h4 class="font-semibold mb-4 text-white/80">工具链接</h4>
+                    <h4 class="font-semibold mb-4 text-white/80" data-i18n="footer_links_title">工具链接</h4>
                     <ul class="space-y-2 text-sm text-white/50">
-                        <li><a href="https://wdnmd.vip/image-tools/" class="hover:text-white transition-colors">在线图片压缩</a></li>
-                        <li><a href="https://wdnmd.vip/pdf-tools/" class="hover:text-white transition-colors">在线PDF工具</a></li>
-                        <li><a href="https://wdnmd.vip/text-tools/" class="hover:text-white transition-colors">在线文字处理工具</a></li>
+                        <li><a href="https://wdnmd.vip/image-tools/" class="hover:text-white transition-colors" data-i18n="tool1_name">在线图片压缩</a></li>
+                        <li><a href="https://wdnmd.vip/pdf-tools/" class="hover:text-white transition-colors" data-i18n="tool2_name">在线PDF工具</a></li>
+                        <li><a href="https://wdnmd.vip/text-tools/" class="hover:text-white transition-colors" data-i18n="tool3_name">在线文字处理工具</a></li>
                     </ul>
                 </div>
                 <div>
-                    <h4 class="font-semibold mb-4 text-white/80">关于</h4>
+                    <h4 class="font-semibold mb-4 text-white/80" data-i18n="footer_about_title">关于</h4>
                     <ul class="space-y-2 text-sm text-white/50">
-                        <li>所有工具永久免费</li>
-                        <li>无需注册即可使用</li>
-                        <li>本地处理保护隐私</li>
-                        <li>如有问题请联系我们</li>
+                        <li data-i18n="footer_about_1">所有工具永久免费</li>
+                        <li data-i18n="footer_about_2">无需注册即可使用</li>
+                        <li data-i18n="footer_about_3">本地处理保护隐私</li>
+                        <li data-i18n="footer_about_4">如有问题请联系我们</li>
                     </ul>
                 </div>
             </div>
             <div class="border-t border-white/10 pt-8 text-center text-sm text-white/40">
-                <p>&copy; 2026 白给工具 · 保留所有权利</p>
+                <p data-i18n="footer_copyright">&copy; 2026 白给工具 · 保留所有权利</p>
             </div>
         </div>
     </footer>
@@ -571,6 +574,24 @@
         (function() {
             'use strict';
 
+            function getLocaleFromLang(lang) {
+                var map = {
+                    zh: 'zh-CN',
+                    en: 'en-US',
+                    ja: 'ja-JP',
+                    es: 'es-ES',
+                    pt: 'pt-PT',
+                };
+                return map[lang] || 'zh-CN';
+            }
+
+            function getCurrentLocale() {
+                if (typeof window.getCurrentLang === 'function') {
+                    return getLocaleFromLang(window.getCurrentLang());
+                }
+                return 'zh-CN';
+            }
+
             function animateCounter(element) {
                 const target = parseInt(element.getAttribute('data-target'), 10);
                 const duration = 2000;
@@ -582,11 +603,12 @@
                     // Ease out cubic
                     const eased = 1 - Math.pow(1 - progress, 3);
                     const current = Math.floor(eased * target);
-                    element.textContent = current.toLocaleString('zh-CN');
+                    var locale = getCurrentLocale();
+                    element.textContent = current.toLocaleString(locale);
                     if (progress < 1) {
                         requestAnimationFrame(update);
                     } else {
-                        element.textContent = target.toLocaleString('zh-CN');
+                        element.textContent = target.toLocaleString(locale);
                     }
                 }
 
@@ -639,6 +661,13 @@
         var s = document.getElementsByTagName('script')[0];
         s.parentNode.insertBefore(bp, s);
     })();
+    </script>
+
+    <!-- i18n -->
+    <script src="/i18n/translations.js"></script>
+    <script src="/i18n/i18n.js" defer></script>
+    <script>
+        createLanguageSelector('lang-selector');
     </script>
 </body>
 </html>

@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Look up US ZIP codes to find city, state, county, area code, and timezone. Covers 100+ major US cities. Fast and free.">
+    <meta name="keywords" content="ZIP code lookup, US ZIP code, find ZIP code, city by ZIP, area code, timezone, ZIP code search">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://wdnmd.vip/en/zip-code-lookup/">
+    <meta property="og:title" content="US ZIP Code Lookup - Free Online Tool | BaiGei Tools">
+    <meta property="og:description" content="Look up US ZIP codes to find city, state, county, area code, and timezone.">
+    <meta property="og:url" content="https://wdnmd.vip/en/zip-code-lookup/">
+    <meta property="og:type" content="website">
+    <title>US ZIP Code Lookup - Free Online Tool | BaiGei Tools</title>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2082456546225568" crossorigin="anonymous"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    animation: {
+                        'gradient': 'gradient 8s ease infinite',
+                        'fade-in': 'fadeIn 0.5s ease-out',
+                    },
+                    keyframes: {
+                        gradient: {
+                            '0%, 100%': { backgroundPosition: '0% 50%' },
+                            '50%': { backgroundPosition: '100% 50%' },
+                        },
+                        fadeIn: {
+                            '0%': { opacity: '0', transform: 'translateY(10px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        },
+                    },
+                },
+            },
+        }
+    </script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        .gradient-header {
+            background: linear-gradient(-45deg, #667eea, #764ba2, #f093fb, #4facfe, #00f2fe);
+            background-size: 400% 400%;
+            animation: gradient 8s ease infinite;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            transition: all 0.3s ease;
+        }
+        .glass-card:hover {
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+        .footer-gradient {
+            background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
+        }
+        .hero-gradient {
+            background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
+        }
+        .search-input:focus {
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.2);
+        }
+        .result-detail {
+            transition: all 0.3s ease;
+        }
+        .result-detail:hover {
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen flex flex-col font-sans">
+
+    <!-- Navigation -->
+    <nav class="hero-gradient text-white py-3 px-4 shadow-lg">
+        <div class="max-w-6xl mx-auto flex items-center justify-between">
+            <a href="https://wdnmd.vip/" class="text-lg font-bold hover:text-purple-300 transition">BaiGei Tools</a>
+            <div class="flex gap-4 text-sm">
+                <a href="https://wdnmd.vip/" class="hover:text-purple-300 transition">Home</a>
+                <a href="/en/zip-code-lookup/" class="text-purple-300 font-semibold">ZIP Lookup</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Header -->
+    <header class="gradient-header text-white py-12 px-4 text-center">
+        <div class="max-w-4xl mx-auto">
+            <h1 class="text-4xl md:text-5xl font-bold mb-4">US ZIP Code Lookup</h1>
+            <p class="text-lg md:text-xl opacity-90">Find city, state, county, area code &amp; timezone for any US ZIP code</p>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-1 max-w-2xl mx-auto w-full px-4 py-8">
+        <!-- Search -->
+        <div class="glass-card rounded-2xl p-6 md:p-8 mb-6">
+            <div>
+                <label class="block text-sm font-semibold text-gray-700 mb-2">Enter ZIP Code</label>
+                <div class="relative">
+                    <input type="text" id="zipInput" class="search-input w-full px-4 py-3.5 pl-12 rounded-xl border border-gray-200 focus:border-purple-400 transition text-lg" placeholder="e.g. 90210" maxlength="5" inputmode="numeric" pattern="[0-9]*" oninput="lookupZIP(event)">
+                    <svg class="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+                </div>
+                <p class="text-xs text-gray-400 mt-2">Enter a 5-digit US ZIP code to look up location details.</p>
+            </div>
+        </div>
+
+        <!-- Result -->
+        <div id="resultContainer" class="hidden">
+            <div class="grid grid-cols-2 md:grid-cols-3 gap-4 mb-4" id="resultCards">
+                <!-- Dynamically rendered by JS -->
+            </div>
+            <div id="suggestionBox" class="glass-card rounded-xl p-4 text-center text-sm text-gray-500">
+                Not what you're looking for? Try another ZIP code.
+            </div>
+        </div>
+
+        <!-- Error -->
+        <div id="errorContainer" class="hidden glass-card rounded-2xl p-6 text-center">
+            <svg class="w-12 h-12 mx-auto mb-3 text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L4.082 16.5c-.77.833.192 2.5 1.732 2.5z"/></svg>
+            <p class="text-gray-600" id="errorMessage">ZIP code not found. Please try another.</p>
+        </div>
+
+        <!-- Quick Links -->
+        <div class="glass-card rounded-2xl p-6 mt-6">
+            <p class="text-sm font-semibold text-gray-700 mb-3">Popular ZIP Codes</p>
+            <div class="flex flex-wrap gap-2" id="quickLinks">
+                <!-- populated by JS -->
+            </div>
+        </div>
+
+        <!-- Ad Placeholder -->
+        <div class="glass-card rounded-2xl p-6 mt-6 text-center text-gray-400 text-sm">
+            <p>Advertisement</p>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer-gradient text-white py-8 px-4">
+        <div class="max-w-6xl mx-auto text-center">
+            <p class="mb-2">&copy; 2026 BaiGei Tools</p>
+            <a href="https://wdnmd.vip/" class="text-purple-300 hover:text-purple-200 text-sm transition">Back to Home</a>
+        </div>
+    </footer>
+
+    <script>
+        // Dataset of ~100 major US ZIP codes
+        const zipData = {
+            "10001": { city: "New York", state: "NY", county: "New York County", areaCode: "212/646/917", timezone: "Eastern" },
+            "10002": { city: "New York", state: "NY", county: "New York County", areaCode: "212/646/917", timezone: "Eastern" },
+            "10011": { city: "New York", state: "NY", county: "New York County", areaCode: "212/646/917", timezone: "Eastern" },
+            "10013": { city: "New York", state: "NY", county: "New York County", areaCode: "212/646/917", timezone: "Eastern" },
+            "11201": { city: "Brooklyn", state: "NY", county: "Kings County", areaCode: "718/347", timezone: "Eastern" },
+            "11215": { city: "Brooklyn", state: "NY", county: "Kings County", areaCode: "718/347", timezone: "Eastern" },
+            "11375": { city: "Queens", state: "NY", county: "Queens County", areaCode: "718/347", timezone: "Eastern" },
+            "10451": { city: "Bronx", state: "NY", county: "Bronx County", areaCode: "718/347", timezone: "Eastern" },
+            "10301": { city: "Staten Island", state: "NY", county: "Richmond County", areaCode: "718/347", timezone: "Eastern" },
+            "90001": { city: "Los Angeles", state: "CA", county: "Los Angeles County", areaCode: "213/323", timezone: "Pacific" },
+            "90012": { city: "Los Angeles", state: "CA", county: "Los Angeles County", areaCode: "213/323", timezone: "Pacific" },
+            "90210": { city: "Beverly Hills", state: "CA", county: "Los Angeles County", areaCode: "310/424", timezone: "Pacific" },
+            "90291": { city: "Venice", state: "CA", county: "Los Angeles County", areaCode: "310/424", timezone: "Pacific" },
+            "90301": { city: "Inglewood", state: "CA", county: "Los Angeles County", areaCode: "310/424", timezone: "Pacific" },
+            "90401": { city: "Santa Monica", state: "CA", county: "Los Angeles County", areaCode: "310/424", timezone: "Pacific" },
+            "90501": { city: "Torrance", state: "CA", county: "Los Angeles County", areaCode: "310/424", timezone: "Pacific" },
+            "90620": { city: "Buena Park", state: "CA", county: "Orange County", areaCode: "714/657", timezone: "Pacific" },
+            "90802": { city: "Long Beach", state: "CA", county: "Los Angeles County", areaCode: "562/424", timezone: "Pacific" },
+            "91101": { city: "Pasadena", state: "CA", county: "Los Angeles County", areaCode: "626/323", timezone: "Pacific" },
+            "91401": { city: "Van Nuys", state: "CA", county: "Los Angeles County", areaCode: "818/747", timezone: "Pacific" },
+            "92101": { city: "San Diego", state: "CA", county: "San Diego County", areaCode: "619/858", timezone: "Pacific" },
+            "92102": { city: "San Diego", state: "CA", county: "San Diego County", areaCode: "619/858", timezone: "Pacific" },
+            "94102": { city: "San Francisco", state: "CA", county: "San Francisco County", areaCode: "415/628", timezone: "Pacific" },
+            "94110": { city: "San Francisco", state: "CA", county: "San Francisco County", areaCode: "415/628", timezone: "Pacific" },
+            "94117": { city: "San Francisco", state: "CA", county: "San Francisco County", areaCode: "415/628", timezone: "Pacific" },
+            "94601": { city: "Oakland", state: "CA", county: "Alameda County", areaCode: "510/341", timezone: "Pacific" },
+            "94701": { city: "Berkeley", state: "CA", county: "Alameda County", areaCode: "510/341", timezone: "Pacific" },
+            "95101": { city: "San Jose", state: "CA", county: "Santa Clara County", areaCode: "408/669", timezone: "Pacific" },
+            "95814": { city: "Sacramento", state: "CA", county: "Sacramento County", areaCode: "916/279", timezone: "Pacific" },
+            "60601": { city: "Chicago", state: "IL", county: "Cook County", areaCode: "312/773", timezone: "Central" },
+            "60610": { city: "Chicago", state: "IL", county: "Cook County", areaCode: "312/773", timezone: "Central" },
+            "60614": { city: "Chicago", state: "IL", county: "Cook County", areaCode: "312/773", timezone: "Central" },
+            "60657": { city: "Chicago", state: "IL", county: "Cook County", areaCode: "312/773", timezone: "Central" },
+            "77001": { city: "Houston", state: "TX", county: "Harris County", areaCode: "713/281", timezone: "Central" },
+            "77002": { city: "Houston", state: "TX", county: "Harris County", areaCode: "713/281", timezone: "Central" },
+            "77005": { city: "Houston", state: "TX", county: "Harris County", areaCode: "713/281", timezone: "Central" },
+            "77019": { city: "Houston", state: "TX", county: "Harris County", areaCode: "713/281", timezone: "Central" },
+            "75201": { city: "Dallas", state: "TX", county: "Dallas County", areaCode: "214/469", timezone: "Central" },
+            "75202": { city: "Dallas", state: "TX", county: "Dallas County", areaCode: "214/469", timezone: "Central" },
+            "75225": { city: "Dallas", state: "TX", county: "Dallas County", areaCode: "214/469", timezone: "Central" },
+            "73301": { city: "Austin", state: "TX", county: "Travis County", areaCode: "512/737", timezone: "Central" },
+            "78201": { city: "San Antonio", state: "TX", county: "Bexar County", areaCode: "210/726", timezone: "Central" },
+            "85001": { city: "Phoenix", state: "AZ", county: "Maricopa County", areaCode: "602/623", timezone: "Mountain" },
+            "85003": { city: "Phoenix", state: "AZ", county: "Maricopa County", areaCode: "602/623", timezone: "Mountain" },
+            "85701": { city: "Tucson", state: "AZ", county: "Pima County", areaCode: "520/621", timezone: "Mountain" },
+            "19101": { city: "Philadelphia", state: "PA", county: "Philadelphia County", areaCode: "215/267", timezone: "Eastern" },
+            "19102": { city: "Philadelphia", state: "PA", county: "Philadelphia County", areaCode: "215/267", timezone: "Eastern" },
+            "19103": { city: "Philadelphia", state: "PA", county: "Philadelphia County", areaCode: "215/267", timezone: "Eastern" },
+            "15201": { city: "Pittsburgh", state: "PA", county: "Allegheny County", areaCode: "412/878", timezone: "Eastern" },
+            "20001": { city: "Washington", state: "DC", county: "District of Columbia", areaCode: "202/771", timezone: "Eastern" },
+            "20002": { city: "Washington", state: "DC", county: "District of Columbia", areaCode: "202/771", timezone: "Eastern" },
+            "20005": { city: "Washington", state: "DC", county: "District of Columbia", areaCode: "202/771", timezone: "Eastern" },
+            "20008": { city: "Washington", state: "DC", county: "District of Columbia", areaCode: "202/771", timezone: "Eastern" },
+            "30301": { city: "Atlanta", state: "GA", county: "Fulton County", areaCode: "404/678", timezone: "Eastern" },
+            "30303": { city: "Atlanta", state: "GA", county: "Fulton County", areaCode: "404/678", timezone: "Eastern" },
+            "30309": { city: "Atlanta", state: "GA", county: "Fulton County", areaCode: "404/678", timezone: "Eastern" },
+            "33101": { city: "Miami", state: "FL", county: "Miami-Dade County", areaCode: "305/786", timezone: "Eastern" },
+            "33109": { city: "Miami Beach", state: "FL", county: "Miami-Dade County", areaCode: "305/786", timezone: "Eastern" },
+            "33125": { city: "Miami", state: "FL", county: "Miami-Dade County", areaCode: "305/786", timezone: "Eastern" },
+            "32801": { city: "Orlando", state: "FL", county: "Orange County", areaCode: "407/689", timezone: "Eastern" },
+            "32819": { city: "Orlando", state: "FL", county: "Orange County", areaCode: "407/689", timezone: "Eastern" },
+            "33601": { city: "Tampa", state: "FL", county: "Hillsborough County", areaCode: "813/656", timezone: "Eastern" },
+            "02101": { city: "Boston", state: "MA", county: "Suffolk County", areaCode: "617/857", timezone: "Eastern" },
+            "02108": { city: "Boston", state: "MA", county: "Suffolk County", areaCode: "617/857", timezone: "Eastern" },
+            "02115": { city: "Boston", state: "MA", county: "Suffolk County", areaCode: "617/857", timezone: "Eastern" },
+            "02116": { city: "Boston", state: "MA", county: "Suffolk County", areaCode: "617/857", timezone: "Eastern" },
+            "48201": { city: "Detroit", state: "MI", county: "Wayne County", areaCode: "313/679", timezone: "Eastern" },
+            "48202": { city: "Detroit", state: "MI", county: "Wayne County", areaCode: "313/679", timezone: "Eastern" },
+            "55401": { city: "Minneapolis", state: "MN", county: "Hennepin County", areaCode: "612/276", timezone: "Central" },
+            "55403": { city: "Minneapolis", state: "MN", county: "Hennepin County", areaCode: "612/276", timezone: "Central" },
+            "55101": { city: "St. Paul", state: "MN", county: "Ramsey County", areaCode: "651/224", timezone: "Central" },
+            "63101": { city: "St. Louis", state: "MO", county: "St. Louis City", areaCode: "314/557", timezone: "Central" },
+            "63103": { city: "St. Louis", state: "MO", county: "St. Louis City", areaCode: "314/557", timezone: "Central" },
+            "64101": { city: "Kansas City", state: "MO", county: "Jackson County", areaCode: "816/975", timezone: "Central" },
+            "80201": { city: "Denver", state: "CO", county: "Denver County", areaCode: "303/720", timezone: "Mountain" },
+            "80202": { city: "Denver", state: "CO", county: "Denver County", areaCode: "303/720", timezone: "Mountain" },
+            "80204": { city: "Denver", state: "CO", county: "Denver County", areaCode: "303/720", timezone: "Mountain" },
+            "97201": { city: "Portland", state: "OR", county: "Multnomah County", areaCode: "503/971", timezone: "Pacific" },
+            "97202": { city: "Portland", state: "OR", county: "Multnomah County", areaCode: "503/971", timezone: "Pacific" },
+            "98101": { city: "Seattle", state: "WA", county: "King County", areaCode: "206/564", timezone: "Pacific" },
+            "98102": { city: "Seattle", state: "WA", county: "King County", areaCode: "206/564", timezone: "Pacific" },
+            "98103": { city: "Seattle", state: "WA", county: "King County", areaCode: "206/564", timezone: "Pacific" },
+            "37201": { city: "Nashville", state: "TN", county: "Davidson County", areaCode: "615/629", timezone: "Central" },
+            "37203": { city: "Nashville", state: "TN", county: "Davidson County", areaCode: "615/629", timezone: "Central" },
+            "38101": { city: "Memphis", state: "TN", county: "Shelby County", areaCode: "901/363", timezone: "Central" },
+            "46201": { city: "Indianapolis", state: "IN", county: "Marion County", areaCode: "317/463", timezone: "Eastern" },
+            "46202": { city: "Indianapolis", state: "IN", county: "Marion County", areaCode: "317/463", timezone: "Eastern" },
+            "21201": { city: "Baltimore", state: "MD", county: "Baltimore City", areaCode: "410/443", timezone: "Eastern" },
+            "21202": { city: "Baltimore", state: "MD", county: "Baltimore City", areaCode: "410/443", timezone: "Eastern" },
+            "70112": { city: "New Orleans", state: "LA", county: "Orleans Parish", areaCode: "504/985", timezone: "Central" },
+            "70116": { city: "New Orleans", state: "LA", county: "Orleans Parish", areaCode: "504/985", timezone: "Central" },
+            "44101": { city: "Cleveland", state: "OH", county: "Cuyahoga County", areaCode: "216/440", timezone: "Eastern" },
+            "43201": { city: "Columbus", state: "OH", county: "Franklin County", areaCode: "614/380", timezone: "Eastern" },
+            "45201": { city: "Cincinnati", state: "OH", county: "Hamilton County", areaCode: "513/283", timezone: "Eastern" },
+            "53201": { city: "Milwaukee", state: "WI", county: "Milwaukee County", areaCode: "414/262", timezone: "Central" },
+            "96801": { city: "Honolulu", state: "HI", county: "Honolulu County", areaCode: "808/429", timezone: "Hawaii-Aleutian" },
+            "99501": { city: "Anchorage", state: "AK", county: "Anchorage Municipality", areaCode: "907/929", timezone: "Alaska" },
+            "87101": { city: "Albuquerque", state: "NM", county: "Bernalillo County", areaCode: "505/575", timezone: "Mountain" },
+            "73101": { city: "Oklahoma City", state: "OK", county: "Oklahoma County", areaCode: "405/572", timezone: "Central" },
+            "74101": { city: "Tulsa", state: "OK", county: "Tulsa County", areaCode: "918/539", timezone: "Central" },
+            "83201": { city: "Salt Lake City", state: "UT", county: "Salt Lake County", areaCode: "801/385", timezone: "Mountain" },
+            "23218": { city: "Richmond", state: "VA", county: "Richmond City", areaCode: "804/686", timezone: "Eastern" },
+            "27601": { city: "Raleigh", state: "NC", county: "Wake County", areaCode: "919/984", timezone: "Eastern" },
+            "28201": { city: "Charlotte", state: "NC", county: "Mecklenburg County", areaCode: "704/980", timezone: "Eastern" },
+            "29201": { city: "Columbia", state: "SC", county: "Richland County", areaCode: "803/839", timezone: "Eastern" },
+            "40201": { city: "Louisville", state: "KY", county: "Jefferson County", areaCode: "502/364", timezone: "Eastern" },
+            "32201": { city: "Jacksonville", state: "FL", county: "Duval County", areaCode: "904/672", timezone: "Eastern" },
+            "68101": { city: "Omaha", state: "NE", county: "Douglas County", areaCode: "402/531", timezone: "Central" },
+            "67201": { city: "Wichita", state: "KS", county: "Sedgwick County", areaCode: "316/350", timezone: "Central" },
+        };
+
+        const popularZips = ["10001", "90001", "60601", "77001", "85001", "19101", "20001", "30301", "33101", "02101", "98101", "80201", "94102", "92101", "75201"];
+
+        function lookupZIP(event) {
+            const input = document.getElementById('zipInput');
+            let value = input.value.replace(/\D/g, '').slice(0, 5);
+            input.value = value;
+
+            const resultContainer = document.getElementById('resultContainer');
+            const errorContainer = document.getElementById('errorContainer');
+
+            if (value.length !== 5) {
+                resultContainer.classList.add('hidden');
+                errorContainer.classList.add('hidden');
+                return;
+            }
+
+            const data = zipData[value];
+            if (!data) {
+                resultContainer.classList.add('hidden');
+                errorContainer.classList.remove('hidden');
+                document.getElementById('errorMessage').textContent = `ZIP code "${value}" not found in our database. Try another code.`;
+                return;
+            }
+
+            errorContainer.classList.add('hidden');
+
+            const cards = [
+                { label: 'City', value: data.city, icon: '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>' },
+                { label: 'State', value: data.state, icon: '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>' },
+                { label: 'County', value: data.county, icon: '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>' },
+                { label: 'Area Code', value: data.areaCode, icon: '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"/>' },
+                { label: 'Timezone', value: data.timezone, icon: '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/>' },
+            ];
+
+            const cardsHtml = cards.map(c => `
+                <div class="glass-card result-detail rounded-xl p-4 text-center">
+                    <svg class="w-6 h-6 mx-auto mb-2 text-purple-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">${c.icon}</svg>
+                    <p class="text-xs text-gray-500 font-medium uppercase tracking-wide mb-1">${c.label}</p>
+                    <p class="text-base font-bold text-gray-800">${c.value}</p>
+                </div>
+            `).join('');
+
+            document.getElementById('resultCards').innerHTML = cardsHtml;
+            resultContainer.classList.remove('hidden');
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // Quick links
+            const quickLinks = document.getElementById('quickLinks');
+            popularZips.forEach(zip => {
+                const btn = document.createElement('button');
+                btn.className = 'px-3 py-1.5 bg-gray-100 hover:bg-purple-100 hover:text-purple-700 text-gray-600 rounded-lg text-sm transition';
+                btn.textContent = zip;
+                btn.addEventListener('click', () => {
+                    document.getElementById('zipInput').value = zip;
+                    lookupZIP({ target: { value: zip } });
+                });
+                quickLinks.appendChild(btn);
+            });
+        });
+    </script>
+</body>
+</html>

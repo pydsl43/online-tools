@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>郵便番号検索 - 日本の郵便番号を検索</title>
+    <meta name="description" content="日本の郵便番号を無料で検索。主要な郵便番号データベースから住所を瞬時に検索できます。">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2082456546225568" crossorigin="anonymous"></script>
+</head>
+<body class="bg-gradient-to-br from-blue-50 via-white to-indigo-50 min-h-screen">
+    <div class="container mx-auto px-4 py-8 max-w-2xl">
+        <a href="https://wdnmd.vip/" class="text-gray-500 hover:text-gray-700 text-sm mb-4 inline-block">&larr; トップへ戻る</a>
+        
+        <div class="text-center mb-8">
+            <h1 class="text-3xl font-bold text-gray-800 mb-2">📮 郵便番号検索</h1>
+            <p class="text-gray-500">日本の郵便番号から住所を検索</p>
+        </div>
+
+        <div class="bg-white rounded-2xl shadow-lg p-6 mb-6">
+            <div class="mb-4">
+                <label for="zipInput" class="block text-gray-700 font-medium mb-2">郵便番号を入力</label>
+                <div class="relative">
+                    <span class="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 text-xl">〒</span>
+                    <input type="text" id="zipInput" placeholder="100-0001" maxlength="8" class="w-full pl-12 pr-4 py-3 rounded-xl border-2 border-gray-200 focus:border-blue-500 focus:outline-none text-xl tracking-widest">
+                </div>
+                <p class="text-sm text-gray-400 mt-1">ハイフン自動入力対応（例: 1000001 → 100-0001）</p>
+            </div>
+            <div id="resultArea" class="hidden">
+                <div class="border-t pt-4">
+                    <div class="bg-blue-50 rounded-xl p-6">
+                        <div class="grid grid-cols-1 gap-3">
+                            <div>
+                                <span class="text-sm text-gray-500">郵便番号</span>
+                                <p class="text-lg font-bold text-gray-800" id="displayZip">〒100-0001</p>
+                            </div>
+                            <div>
+                                <span class="text-sm text-gray-500">都道府県</span>
+                                <p class="text-lg font-bold text-gray-800" id="displayPrefecture">東京都</p>
+                            </div>
+                            <div>
+                                <span class="text-sm text-gray-500">市区町村</span>
+                                <p class="text-lg font-bold text-gray-800" id="displayCity">千代田区</p>
+                            </div>
+                            <div>
+                                <span class="text-sm text-gray-500">町域</span>
+                                <p class="text-lg font-bold text-gray-800" id="displayTown">千代田</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="notFound" class="hidden text-center py-8 text-gray-400">
+                <p class="text-4xl mb-2">🔍</p>
+                <p>該当する郵便番号が見つかりませんでした</p>
+            </div>
+        </div>
+
+        <div class="bg-white rounded-2xl shadow-lg p-6">
+            <h2 class="text-lg font-bold text-gray-800 mb-4">📋 主要な郵便番号一覧</h2>
+            <div class="overflow-x-auto">
+                <table class="w-full text-sm">
+                    <thead>
+                        <tr class="bg-gray-100 text-gray-600">
+                            <th class="p-2 text-left">郵便番号</th>
+                            <th class="p-2 text-left">都道府県</th>
+                            <th class="p-2 text-left">市区町村</th>
+                        </tr>
+                    </thead>
+                    <tbody id="zipTableBody" class="text-gray-700"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <footer class="text-center py-6 text-gray-400 text-sm">
+        <a href="https://wdnmd.vip/" class="hover:text-gray-600 transition">トップページ</a>
+        <span class="mx-2">|</span>
+        © 2026 BaiGei Tools
+    </footer>
+
+    <script>
+        const zipDatabase = [
+            { code: '100-0001', prefecture: '東京都', city: '千代田区', town: '千代田' },
+            { code: '100-0005', prefecture: '東京都', city: '千代田区', town: '丸の内' },
+            { code: '104-0061', prefecture: '東京都', city: '中央区', town: '銀座' },
+            { code: '150-0001', prefecture: '東京都', city: '渋谷区', town: '神宮前' },
+            { code: '150-0043', prefecture: '東京都', city: '渋谷区', town: '道玄坂' },
+            { code: '160-0022', prefecture: '東京都', city: '新宿区', town: '新宿' },
+            { code: '170-0002', prefecture: '東京都', city: '豊島区', town: '巣鴨' },
+            { code: '530-0001', prefecture: '大阪府', city: '大阪市北区', town: '梅田' },
+            { code: '542-0076', prefecture: '大阪府', city: '大阪市中央区', town: '難波' },
+            { code: '550-0002', prefecture: '大阪府', city: '大阪市西区', town: '江戸堀' },
+            { code: '220-0011', prefecture: '神奈川県', city: '横浜市西区', town: '高島' },
+            { code: '231-0023', prefecture: '神奈川県', city: '横浜市中区', town: '山下町' },
+            { code: '460-0008', prefecture: '愛知県', city: '名古屋市中区', town: '栄' },
+            { code: '461-0005', prefecture: '愛知県', city: '名古屋市東区', town: '東桜' },
+            { code: '060-0001', prefecture: '北海道', city: '札幌市中央区', town: '北一条西' },
+            { code: '064-0804', prefecture: '北海道', city: '札幌市中央区', town: '南四条西' },
+            { code: '810-0001', prefecture: '福岡県', city: '福岡市中央区', town: '天神' },
+            { code: '812-0011', prefecture: '福岡県', city: '福岡市博多区', town: '博多駅前' },
+            { code: '650-0011', prefecture: '兵庫県', city: '神戸市中央区', town: '磯上通' },
+            { code: '651-0086', prefecture: '兵庫県', city: '神戸市中央区', town: '磯上通' },
+            { code: '600-8216', prefecture: '京都府', city: '京都市下京区', town: '烏丸通' },
+            { code: '604-8001', prefecture: '京都府', city: '京都市中京区', town: '河原町通' },
+            { code: '980-0021', prefecture: '宮城県', city: '仙台市青葉区', town: '中央' },
+            { code: '980-0803', prefecture: '宮城県', city: '仙台市青葉区', town: '国分町' },
+            { code: '730-0011', prefecture: '広島県', city: '広島市中区', town: '基町' },
+            { code: '732-0822', prefecture: '広島県', city: '広島市南区', town: '松原町' },
+            { code: '810-0041', prefecture: '福岡県', city: '福岡市中央区', town: '大名' },
+            { code: '820-0011', prefecture: '福岡県', city: '飯塚市', town: '柏の森' },
+            { code: '950-0088', prefecture: '新潟県', city: '新潟市中央区', town: '万代' },
+            { code: '951-8011', prefecture: '新潟県', city: '新潟市中央区', town: '柳島町' },
+            { code: '541-0041', prefecture: '大阪府', city: '大阪市中央区', town: '北浜' },
+            { code: '541-0056', prefecture: '大阪府', city: '大阪市中央区', town: '久太郎町' },
+            { code: '460-0022', prefecture: '愛知県', city: '名古屋市中区', town: '金山' },
+            { code: '461-0023', prefecture: '愛知県', city: '名古屋市東区', town: '徳川' },
+            { code: '003-0029', prefecture: '北海道', city: '札幌市白石区', town: '平和通' },
+            { code: '651-0097', prefecture: '兵庫県', city: '神戸市中央区', town: '布引町' },
+            { code: '700-0907', prefecture: '岡山県', city: '岡山市北区', town: '下石井' },
+            { code: '700-0822', prefecture: '岡山県', city: '岡山市北区', town: '表町' },
+            { code: '810-0022', prefecture: '福岡県', city: '福岡市中央区', town: '薬院' },
+            { code: '860-0806', prefecture: '熊本県', city: '熊本市中央区', town: '花畑町' },
+            { code: '860-0845', prefecture: '熊本県', city: '熊本市中央区', town: '上通町' },
+            { code: '900-0013', prefecture: '沖縄県', city: '那覇市', town: '牧志' },
+            { code: '900-0015', prefecture: '沖縄県', city: '那覇市', town: '久茂地' },
+            { code: '240-0001', prefecture: '神奈川県', city: '横浜市保土ケ谷区', town: '川辺町' },
+            { code: '221-0835', prefecture: '神奈川県', city: '横浜市神奈川区', town: '鶴屋町' },
+            { code: '332-0015', prefecture: '埼玉県', city: '川口市', town: '川口' },
+            { code: '330-0061', prefecture: '埼玉県', city: 'さいたま市浦和区', town: '常盤' },
+            { code: '273-0005', prefecture: '千葉県', city: '船橋市', town: '本町' },
+            { code: '260-0013', prefecture: '千葉県', city: '千葉市中央区', town: '中央' }
+        ];
+
+        const zipInput = document.getElementById('zipInput');
+        const resultArea = document.getElementById('resultArea');
+        const notFound = document.getElementById('notFound');
+        const displayZip = document.getElementById('displayZip');
+        const displayPrefecture = document.getElementById('displayPrefecture');
+        const displayCity = document.getElementById('displayCity');
+        const displayTown = document.getElementById('displayTown');
+        const zipTableBody = document.getElementById('zipTableBody');
+
+        // Populate reference table
+        function populateTable() {
+            zipTableBody.innerHTML = zipDatabase.slice(0, 20).map(z => `
+                <tr class="border-b border-gray-100 hover:bg-gray-50 cursor-pointer" data-code="${z.code}">
+                    <td class="p-2 font-mono">〒${z.code}</td>
+                    <td class="p-2">${z.prefecture}</td>
+                    <td class="p-2">${z.city} ${z.town}</td>
+                </tr>
+            `).join('');
+            
+            document.querySelectorAll('[data-code]').forEach(row => {
+                row.addEventListener('click', () => {
+                    zipInput.value = row.dataset.code;
+                    zipInput.dispatchEvent(new Event('input'));
+                });
+            });
+        }
+        populateTable();
+
+        // Auto-hyphen
+        zipInput.addEventListener('input', function(e) {
+            let value = this.value.replace(/[^0-9]/g, '');
+            if (value.length > 3) {
+                value = value.slice(0, 3) + '-' + value.slice(3, 7);
+            }
+            this.value = value;
+            lookupZip(value);
+        });
+
+        function lookupZip(value) {
+            const cleanCode = value.replace(/[^0-9]/g, '');
+            if (cleanCode.length < 7) {
+                resultArea.classList.add('hidden');
+                notFound.classList.add('hidden');
+                return;
+            }
+            
+            const formatted = cleanCode.slice(0, 3) + '-' + cleanCode.slice(3, 7);
+            const result = zipDatabase.find(z => z.code === formatted);
+            
+            if (result) {
+                displayZip.textContent = '〒' + result.code;
+                displayPrefecture.textContent = result.prefecture;
+                displayCity.textContent = result.city;
+                displayTown.textContent = result.town;
+                resultArea.classList.remove('hidden');
+                notFound.classList.add('hidden');
+            } else {
+                resultArea.classList.add('hidden');
+                notFound.classList.remove('hidden');
+            }
+        }
+    </script>
+</body>
+</html>

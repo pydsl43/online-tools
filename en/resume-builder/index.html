@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Free online resume builder. Create a professional resume with our simple form. Preview in real-time and download as PDF. No registration required.">
+    <meta name="keywords" content="resume builder, free resume, online resume, CV builder, job application, professional resume, PDF resume">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://wdnmd.vip/en/resume-builder/">
+    <meta property="og:title" content="Resume Builder - Free Online Tool | BaiGei Tools">
+    <meta property="og:description" content="Create a professional resume instantly. Real-time preview and PDF download.">
+    <meta property="og:url" content="https://wdnmd.vip/en/resume-builder/">
+    <meta property="og:type" content="website">
+    <title>Resume Builder - Free Online Tool | BaiGei Tools</title>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2082456546225568" crossorigin="anonymous"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    animation: {
+                        'gradient': 'gradient 8s ease infinite',
+                    },
+                    keyframes: {
+                        gradient: {
+                            '0%, 100%': { backgroundPosition: '0% 50%' },
+                            '50%': { backgroundPosition: '100% 50%' },
+                        },
+                    },
+                },
+            },
+        }
+    </script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        .gradient-header {
+            background: linear-gradient(-45deg, #667eea, #764ba2, #f093fb, #4facfe, #00f2fe);
+            background-size: 400% 400%;
+            animation: gradient 8s ease infinite;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            transition: all 0.3s ease;
+        }
+        .footer-gradient {
+            background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
+        }
+        .hero-gradient {
+            background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
+        }
+        .form-input {
+            transition: all 0.3s ease;
+        }
+        .form-input:focus {
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.2);
+        }
+
+        /* Resume preview styles - print-friendly */
+        .resume-preview {
+            font-family: 'Georgia', 'Times New Roman', serif;
+            line-height: 1.5;
+            color: #333;
+        }
+        .resume-preview h1 {
+            font-size: 24px;
+            font-weight: bold;
+            color: #1a1a2e;
+            margin-bottom: 4px;
+        }
+        .resume-preview .contact-line {
+            font-size: 13px;
+            color: #555;
+            margin-bottom: 16px;
+        }
+        .resume-preview .section-title {
+            font-size: 14px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #667eea;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 4px;
+            margin-bottom: 8px;
+            margin-top: 14px;
+        }
+        .resume-preview .summary-text {
+            font-size: 13px;
+            color: #444;
+            margin-bottom: 8px;
+        }
+        .resume-preview .exp-item, .resume-preview .edu-item {
+            margin-bottom: 10px;
+        }
+        .resume-preview .exp-title, .resume-preview .edu-title {
+            font-weight: bold;
+            font-size: 14px;
+            color: #222;
+        }
+        .resume-preview .exp-sub, .resume-preview .edu-sub {
+            font-size: 12px;
+            color: #666;
+        }
+        .resume-preview .exp-desc {
+            font-size: 12px;
+            color: #444;
+            margin-top: 2px;
+        }
+        .resume-preview .skills-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+        .resume-preview .skill-tag {
+            background: #eef2ff;
+            color: #4338ca;
+            padding: 2px 10px;
+            border-radius: 12px;
+            font-size: 12px;
+        }
+
+        @media print {
+            body { background: white !important; }
+            nav, header, footer, .no-print { display: none !important; }
+            .resume-preview-container { box-shadow: none !important; border: none !important; padding: 0 !important; }
+            .resume-preview { max-width: 100% !important; }
+            @page { margin: 0.5in; }
+        }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen flex flex-col font-sans">
+
+    <!-- Navigation -->
+    <nav class="hero-gradient text-white py-3 px-4 shadow-lg no-print">
+        <div class="max-w-6xl mx-auto flex items-center justify-between">
+            <a href="https://wdnmd.vip/" class="text-lg font-bold hover:text-purple-300 transition">BaiGei Tools</a>
+            <div class="flex gap-4 text-sm">
+                <a href="https://wdnmd.vip/" class="hover:text-purple-300 transition">Home</a>
+                <a href="/en/resume-builder/" class="text-purple-300 font-semibold">Resume Builder</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Header -->
+    <header class="gradient-header text-white py-12 px-4 text-center no-print">
+        <div class="max-w-4xl mx-auto">
+            <h1 class="text-4xl md:text-5xl font-bold mb-4">Resume Builder</h1>
+            <p class="text-lg md:text-xl opacity-90">Create a professional resume in minutes &mdash; no sign-up required</p>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-1 max-w-6xl mx-auto w-full px-4 py-8">
+        <div class="grid md:grid-cols-2 gap-6">
+            <!-- Form Column -->
+            <div>
+                <div class="glass-card rounded-2xl p-6">
+                    <h2 class="text-xl font-bold text-gray-800 mb-5">Your Information</h2>
+                    <div class="grid gap-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-600 mb-1">Full Name</label>
+                            <input type="text" id="fullName" class="form-input w-full px-4 py-2.5 rounded-lg border border-gray-200 focus:border-purple-400" placeholder="John Doe" oninput="updatePreview()">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-600 mb-1">Email</label>
+                            <input type="email" id="email" class="form-input w-full px-4 py-2.5 rounded-lg border border-gray-200 focus:border-purple-400" placeholder="john@example.com" oninput="updatePreview()">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-600 mb-1">Phone</label>
+                            <input type="tel" id="phone" class="form-input w-full px-4 py-2.5 rounded-lg border border-gray-200 focus:border-purple-400" placeholder="(555) 123-4567" oninput="updatePreview()">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-600 mb-1">Professional Summary</label>
+                            <textarea id="summary" rows="3" class="form-input w-full px-4 py-2.5 rounded-lg border border-gray-200 focus:border-purple-400" placeholder="Brief summary of your professional background..." oninput="updatePreview()"></textarea>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-600 mb-1">Experience</label>
+                            <textarea id="experience" rows="4" class="form-input w-full px-4 py-2.5 rounded-lg border border-gray-200 focus:border-purple-400" placeholder="Company Name | Job Title | Dates&#10;- Responsible for...&#10;- Achieved..." oninput="updatePreview()"></textarea>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-600 mb-1">Education</label>
+                            <textarea id="education" rows="3" class="form-input w-full px-4 py-2.5 rounded-lg border border-gray-200 focus:border-purple-400" placeholder="University | Degree | Year&#10;- Relevant coursework or honors" oninput="updatePreview()"></textarea>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-600 mb-1">Skills</label>
+                            <textarea id="skills" rows="2" class="form-input w-full px-4 py-2.5 rounded-lg border border-gray-200 focus:border-purple-400" placeholder="JavaScript, Python, Project Management, Communication" oninput="updatePreview()"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Preview Column -->
+            <div>
+                <div class="flex items-center justify-between mb-4 no-print">
+                    <h2 class="text-xl font-bold text-gray-800">Preview</h2>
+                    <button onclick="downloadPDF()" class="px-5 py-2.5 rounded-xl font-medium text-sm bg-gradient-to-r from-purple-600 to-blue-500 text-white shadow-md hover:shadow-lg transition">
+                        <svg class="w-4 h-4 inline mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+                        Download PDF
+                    </button>
+                </div>
+                <div class="glass-card rounded-2xl p-8 resume-preview-container" id="previewContainer">
+                    <div class="resume-preview" id="resumePreview">
+                        <div class="text-center text-gray-400 py-12">
+                            <svg class="w-12 h-12 mx-auto mb-3 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+                            <p class="text-sm">Fill in the form to see your resume preview</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Ad Placeholder -->
+        <div class="glass-card rounded-2xl p-6 mt-6 text-center text-gray-400 text-sm no-print">
+            <p>Advertisement</p>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer-gradient text-white py-8 px-4 no-print">
+        <div class="max-w-6xl mx-auto text-center">
+            <p class="mb-2">&copy; 2026 BaiGei Tools</p>
+            <a href="https://wdnmd.vip/" class="text-purple-300 hover:text-purple-200 text-sm transition">Back to Home</a>
+        </div>
+    </footer>
+
+    <script>
+        function updatePreview() {
+            const name = document.getElementById('fullName').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const phone = document.getElementById('phone').value.trim();
+            const summary = document.getElementById('summary').value.trim();
+            const experience = document.getElementById('experience').value.trim();
+            const education = document.getElementById('education').value.trim();
+            const skills = document.getElementById('skills').value.trim();
+
+            if (!name && !email && !phone && !summary && !experience && !education && !skills) {
+                document.getElementById('resumePreview').innerHTML = `
+                    <div class="text-center text-gray-400 py-12">
+                        <svg class="w-12 h-12 mx-auto mb-3 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+                        <p class="text-sm">Fill in the form to see your resume preview</p>
+                    </div>
+                `;
+                return;
+            }
+
+            let html = '';
+
+            // Name
+            if (name) {
+                html += `<h1>${escapeHtml(name)}</h1>`;
+            }
+
+            // Contact
+            const contactParts = [];
+            if (email) contactParts.push(escapeHtml(email));
+            if (phone) contactParts.push(escapeHtml(phone));
+            if (contactParts.length > 0) {
+                html += `<div class="contact-line">${contactParts.join(' &nbsp;|&nbsp; ')}</div>`;
+            }
+
+            // Summary
+            if (summary) {
+                html += `<div class="section-title">Professional Summary</div>`;
+                html += `<div class="summary-text">${escapeHtml(summary)}</div>`;
+            }
+
+            // Experience
+            if (experience) {
+                html += `<div class="section-title">Experience</div>`;
+                const lines = experience.split('\n').filter(l => l.trim());
+                let inBullet = false;
+                lines.forEach(line => {
+                    const trimmed = line.trim();
+                    if (trimmed.startsWith('-') || trimmed.startsWith('•')) {
+                        html += `<div class="exp-desc" style="margin-left:12px;">${escapeHtml(trimmed)}</div>`;
+                    } else if (trimmed.includes('|')) {
+                        const parts = trimmed.split('|').map(p => p.trim());
+                        html += `<div class="exp-item"><div class="exp-title">${escapeHtml(parts[0])}</div>`;
+                        if (parts.length > 1) {
+                            html += `<div class="exp-sub">${escapeHtml(parts[1])}`;
+                            if (parts.length > 2) html += ` &nbsp;|&nbsp; ${escapeHtml(parts[2])}`;
+                            html += `</div>`;
+                        }
+                        html += `</div>`;
+                    } else {
+                        html += `<div class="exp-desc">${escapeHtml(trimmed)}</div>`;
+                    }
+                });
+            }
+
+            // Education
+            if (education) {
+                html += `<div class="section-title">Education</div>`;
+                const lines = education.split('\n').filter(l => l.trim());
+                lines.forEach(line => {
+                    const trimmed = line.trim();
+                    if (trimmed.startsWith('-') || trimmed.startsWith('•')) {
+                        html += `<div class="exp-desc" style="margin-left:12px;">${escapeHtml(trimmed)}</div>`;
+                    } else if (trimmed.includes('|')) {
+                        const parts = trimmed.split('|').map(p => p.trim());
+                        html += `<div class="edu-item"><div class="edu-title">${escapeHtml(parts[0])}</div>`;
+                        if (parts.length > 1) {
+                            html += `<div class="edu-sub">${escapeHtml(parts[1])}`;
+                            if (parts.length > 2) html += ` &nbsp;|&nbsp; ${escapeHtml(parts[2])}`;
+                            html += `</div>`;
+                        }
+                        html += `</div>`;
+                    } else {
+                        html += `<div class="exp-desc">${escapeHtml(trimmed)}</div>`;
+                    }
+                });
+            }
+
+            // Skills
+            if (skills) {
+                html += `<div class="section-title">Skills</div>`;
+                const skillItems = skills.split(',').map(s => s.trim()).filter(s => s);
+                html += `<div class="skills-list">`;
+                skillItems.forEach(skill => {
+                    html += `<span class="skill-tag">${escapeHtml(skill)}</span>`;
+                });
+                html += `</div>`;
+            }
+
+            document.getElementById('resumePreview').innerHTML = html;
+        }
+
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        function downloadPDF() {
+            window.print();
+        }
+    </script>
+</body>
+</html>

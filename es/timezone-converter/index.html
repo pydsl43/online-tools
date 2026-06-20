@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Conversor de zonas horarias para América Latina. Consulta la hora actual en Ciudad de México, Buenos Aires, Santiago, Lima, Bogotá y más.">
+    <meta name="keywords" content="zonas horarias, husos horarios, Latinoamérica, conversor horario, Ciudad de México, Buenos Aires, Santiago, Lima, Bogotá, São Paulo">
+    <meta name="author" content="BaiGei Tools">
+    <title>Conversor de Zonas Horarias - Latinoamérica</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2082456546225568" crossorigin="anonymous"></script>
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <nav class="bg-white shadow-md py-3 px-4">
+        <div class="max-w-5xl mx-auto flex justify-between items-center">
+            <a href="https://wdnmd.vip/" class="text-gray-600 hover:text-gray-900 text-sm">&larr; Inicio</a>
+            <span class="text-gray-400 text-xs">BaiGei Tools</span>
+        </div>
+    </nav>
+
+    <div class="max-w-4xl mx-auto px-4 py-8">
+        <header class="text-center mb-8">
+            <h1 class="text-3xl md:text-4xl font-bold text-gray-800 mb-2">Conversor de Zonas Horarias</h1>
+            <p class="text-gray-500">Horarios actuales y conversión entre zonas de Latinoamérica</p>
+        </header>
+
+        <div class="bg-white rounded-2xl shadow-md p-6 md:p-8 border border-gray-200 mb-6">
+            <h2 class="text-xl font-semibold text-gray-800 mb-4">Hora Actual por Ciudad</h2>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-3" id="relojes"></div>
+        </div>
+
+        <div class="bg-white rounded-2xl shadow-md p-6 md:p-8 border border-gray-200 mb-6">
+            <h2 class="text-xl font-semibold text-gray-800 mb-4">Convertir Hora</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 items-end mb-4">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Desde</label>
+                    <select id="tzFrom" class="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-indigo-400 focus:outline-none bg-white"></select>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Hora</label>
+                    <input type="time" id="horaInput" class="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-indigo-400 focus:outline-none">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Fecha</label>
+                    <input type="date" id="fechaInput" class="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-indigo-400 focus:outline-none">
+                </div>
+            </div>
+            <div class="mb-4">
+                <label class="block text-sm font-medium text-gray-700 mb-2">Zonas destino</label>
+                <div class="flex flex-wrap gap-2 mb-3">
+                    <button onclick="toggleAllDestinos(true)" class="text-xs bg-indigo-100 text-indigo-700 px-3 py-1 rounded-full hover:bg-indigo-200 transition">Seleccionar todas</button>
+                    <button onclick="toggleAllDestinos(false)" class="text-xs bg-gray-100 text-gray-600 px-3 py-1 rounded-full hover:bg-gray-200 transition">Deseleccionar todas</button>
+                </div>
+                <div id="checkDestinos" class="grid grid-cols-2 md:grid-cols-3 gap-2"></div>
+            </div>
+            <button onclick="convertirHora()" class="w-full bg-indigo-600 text-white py-3.5 rounded-xl hover:bg-indigo-700 transition font-semibold text-lg shadow-sm">Convertir</button>
+
+            <div id="resultadosConversion" class="hidden mt-6 space-y-2"></div>
+        </div>
+
+        <div class="bg-white rounded-2xl shadow-md p-6 border border-gray-200">
+            <h3 class="text-lg font-semibold text-gray-800 mb-3">Zonas Horarias de Latinoamérica</h3>
+            <div class="text-gray-600 text-sm space-y-2">
+                <p>Latinoamérica abarca múltiples husos horarios desde UTC-8 (Baja California) hasta UTC-2 (parte de Brasil). La mayoría de los países usan UTC-5, UTC-4 y UTC-3.</p>
+                <p>Países como México y Brasil tienen múltiples zonas horarias. Chile y Paraguay observan horario de verano.</p>
+            </div>
+            <div class="mt-4 overflow-x-auto">
+                <table class="w-full text-sm">
+                    <thead class="text-left text-gray-500 border-b">
+                        <tr>
+                            <th class="pb-2">Ciudad</th>
+                            <th class="pb-2">País</th>
+                            <th class="pb-2">Offset</th>
+                        </tr>
+                    </thead>
+                    <tbody class="text-gray-700" id="tablaZonas"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <footer class="text-center py-6 text-gray-400 text-sm">
+        <p>&copy; 2026 BaiGei Tools</p>
+    </footer>
+
+    <script>
+        const ZONAS = [
+            { id: 'America/Mexico_City', ciudad: 'Ciudad de México', pais: 'México', flag: '🇲🇽', offset: -6, ref: 'UTC-6' },
+            { id: 'America/Argentina/Buenos_Aires', ciudad: 'Buenos Aires', pais: 'Argentina', flag: '🇦🇷', offset: -3, ref: 'UTC-3' },
+            { id: 'America/Santiago', ciudad: 'Santiago', pais: 'Chile', flag: '🇨🇱', offset: -4, ref: 'UTC-4' },
+            { id: 'America/Lima', ciudad: 'Lima', pais: 'Perú', flag: '🇵🇪', offset: -5, ref: 'UTC-5' },
+            { id: 'America/Bogota', ciudad: 'Bogotá', pais: 'Colombia', flag: '🇨🇴', offset: -5, ref: 'UTC-5' },
+            { id: 'America/Sao_Paulo', ciudad: 'São Paulo', pais: 'Brasil', flag: '🇧🇷', offset: -3, ref: 'UTC-3' },
+            { id: 'America/New_York', ciudad: 'Nueva York (US Eastern)', pais: 'EE.UU.', flag: '🇺🇸', offset: -5, ref: 'UTC-5' },
+            { id: 'America/Los_Angeles', ciudad: 'Los Ángeles (US Pacific)', pais: 'EE.UU.', flag: '🇺🇸', offset: -8, ref: 'UTC-8' },
+            { id: 'UTC', ciudad: 'Tiempo Universal Coordinado', pais: '', flag: '🌐', offset: 0, ref: 'UTC' },
+            { id: 'Europe/Madrid', ciudad: 'Madrid', pais: 'España', flag: '🇪🇸', offset: 1, ref: 'UTC+1' }
+        ];
+
+        let intervalRelojes;
+
+        function getOffsetStr(offset) {
+            const sign = offset >= 0 ? '+' : '';
+            const hours = Math.abs(Math.floor(offset));
+            const mins = Math.abs(offset) % 1 * 60;
+            return `UTC${sign}${hours}${mins > 0 ? ':' + String(mins).padStart(2, '0') : ''}`;
+        }
+
+        function getTimeInZone(zonaId) {
+            const now = new Date();
+            if (zonaId === 'UTC') {
+                const utcHours = now.getUTCHours();
+                const utcMins = now.getUTCMinutes();
+                const utcSecs = now.getUTCSeconds();
+                const utcDate = now.toUTCString().split(', ')[1] || '';
+                return { horas: utcHours, minutos: utcMins, segundos: utcSecs, fecha: now.toLocaleDateString('es-ES', { timeZone: 'UTC', weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' }) };
+            }
+            try {
+                const horas = now.toLocaleString('es-ES', { timeZone: zonaId, hour: '2-digit', hour12: false, minute: '2-digit', second: '2-digit' });
+                const fecha = now.toLocaleDateString('es-ES', { timeZone: zonaId, weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' });
+                const [h, m, s] = horas.split(':').map(Number);
+                return { horas: h, minutos: m, segundos: s || 0, fecha };
+            } catch {
+                return { horas: 0, minutos: 0, segundos: 0, fecha: '' };
+            }
+        }
+
+        function initRelojes() {
+            const container = document.getElementById('relojes');
+            container.innerHTML = '';
+            ZONAS.forEach((z, i) => {
+                const card = document.createElement('div');
+                card.id = 'reloj-' + i;
+                card.className = 'bg-gradient-to-br from-indigo-50 to-purple-50 rounded-xl p-3 border border-indigo-100 text-center';
+                card.innerHTML = `
+                    <p class="text-xs text-gray-500">${z.flag} ${z.ciudad}</p>
+                    <p class="text-sm text-gray-400">${z.ref}</p>
+                    <p id="reloj-hora-${i}" class="text-lg font-bold text-indigo-700 mt-1">--:--:--</p>
+                    <p id="reloj-fecha-${i}" class="text-xs text-gray-400">--</p>
+                `;
+                container.appendChild(card);
+            });
+            actualizarRelojes();
+            if (intervalRelojes) clearInterval(intervalRelojes);
+            intervalRelojes = setInterval(actualizarRelojes, 1000);
+        }
+
+        function actualizarRelojes() {
+            ZONAS.forEach((z, i) => {
+                const t = getTimeInZone(z.id);
+                const h = String(t.horas).padStart(2, '0');
+                const m = String(t.minutos).padStart(2, '0');
+                const s = String(t.segundos).padStart(2, '0');
+                const elHora = document.getElementById('reloj-hora-' + i);
+                const elFecha = document.getElementById('reloj-fecha-' + i);
+                if (elHora) elHora.textContent = h + ':' + m + ':' + s;
+                if (elFecha) elFecha.textContent = t.fecha;
+            });
+        }
+
+        function initSelectores() {
+            const fromSelect = document.getElementById('tzFrom');
+            const checkContainer = document.getElementById('checkDestinos');
+            fromSelect.innerHTML = '';
+            checkContainer.innerHTML = '';
+
+            ZONAS.forEach((z, i) => {
+                const opt = document.createElement('option');
+                opt.value = z.id;
+                opt.textContent = z.flag + ' ' + z.ciudad + ' (' + z.ref + ')';
+                if (i === 0) opt.selected = true;
+                fromSelect.appendChild(opt);
+
+                const label = document.createElement('label');
+                label.className = 'flex items-center gap-2 p-2 rounded-lg hover:bg-gray-50 cursor-pointer';
+                label.innerHTML = `
+                    <input type="checkbox" data-idx="${i}" checked class="w-4 h-4 text-indigo-600 rounded border-gray-300 focus:ring-indigo-500">
+                    <span class="text-sm text-gray-700">${z.flag} ${z.ciudad} (${z.ref})</span>
+                `;
+                checkContainer.appendChild(label);
+            });
+
+            // Fecha/hora por defecto
+            const now = new Date();
+            const localISODate = now.toISOString().split('T')[0];
+            const localTime = String(now.getHours()).padStart(2, '0') + ':' + String(now.getMinutes()).padStart(2, '0');
+            document.getElementById('fechaInput').value = localISODate;
+            document.getElementById('horaInput').value = localTime;
+        }
+
+        function initTablaZonas() {
+            const tbody = document.getElementById('tablaZonas');
+            ZONAS.forEach(z => {
+                const tr = document.createElement('tr');
+                tr.className = 'border-b border-gray-100 last:border-0';
+                tr.innerHTML = `
+                    <td class="py-2">${z.flag} ${z.ciudad}</td>
+                    <td class="py-2 text-gray-500">${z.pais}</td>
+                    <td class="py-2 font-mono text-indigo-600 font-medium">${z.ref}</td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function toggleAllDestinos(selectAll) {
+            document.querySelectorAll('#checkDestinos input[type="checkbox"]').forEach(cb => {
+                cb.checked = selectAll;
+            });
+        }
+
+        function convertirHora() {
+            const fromId = document.getElementById('tzFrom').value;
+            const horaStr = document.getElementById('horaInput').value;
+            const fechaStr = document.getElementById('fechaInput').value;
+
+            if (!horaStr || !fechaStr) {
+                alert('Por favor seleccione una hora y fecha.');
+                return;
+            }
+
+            const [h, m] = horaStr.split(':').map(Number);
+            const [year, month, day] = fechaStr.split('-').map(Number);
+
+            // Crear fecha en la zona origen usando UTC como base
+            const zonaFrom = ZONAS.find(z => z.id === fromId);
+            if (!zonaFrom) return;
+
+            // Construir fecha UTC restando el offset de la zona origen
+            const utcDate = new Date(Date.UTC(year, month - 1, day, h - zonaFrom.offset, m));
+
+            const container = document.getElementById('resultadosConversion');
+            container.innerHTML = '';
+            container.classList.remove('hidden');
+
+            const checkboxes = document.querySelectorAll('#checkDestinos input[type="checkbox"]');
+
+            checkboxes.forEach((cb, idx) => {
+                if (!cb.checked) return;
+                const zona = ZONAS[idx];
+                const horaLocal = new Date(utcDate.getTime() + zona.offset * 3600000);
+
+                const hh = String(horaLocal.getUTCHours()).padStart(2, '0');
+                const mm = String(horaLocal.getUTCMinutes()).padStart(2, '0');
+                const dd = String(horaLocal.getUTCDate()).padStart(2, '0');
+                const mmStr = String(horaLocal.getUTCMonth() + 1).padStart(2, '0');
+                const yyyy = horaLocal.getUTCFullYear();
+
+                const card = document.createElement('div');
+                card.className = 'flex items-center justify-between bg-gray-50 rounded-xl p-3 border border-gray-100';
+                card.innerHTML = `
+                    <div>
+                        <p class="font-medium text-gray-800">${zona.flag} ${zona.ciudad}</p>
+                        <p class="text-xs text-gray-400">${zona.ref}</p>
+                    </div>
+                    <div class="text-right">
+                        <p class="text-xl font-bold text-indigo-700">${hh}:${mm}</p>
+                        <p class="text-xs text-gray-400">${dd}/${mmStr}/${yyyy}</p>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        window.addEventListener('load', function() {
+            initRelojes();
+            initSelectores();
+            initTablaZonas();
+        });
+
+        window.addEventListener('beforeunload', function() {
+            if (intervalRelojes) clearInterval(intervalRelojes);
+        });
+    </script>
+</body>
+</html>

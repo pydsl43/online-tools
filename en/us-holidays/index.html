@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="View all US federal holidays for any year. See dates, day-of-week, and countdown to the next holiday. Supports previous, current, and next year.">
+    <meta name="keywords" content="US federal holidays, federal holidays, US holidays calendar, holiday countdown, 4th of July, Christmas, Thanksgiving, New Year">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://wdnmd.vip/en/us-holidays/">
+    <meta property="og:title" content="US Federal Holidays Calendar - Free Online Tool | BaiGei Tools">
+    <meta property="og:description" content="View all US federal holidays for any year with dates, day-of-week, and countdown to the next holiday.">
+    <meta property="og:url" content="https://wdnmd.vip/en/us-holidays/">
+    <meta property="og:type" content="website">
+    <title>US Federal Holidays Calendar - Free Online Tool | BaiGei Tools</title>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2082456546225568" crossorigin="anonymous"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    animation: {
+                        'gradient': 'gradient 8s ease infinite',
+                        'pulse-slow': 'pulse 3s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        gradient: {
+                            '0%, 100%': { backgroundPosition: '0% 50%' },
+                            '50%': { backgroundPosition: '100% 50%' },
+                        },
+                    },
+                },
+            },
+        }
+    </script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        .gradient-header {
+            background: linear-gradient(-45deg, #667eea, #764ba2, #f093fb, #4facfe, #00f2fe);
+            background-size: 400% 400%;
+            animation: gradient 8s ease infinite;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            transition: all 0.3s ease;
+        }
+        .glass-card:hover {
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+        .footer-gradient {
+            background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
+        }
+        .hero-gradient {
+            background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
+        }
+        .countdown-number {
+            font-size: 2.5rem;
+        }
+        @media (min-width: 768px) {
+            .countdown-number {
+                font-size: 3.5rem;
+            }
+        }
+        .holiday-row {
+            transition: all 0.3s ease;
+        }
+        .holiday-row:hover {
+            background: #f5f3ff;
+        }
+        .holiday-row.today {
+            background: #eef2ff;
+            border-left: 4px solid #667eea;
+        }
+        .year-btn {
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        .year-btn.active {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen flex flex-col font-sans">
+
+    <!-- Navigation -->
+    <nav class="hero-gradient text-white py-3 px-4 shadow-lg">
+        <div class="max-w-6xl mx-auto flex items-center justify-between">
+            <a href="https://wdnmd.vip/" class="text-lg font-bold hover:text-purple-300 transition">BaiGei Tools</a>
+            <div class="flex gap-4 text-sm">
+                <a href="https://wdnmd.vip/" class="hover:text-purple-300 transition">Home</a>
+                <a href="/en/us-holidays/" class="text-purple-300 font-semibold">US Holidays</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Header -->
+    <header class="gradient-header text-white py-12 px-4 text-center">
+        <div class="max-w-4xl mx-auto">
+            <h1 class="text-4xl md:text-5xl font-bold mb-4">US Federal Holidays</h1>
+            <p class="text-lg md:text-xl opacity-90">Complete calendar of US federal holidays &mdash; with live countdown</p>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-1 max-w-4xl mx-auto w-full px-4 py-8">
+        <!-- Countdown Card -->
+        <div class="glass-card rounded-2xl p-6 md:p-8 mb-6 text-center" id="countdownCard">
+            <div id="countdownContent">
+                <p class="text-sm text-gray-500 font-medium uppercase tracking-wide mb-1">Countdown to</p>
+                <p class="text-2xl font-bold text-gray-800 mb-4" id="nextHolidayName">Loading...</p>
+                <div class="flex justify-center gap-4 md:gap-8 mb-2">
+                    <div>
+                        <div class="countdown-number font-bold text-purple-600" id="countdownDays">--</div>
+                        <p class="text-xs text-gray-500">Days</p>
+                    </div>
+                    <div>
+                        <div class="countdown-number font-bold text-purple-600" id="countdownHours">--</div>
+                        <p class="text-xs text-gray-500">Hours</p>
+                    </div>
+                    <div>
+                        <div class="countdown-number font-bold text-purple-600" id="countdownMinutes">--</div>
+                        <p class="text-xs text-gray-500">Minutes</p>
+                    </div>
+                    <div>
+                        <div class="countdown-number font-bold text-purple-600" id="countdownSeconds">--</div>
+                        <p class="text-xs text-gray-500">Seconds</p>
+                    </div>
+                </div>
+            </div>
+            <div id="noMoreHolidays" class="hidden">
+                <p class="text-lg text-gray-500">No more holidays this year!</p>
+            </div>
+        </div>
+
+        <!-- Year Selector -->
+        <div class="glass-card rounded-2xl p-4 mb-6">
+            <div class="flex flex-wrap gap-2 justify-center" id="yearSelector">
+                <button class="year-btn px-6 py-2.5 rounded-xl font-medium text-sm bg-gray-100 text-gray-600 hover:bg-gray-200" data-year="prev">Previous Year</button>
+                <button class="year-btn active px-6 py-2.5 rounded-xl font-medium text-sm bg-gradient-to-r from-purple-600 to-blue-500 text-white shadow-md" data-year="current">Current Year</button>
+                <button class="year-btn px-6 py-2.5 rounded-xl font-medium text-sm bg-gray-100 text-gray-600 hover:bg-gray-200" data-year="next">Next Year</button>
+            </div>
+        </div>
+
+        <!-- Holidays List -->
+        <div id="holidaysContainer" class="glass-card rounded-2xl overflow-hidden">
+            <div class="p-4 bg-gray-50 border-b border-gray-100">
+                <p class="text-sm text-gray-500 text-center" id="yearLabel">2026 Federal Holidays</p>
+            </div>
+            <div id="holidaysList" class="divide-y divide-gray-100">
+                <!-- Dynamically rendered -->
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer-gradient text-white py-8 px-4 mt-8">
+        <div class="max-w-6xl mx-auto text-center">
+            <p class="mb-2">&copy; 2026 BaiGei Tools</p>
+            <a href="https://wdnmd.vip/" class="text-purple-300 hover:text-purple-200 text-sm transition">Back to Home</a>
+        </div>
+    </footer>
+
+    <script>
+        // US Federal Holidays computation
+        function getFederalHolidays(year) {
+            function nthWeekdayOfMonth(year, month, weekday, n) {
+                const first = new Date(year, month, 1);
+                const dayOfWeek = first.getDay();
+                let diff = weekday - dayOfWeek;
+                if (diff < 0) diff += 7;
+                const day = 1 + diff + (n - 1) * 7;
+                return new Date(year, month, day);
+            }
+
+            function lastMondayOfMay(year) {
+                const lastDay = new Date(year, 4, 31);
+                let day = lastDay.getDay();
+                let diff = 1 - day; // Monday = 1
+                if (diff > 0) diff -= 7;
+                return new Date(year, 4, 31 + diff);
+            }
+
+            function nearestWeekday(date) {
+                let d = new Date(date);
+                const day = d.getDay();
+                if (day === 0) d.setDate(d.getDate() + 1);
+                if (day === 6) d.setDate(d.getDate() - 1);
+                return d;
+            }
+
+            const holidays = [
+                { name: "New Year's Day", date: new Date(year, 0, 1) },
+                { name: "Martin Luther King Jr. Day", date: nthWeekdayOfMonth(year, 0, 1, 3) },
+                { name: "Presidents' Day", date: nthWeekdayOfMonth(year, 1, 1, 3) },
+                { name: "Memorial Day", date: lastMondayOfMay(year) },
+                { name: "Juneteenth", date: new Date(year, 5, 19) },
+                { name: "Independence Day", date: new Date(year, 6, 4) },
+                { name: "Labor Day", date: nthWeekdayOfMonth(year, 8, 1, 1) },
+                { name: "Columbus Day", date: nthWeekdayOfMonth(year, 9, 1, 2) },
+                { name: "Veterans Day", date: new Date(year, 10, 11) },
+                { name: "Thanksgiving Day", date: nthWeekdayOfMonth(year, 10, 4, 4) },
+                { name: "Christmas Day", date: new Date(year, 11, 25) },
+            ];
+
+            // Apply weekend rule: if holiday falls on Saturday -> Friday before, Sunday -> Monday after
+            holidays.forEach(h => {
+                h.date = nearestWeekday(h.date);
+                h.dayOfWeek = h.date.toLocaleDateString('en-US', { weekday: 'long' });
+                h.formattedDate = h.date.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+            });
+
+            return holidays;
+        }
+
+        function isToday(date) {
+            const today = new Date();
+            return date.getFullYear() === today.getFullYear() &&
+                   date.getMonth() === today.getMonth() &&
+                   date.getDate() === today.getDate();
+        }
+
+        let currentYear = new Date().getFullYear();
+        let countdownTimer = null;
+
+        function renderYear(year) {
+            const holidays = getFederalHolidays(year);
+            const list = document.getElementById('holidaysList');
+            const label = document.getElementById('yearLabel');
+            label.textContent = `${year} Federal Holidays`;
+
+            let html = '';
+            holidays.forEach((h, idx) => {
+                const todayClass = isToday(h.date) ? ' today' : '';
+                const todayBadge = isToday(h.date) ? '<span class="ml-2 px-2 py-0.5 text-xs bg-purple-100 text-purple-700 rounded-full">Today</span>' : '';
+                html += `
+                    <div class="holiday-row px-4 md:px-6 py-4${todayClass}">
+                        <div class="flex items-center justify-between">
+                            <div class="flex-1">
+                                <div class="flex items-center flex-wrap">
+                                    <span class="font-semibold text-gray-800">${h.name}</span>
+                                    ${todayBadge}
+                                </div>
+                                <div class="text-sm text-gray-500 mt-0.5">${h.formattedDate}</div>
+                            </div>
+                            <div class="text-right flex-shrink-0 ml-4">
+                                <span class="text-sm font-medium text-purple-600 bg-purple-50 px-3 py-1 rounded-full">${h.dayOfWeek}</span>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+            list.innerHTML = html;
+            updateCountdown(year);
+        }
+
+        function updateCountdown(year) {
+            const now = new Date();
+            const holidays = getFederalHolidays(year);
+            let nextHoliday = null;
+
+            for (const h of holidays) {
+                if (h.date > now) {
+                    nextHoliday = h;
+                    break;
+                }
+            }
+
+            const content = document.getElementById('countdownContent');
+            const noMore = document.getElementById('noMoreHolidays');
+
+            if (!nextHoliday) {
+                content.classList.add('hidden');
+                noMore.classList.remove('hidden');
+                if (countdownTimer) {
+                    clearInterval(countdownTimer);
+                    countdownTimer = null;
+                }
+                return;
+            }
+
+            content.classList.remove('hidden');
+            noMore.classList.add('hidden');
+            document.getElementById('nextHolidayName').textContent = nextHoliday.name;
+
+            function tick() {
+                const now = new Date();
+                const diff = nextHoliday.date - now;
+                if (diff <= 0) {
+                    renderYear(currentYear);
+                    return;
+                }
+                const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+                document.getElementById('countdownDays').textContent = String(days).padStart(2, '0');
+                document.getElementById('countdownHours').textContent = String(hours).padStart(2, '0');
+                document.getElementById('countdownMinutes').textContent = String(minutes).padStart(2, '0');
+                document.getElementById('countdownSeconds').textContent = String(seconds).padStart(2, '0');
+            }
+
+            tick();
+            if (countdownTimer) clearInterval(countdownTimer);
+            countdownTimer = setInterval(tick, 1000);
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            renderYear(currentYear);
+
+            document.querySelectorAll('.year-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    document.querySelectorAll('.year-btn').forEach(b => {
+                        b.classList.remove('active', 'bg-gradient-to-r', 'from-purple-600', 'to-blue-500', 'text-white', 'shadow-md');
+                        b.classList.add('bg-gray-100', 'text-gray-600', 'hover:bg-gray-200');
+                    });
+                    btn.classList.add('active', 'bg-gradient-to-r', 'from-purple-600', 'to-blue-500', 'text-white', 'shadow-md');
+                    btn.classList.remove('bg-gray-100', 'text-gray-600', 'hover:bg-gray-200');
+
+                    const offset = btn.dataset.year;
+                    if (offset === 'prev') renderYear(currentYear - 1);
+                    else if (offset === 'next') renderYear(currentYear + 1);
+                    else renderYear(currentYear);
+                });
+            });
+        });
+    </script>
+</body>
+</html>

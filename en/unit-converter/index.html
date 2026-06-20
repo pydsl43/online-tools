@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Free online unit converter - Convert length, weight, temperature, and volume units instantly. Inches to cm, pounds to kg, Fahrenheit to Celsius, gallons to liters.">
+    <meta name="keywords" content="unit converter, length converter, weight converter, temperature converter, volume converter, inches to cm, pounds to kg, fahrenheit to celsius">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://wdnmd.vip/en/unit-converter/">
+    <meta property="og:title" content="Unit Converter - Free Online Tool | BaiGei Tools">
+    <meta property="og:description" content="Convert length, weight, temperature, and volume units instantly. Free online unit converter.">
+    <meta property="og:url" content="https://wdnmd.vip/en/unit-converter/">
+    <meta property="og:type" content="website">
+    <title>Unit Converter - Free Online Tool | BaiGei Tools</title>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2082456546225568" crossorigin="anonymous"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    animation: {
+                        'gradient': 'gradient 8s ease infinite',
+                        'float': 'float 6s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        gradient: {
+                            '0%, 100%': { backgroundPosition: '0% 50%' },
+                            '50%': { backgroundPosition: '100% 50%' },
+                        },
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0px)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        },
+                    },
+                },
+            },
+        }
+    </script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        .gradient-header {
+            background: linear-gradient(-45deg, #667eea, #764ba2, #f093fb, #4facfe, #00f2fe);
+            background-size: 400% 400%;
+            animation: gradient 8s ease infinite;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            transition: all 0.3s ease;
+        }
+        .glass-card:hover {
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+        .category-btn {
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        .category-btn.active {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        }
+        .conversion-input {
+            transition: all 0.3s ease;
+        }
+        .conversion-input:focus {
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.2);
+        }
+        .footer-gradient {
+            background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
+        }
+        .hero-gradient {
+            background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
+        }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen flex flex-col font-sans">
+
+    <!-- Navigation -->
+    <nav class="hero-gradient text-white py-3 px-4 shadow-lg">
+        <div class="max-w-6xl mx-auto flex items-center justify-between">
+            <a href="https://wdnmd.vip/" class="text-lg font-bold hover:text-purple-300 transition">BaiGei Tools</a>
+            <div class="flex gap-4 text-sm">
+                <a href="https://wdnmd.vip/" class="hover:text-purple-300 transition">Home</a>
+                <a href="https://wdnmd.vip/en/unit-converter/" class="text-purple-300 font-semibold">Unit Converter</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Header -->
+    <header class="gradient-header text-white py-12 px-4 text-center">
+        <div class="max-w-4xl mx-auto">
+            <h1 class="text-4xl md:text-5xl font-bold mb-4">Unit Converter</h1>
+            <p class="text-lg md:text-xl opacity-90">Convert length, weight, temperature, and volume units in real-time</p>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-1 max-w-3xl mx-auto w-full px-4 py-8">
+        <!-- Category Tabs -->
+        <div class="glass-card rounded-2xl p-4 mb-6">
+            <div class="flex flex-wrap gap-2 justify-center" id="categoryTabs">
+                <button class="category-btn active px-5 py-2.5 rounded-xl font-medium text-sm bg-gradient-to-r from-purple-600 to-blue-500 text-white shadow-md" data-category="length">Length</button>
+                <button class="category-btn px-5 py-2.5 rounded-xl font-medium text-sm bg-gray-100 text-gray-600 hover:bg-gray-200" data-category="weight">Weight</button>
+                <button class="category-btn px-5 py-2.5 rounded-xl font-medium text-sm bg-gray-100 text-gray-600 hover:bg-gray-200" data-category="temperature">Temperature</button>
+                <button class="category-btn px-5 py-2.5 rounded-xl font-medium text-sm bg-gray-100 text-gray-600 hover:bg-gray-200" data-category="volume">Volume</button>
+            </div>
+        </div>
+
+        <!-- Converter Panel -->
+        <div class="glass-card rounded-2xl p-6 md:p-8">
+            <div id="converterContent">
+                <!-- Dynamically rendered by JS -->
+            </div>
+        </div>
+
+        <!-- Ad Placeholder -->
+        <div class="glass-card rounded-2xl p-6 mt-6 text-center text-gray-400 text-sm">
+            <p>Advertisement</p>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer-gradient text-white py-8 px-4">
+        <div class="max-w-6xl mx-auto text-center">
+            <p class="mb-2">&copy; 2026 BaiGei Tools</p>
+            <a href="https://wdnmd.vip/" class="text-purple-300 hover:text-purple-200 text-sm transition">Back to Home</a>
+        </div>
+    </footer>
+
+    <script>
+        const conversions = {
+            length: [
+                { from: 'Inches', to: 'Centimeters', factor: 2.54, fromUnit: 'in', toUnit: 'cm' },
+                { from: 'Centimeters', to: 'Inches', factor: 0.393701, fromUnit: 'cm', toUnit: 'in' },
+                { from: 'Feet', to: 'Meters', factor: 0.3048, fromUnit: 'ft', toUnit: 'm' },
+                { from: 'Meters', to: 'Feet', factor: 3.28084, fromUnit: 'm', toUnit: 'ft' },
+                { from: 'Miles', to: 'Kilometers', factor: 1.60934, fromUnit: 'mi', toUnit: 'km' },
+                { from: 'Kilometers', to: 'Miles', factor: 0.621371, fromUnit: 'km', toUnit: 'mi' },
+            ],
+            weight: [
+                { from: 'Pounds', to: 'Kilograms', factor: 0.453592, fromUnit: 'lb', toUnit: 'kg' },
+                { from: 'Kilograms', to: 'Pounds', factor: 2.20462, fromUnit: 'kg', toUnit: 'lb' },
+                { from: 'Ounces', to: 'Grams', factor: 28.3495, fromUnit: 'oz', toUnit: 'g' },
+                { from: 'Grams', to: 'Ounces', factor: 0.035274, fromUnit: 'g', toUnit: 'oz' },
+            ],
+            temperature: [
+                { from: 'Fahrenheit', to: 'Celsius', convert: (v) => (v - 32) * 5 / 9, convertBack: (v) => v * 9 / 5 + 32, fromUnit: '°F', toUnit: '°C' },
+                { from: 'Celsius', to: 'Fahrenheit', convert: (v) => v * 9 / 5 + 32, convertBack: (v) => (v - 32) * 5 / 9, fromUnit: '°C', toUnit: '°F' },
+            ],
+            volume: [
+                { from: 'Gallons', to: 'Liters', factor: 3.78541, fromUnit: 'gal', toUnit: 'L' },
+                { from: 'Liters', to: 'Gallons', factor: 0.264172, fromUnit: 'L', toUnit: 'gal' },
+                { from: 'Ounces', to: 'Milliliters', factor: 29.5735, fromUnit: 'fl oz', toUnit: 'mL' },
+                { from: 'Milliliters', to: 'Ounces', factor: 0.033814, fromUnit: 'mL', toUnit: 'fl oz' },
+            ],
+        };
+
+        let currentCategory = 'length';
+        let conversionValues = {};
+
+        function renderCategory(category) {
+            const content = document.getElementById('converterContent');
+            const items = conversions[category];
+            let html = `<div class="grid gap-4">`;
+            items.forEach((item, idx) => {
+                const id = `${category}_${idx}`;
+                conversionValues[id] = conversionValues[id] || { from: '', to: '' };
+                html += `
+                    <div class="conversion-row bg-gray-50 rounded-xl p-4 border border-gray-100">
+                        <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
+                            <div class="flex-1">
+                                <label class="block text-xs font-medium text-gray-500 mb-1.5">${item.from} (${item.fromUnit})</label>
+                                <input type="number" id="from_${id}" class="conversion-input w-full px-4 py-2.5 rounded-lg border border-gray-200 focus:border-purple-400 focus:outline-none" placeholder="Enter ${item.from}" step="any" oninput="convertFrom('${category}', ${idx}, this.value)">
+                            </div>
+                            <div class="flex items-center justify-center">
+                                <svg class="w-5 h-5 text-purple-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+                            </div>
+                            <div class="flex-1">
+                                <label class="block text-xs font-medium text-gray-500 mb-1.5">${item.to} (${item.toUnit})</label>
+                                <input type="number" id="to_${id}" class="conversion-input w-full px-4 py-2.5 rounded-lg border border-gray-200 focus:border-purple-400 focus:outline-none" placeholder="Enter ${item.to}" step="any" oninput="convertTo('${category}', ${idx}, this.value)">
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+            html += `</div>`;
+            content.innerHTML = html;
+        }
+
+        function convertFrom(category, idx, value) {
+            const id = `${category}_${idx}`;
+            const item = conversions[category][idx];
+            const toInput = document.getElementById(`to_${id}`);
+            if (value === '' || isNaN(value)) {
+                toInput.value = '';
+                return;
+            }
+            const num = parseFloat(value);
+            let result;
+            if (item.convert) {
+                result = item.convert(num);
+            } else {
+                result = num * item.factor;
+            }
+            toInput.value = roundResult(result);
+        }
+
+        function convertTo(category, idx, value) {
+            const id = `${category}_${idx}`;
+            const item = conversions[category][idx];
+            const fromInput = document.getElementById(`from_${id}`);
+            if (value === '' || isNaN(value)) {
+                fromInput.value = '';
+                return;
+            }
+            const num = parseFloat(value);
+            let result;
+            if (item.convertBack) {
+                result = item.convertBack(num);
+            } else {
+                result = num / item.factor;
+            }
+            fromInput.value = roundResult(result);
+        }
+
+        function roundResult(num) {
+            if (Math.abs(num) >= 1000) return Math.round(num * 100) / 100;
+            if (Math.abs(num) >= 1) return Math.round(num * 1000) / 1000;
+            return Math.round(num * 1000000) / 1000000;
+        }
+
+        // Category tab switching
+        document.addEventListener('DOMContentLoaded', () => {
+            renderCategory('length');
+
+            document.querySelectorAll('.category-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    document.querySelectorAll('.category-btn').forEach(b => {
+                        b.classList.remove('active', 'bg-gradient-to-r', 'from-purple-600', 'to-blue-500', 'text-white', 'shadow-md');
+                        b.classList.add('bg-gray-100', 'text-gray-600', 'hover:bg-gray-200');
+                    });
+                    btn.classList.add('active', 'bg-gradient-to-r', 'from-purple-600', 'to-blue-500', 'text-white', 'shadow-md');
+                    btn.classList.remove('bg-gray-100', 'text-gray-600', 'hover:bg-gray-200');
+                    currentCategory = btn.dataset.category;
+                    renderCategory(currentCategory);
+                });
+            });
+        });
+    </script>
+</body>
+</html>

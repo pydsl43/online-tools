@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Validador de DNI y NIE español. Verifica si un DNI o NIE es válido con su letra correspondiente.">
+    <meta name="keywords" content="DNI, NIE, España, Documento Nacional de Identidad, validador DNI, Número de Identidad de Extranjero, letra DNI">
+    <meta name="author" content="BaiGei Tools">
+    <title>Validador de DNI y NIE - España</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2082456546225568" crossorigin="anonymous"></script>
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <nav class="bg-white shadow-md py-3 px-4">
+        <div class="max-w-5xl mx-auto flex justify-between items-center">
+            <a href="https://wdnmd.vip/" class="text-gray-600 hover:text-gray-900 text-sm">&larr; Inicio</a>
+            <span class="text-gray-400 text-xs">BaiGei Tools</span>
+        </div>
+    </nav>
+
+    <div class="max-w-2xl mx-auto px-4 py-8">
+        <header class="text-center mb-8">
+            <h1 class="text-3xl md:text-4xl font-bold text-gray-800 mb-2">Validador de DNI y NIE</h1>
+            <p class="text-gray-500">Valida documentos de identidad españoles (DNI y NIE)</p>
+        </header>
+
+        <div class="bg-white rounded-2xl shadow-md p-6 md:p-8 border border-gray-200 mb-6">
+            <div class="flex gap-3 mb-6">
+                <button id="tabDNI" onclick="cambiarTipo('DNI')" class="flex-1 py-2.5 rounded-xl font-semibold transition bg-blue-600 text-white shadow-sm">DNI</button>
+                <button id="tabNIE" onclick="cambiarTipo('NIE')" class="flex-1 py-2.5 rounded-xl font-semibold transition bg-gray-100 text-gray-600 hover:bg-gray-200">NIE</button>
+            </div>
+
+            <div class="mb-6">
+                <label for="dniInput" class="block text-sm font-medium text-gray-700 mb-2">Ingrese un <span id="tipoLabel">DNI</span></label>
+                <div class="flex gap-2">
+                    <input type="text" id="dniInput" class="flex-1 px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-blue-400 focus:outline-none text-lg tracking-widest uppercase" placeholder="12345678Z" autocomplete="off" maxlength="10">
+                    <button onclick="validarDNI()" class="bg-blue-600 text-white px-6 py-3 rounded-xl hover:bg-blue-700 transition font-semibold shadow-sm">Validar</button>
+                </div>
+            </div>
+
+            <div id="resultado" class="hidden mb-6">
+                <div id="resultadoCard" class="rounded-xl p-4 border-l-4 flex items-center gap-3">
+                    <div id="resultadoIcono" class="w-10 h-10 rounded-full flex items-center justify-center text-white font-bold text-xl"></div>
+                    <div>
+                        <p id="resultadoTitulo" class="font-semibold text-lg"></p>
+                        <p id="resultadoDesc" class="text-sm"></p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex flex-wrap gap-3">
+                <button onclick="generarDNI()" class="bg-green-600 text-white px-5 py-2.5 rounded-xl hover:bg-green-700 transition font-medium shadow-sm">Generar <span id="genLabel">DNI</span> válido</button>
+                <button onclick="limpiar()" class="bg-gray-100 text-gray-600 px-5 py-2.5 rounded-xl hover:bg-gray-200 transition font-medium">Limpiar</button>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="bg-white rounded-2xl shadow-md p-5 border border-gray-200">
+                <h3 class="text-lg font-semibold text-gray-800 mb-2">DNI</h3>
+                <p class="text-gray-600 text-sm">El Documento Nacional de Identidad (DNI) consta de 8 dígitos seguidos de una letra de control calculada mediante el módulo 23.</p>
+                <p class="text-xs text-gray-400 mt-2">Formato: 12345678Z</p>
+            </div>
+            <div class="bg-white rounded-2xl shadow-md p-5 border border-gray-200">
+                <h3 class="text-lg font-semibold text-gray-800 mb-2">NIE</h3>
+                <p class="text-gray-600 text-sm">El Número de Identidad de Extranjero (NIE) comienza con X, Y o Z, seguido de 7 dígitos y una letra de control.</p>
+                <p class="text-xs text-gray-400 mt-2">Formato: X1234567L</p>
+            </div>
+        </div>
+    </div>
+
+    <footer class="text-center py-6 text-gray-400 text-sm">
+        <p>&copy; 2026 BaiGei Tools</p>
+    </footer>
+
+    <script>
+        const LETRAS_DNI = 'TRWAGMYFPDXBNJZSQVHLCKE';
+        const TIPO = { DNI: 'DNI', NIE: 'NIE' };
+        let tipoActual = TIPO.DNI;
+
+        function cambiarTipo(tipo) {
+            tipoActual = tipo;
+            document.getElementById('tabDNI').className = tipo === 'DNI'
+                ? 'flex-1 py-2.5 rounded-xl font-semibold transition bg-blue-600 text-white shadow-sm'
+                : 'flex-1 py-2.5 rounded-xl font-semibold transition bg-gray-100 text-gray-600 hover:bg-gray-200';
+            document.getElementById('tabNIE').className = tipo === 'NIE'
+                ? 'flex-1 py-2.5 rounded-xl font-semibold transition bg-blue-600 text-white shadow-sm'
+                : 'flex-1 py-2.5 rounded-xl font-semibold transition bg-gray-100 text-gray-600 hover:bg-gray-200';
+            document.getElementById('tipoLabel').textContent = tipo;
+            document.getElementById('genLabel').textContent = tipo;
+            document.getElementById('dniInput').value = '';
+            document.getElementById('resultado').classList.add('hidden');
+        }
+
+        function obtenerNumeroDNI(input) {
+            const limpio = input.replace(/[^0-9]/g, '');
+            return parseInt(limpio, 10);
+        }
+
+        function obtenerNumeroNIE(input) {
+            const limpio = input.toUpperCase().replace(/[^XYZ0-9]/g, '');
+            if (limpio.length < 8) return NaN;
+            const letraInicial = limpio[0];
+            let numero = limpio.slice(1, 8);
+            let prefijo = { 'X': '0', 'Y': '1', 'Z': '2' };
+            return parseInt(prefijo[letraInicial] + numero, 10);
+        }
+
+        function letraDNI(numero) {
+            return LETRAS_DNI[numero % 23];
+        }
+
+        function validarDNI() {
+            const input = document.getElementById('dniInput').value.trim();
+            const limpio = input.toUpperCase().replace(/\s/g, '');
+            const resultado = document.getElementById('resultado');
+            const titulo = document.getElementById('resultadoTitulo');
+            const desc = document.getElementById('resultadoDesc');
+            const icono = document.getElementById('resultadoIcono');
+            const card = document.getElementById('resultadoCard');
+
+            if (!limpio) {
+                alert('Por favor, ingrese un ' + tipoActual);
+                return;
+            }
+
+            let valido = false;
+            let mensaje = '';
+
+            if (tipoActual === TIPO.DNI) {
+                const match = limpio.match(/^(\d{8})([A-Z])$/);
+                if (!match) {
+                    mostrarResultado(titulo, desc, icono, card, resultado, 'danger', '✕', 'Formato inválido', 'El DNI debe tener 8 dígitos seguidos de una letra (ej: 12345678Z)');
+                    return;
+                }
+                const numero = parseInt(match[1], 10);
+                const letraIngresada = match[2];
+                const letraCorrecta = letraDNI(numero);
+                valido = letraIngresada === letraCorrecta;
+                mensaje = valido
+                    ? 'DNI correcto. Letra: ' + letraIngresada
+                    : 'Letra incorrecta. La letra correcta sería: ' + letraCorrecta + ' (ingresaste: ' + letraIngresada + ')';
+            } else {
+                const match = limpio.match(/^([XYZ])(\d{7})([A-Z])$/);
+                if (!match) {
+                    mostrarResultado(titulo, desc, icono, card, resultado, 'danger', '✕', 'Formato inválido', 'El NIE debe tener formato X1234567L (letra X/Y/Z + 7 dígitos + letra)');
+                    return;
+                }
+                const letraInicial = match[1];
+                const digitos = match[2];
+                const letraIngresada = match[3];
+                const prefijo = { 'X': '0', 'Y': '1', 'Z': '2' };
+                const numero = parseInt(prefijo[letraInicial] + digitos, 10);
+                const letraCorrecta = letraDNI(numero);
+                valido = letraIngresada === letraCorrecta;
+                mensaje = valido
+                    ? 'NIE correcto. Letra de control: ' + letraIngresada
+                    : 'Letra de control incorrecta. La correcta sería: ' + letraCorrecta + ' (ingresaste: ' + letraIngresada + ')';
+            }
+
+            if (valido) {
+                mostrarResultado(titulo, desc, icono, card, resultado, 'success', '✓', tipoActual + ' Válido', mensaje);
+            } else {
+                mostrarResultado(titulo, desc, icono, card, resultado, 'danger', '✕', tipoActual + ' Inválido', mensaje);
+            }
+        }
+
+        function mostrarResultado(titulo, desc, icono, card, container, tipo, icon, title, message) {
+            container.classList.remove('hidden');
+            if (tipo === 'success') {
+                card.className = 'rounded-xl p-4 border-l-4 flex items-center gap-3 bg-green-50 border-green-500';
+                icono.className = 'w-10 h-10 rounded-full flex items-center justify-center text-white font-bold text-xl bg-green-500';
+                titulo.className = 'font-semibold text-lg text-green-800';
+                desc.className = 'text-sm text-green-600';
+            } else {
+                card.className = 'rounded-xl p-4 border-l-4 flex items-center gap-3 bg-red-50 border-red-500';
+                icono.className = 'w-10 h-10 rounded-full flex items-center justify-center text-white font-bold text-xl bg-red-500';
+                titulo.className = 'font-semibold text-lg text-red-800';
+                desc.className = 'text-sm text-red-600';
+            }
+            icono.textContent = icon;
+            titulo.textContent = title;
+            desc.textContent = message;
+        }
+
+        function generarDNI() {
+            const input = document.getElementById('dniInput');
+
+            if (tipoActual === TIPO.DNI) {
+                const numero = Math.floor(Math.random() * 90000000) + 10000000;
+                const letra = letraDNI(numero);
+                input.value = numero.toString() + letra;
+            } else {
+                const letras = ['X', 'Y', 'Z'];
+                const letraInicial = letras[Math.floor(Math.random() * 3)];
+                const digitos = String(Math.floor(Math.random() * 9000000) + 1000000);
+                const prefijo = { 'X': '0', 'Y': '1', 'Z': '2' };
+                const numero = parseInt(prefijo[letraInicial] + digitos, 10);
+                const letra = letraDNI(numero);
+                input.value = letraInicial + digitos + letra;
+            }
+
+            validarDNI();
+        }
+
+        function limpiar() {
+            document.getElementById('dniInput').value = '';
+            document.getElementById('resultado').classList.add('hidden');
+        }
+
+        document.getElementById('dniInput').addEventListener('input', function(e) {
+            this.value = this.value.toUpperCase().replace(/[^XYZ0-9A-Z]/g, '');
+        });
+    </script>
+</body>
+</html>

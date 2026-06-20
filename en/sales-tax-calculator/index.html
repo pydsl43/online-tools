@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Calculate US sales tax for any state. Enter an amount and see the base price, tax rate, tax amount, and total. Supports all 50 states.">
+    <meta name="keywords" content="sales tax calculator, US sales tax, state tax rate, tax calculator, California tax, Texas tax, New York tax">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://wdnmd.vip/en/sales-tax-calculator/">
+    <meta property="og:title" content="US Sales Tax Calculator - Free Online Tool | BaiGei Tools">
+    <meta property="og:description" content="Calculate US sales tax for any state. Enter an amount and see the base price, tax rate, tax amount, and total.">
+    <meta property="og:url" content="https://wdnmd.vip/en/sales-tax-calculator/">
+    <meta property="og:type" content="website">
+    <title>US Sales Tax Calculator - Free Online Tool | BaiGei Tools</title>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2082456546225568" crossorigin="anonymous"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    animation: {
+                        'gradient': 'gradient 8s ease infinite',
+                    },
+                    keyframes: {
+                        gradient: {
+                            '0%, 100%': { backgroundPosition: '0% 50%' },
+                            '50%': { backgroundPosition: '100% 50%' },
+                        },
+                    },
+                },
+            },
+        }
+    </script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        .gradient-header {
+            background: linear-gradient(-45deg, #667eea, #764ba2, #f093fb, #4facfe, #00f2fe);
+            background-size: 400% 400%;
+            animation: gradient 8s ease infinite;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            transition: all 0.3s ease;
+        }
+        .glass-card:hover {
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+        .footer-gradient {
+            background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
+        }
+        .hero-gradient {
+            background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
+        }
+        .result-card {
+            transition: all 0.3s ease;
+        }
+        .result-card:hover {
+            transform: translateY(-4px);
+        }
+        select, input {
+            outline: none;
+        }
+        select:focus, input:focus {
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.2);
+        }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen flex flex-col font-sans">
+
+    <!-- Navigation -->
+    <nav class="hero-gradient text-white py-3 px-4 shadow-lg">
+        <div class="max-w-6xl mx-auto flex items-center justify-between">
+            <a href="https://wdnmd.vip/" class="text-lg font-bold hover:text-purple-300 transition">BaiGei Tools</a>
+            <div class="flex gap-4 text-sm">
+                <a href="https://wdnmd.vip/" class="hover:text-purple-300 transition">Home</a>
+                <a href="/en/sales-tax-calculator/" class="text-purple-300 font-semibold">Sales Tax</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Header -->
+    <header class="gradient-header text-white py-12 px-4 text-center">
+        <div class="max-w-4xl mx-auto">
+            <h1 class="text-4xl md:text-5xl font-bold mb-4">US Sales Tax Calculator</h1>
+            <p class="text-lg md:text-xl opacity-90">Calculate sales tax for any state in the United States</p>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-1 max-w-2xl mx-auto w-full px-4 py-8">
+        <!-- Calculator Form -->
+        <div class="glass-card rounded-2xl p-6 md:p-8 mb-6">
+            <div class="grid gap-5">
+                <!-- Amount Input -->
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">Amount ($)</label>
+                    <input type="number" id="amountInput" class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-purple-400 transition text-lg" placeholder="Enter amount, e.g. 100.00" step="0.01" min="0" oninput="calculateTax()">
+                </div>
+
+                <!-- State Dropdown -->
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">Select State</label>
+                    <select id="stateSelect" class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-purple-400 transition text-lg bg-white" onchange="calculateTax()">
+                        <option value="">-- Select a state --</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <!-- Results -->
+        <div id="resultsContainer" class="hidden">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+                <div class="glass-card result-card rounded-xl p-4 text-center">
+                    <p class="text-xs text-gray-500 font-medium uppercase tracking-wide mb-1">Base Price</p>
+                    <p id="basePrice" class="text-xl font-bold text-gray-800">$0.00</p>
+                </div>
+                <div class="glass-card result-card rounded-xl p-4 text-center">
+                    <p class="text-xs text-gray-500 font-medium uppercase tracking-wide mb-1">Tax Rate</p>
+                    <p id="taxRate" class="text-xl font-bold text-purple-600">0.00%</p>
+                </div>
+                <div class="glass-card result-card rounded-xl p-4 text-center">
+                    <p class="text-xs text-gray-500 font-medium uppercase tracking-wide mb-1">Tax Amount</p>
+                    <p id="taxAmount" class="text-xl font-bold text-orange-500">$0.00</p>
+                </div>
+                <div class="glass-card result-card rounded-xl p-4 text-center">
+                    <p class="text-xs text-gray-500 font-medium uppercase tracking-wide mb-1">Total</p>
+                    <p id="totalAmount" class="text-xl font-bold text-green-600">$0.00</p>
+                </div>
+            </div>
+            <div class="glass-card rounded-xl p-4 text-sm text-gray-500 text-center" id="stateInfo">
+                Select a state and enter an amount to calculate sales tax.
+            </div>
+        </div>
+
+        <!-- Ad Placeholder -->
+        <div class="glass-card rounded-2xl p-6 mt-6 text-center text-gray-400 text-sm">
+            <p>Advertisement</p>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer-gradient text-white py-8 px-4">
+        <div class="max-w-6xl mx-auto text-center">
+            <p class="mb-2">&copy; 2026 BaiGei Tools</p>
+            <a href="https://wdnmd.vip/" class="text-purple-300 hover:text-purple-200 text-sm transition">Back to Home</a>
+        </div>
+    </footer>
+
+    <script>
+        const stateTaxRates = {
+            'Alabama': 4.00, 'Alaska': 0.00, 'Arizona': 5.60, 'Arkansas': 6.50,
+            'California': 7.25, 'Colorado': 2.90, 'Connecticut': 6.35, 'Delaware': 0.00,
+            'Florida': 6.00, 'Georgia': 4.00, 'Hawaii': 4.00, 'Idaho': 6.00,
+            'Illinois': 6.25, 'Indiana': 7.00, 'Iowa': 6.00, 'Kansas': 6.50,
+            'Kentucky': 6.00, 'Louisiana': 4.45, 'Maine': 5.50, 'Maryland': 6.00,
+            'Massachusetts': 6.25, 'Michigan': 6.00, 'Minnesota': 6.88, 'Mississippi': 7.00,
+            'Missouri': 4.23, 'Montana': 0.00, 'Nebraska': 5.50, 'Nevada': 6.85,
+            'New Hampshire': 0.00, 'New Jersey': 6.63, 'New Mexico': 5.13, 'New York': 4.00,
+            'North Carolina': 4.75, 'North Dakota': 5.00, 'Ohio': 5.75, 'Oklahoma': 4.50,
+            'Oregon': 0.00, 'Pennsylvania': 6.00, 'Rhode Island': 7.00, 'South Carolina': 6.00,
+            'South Dakota': 4.20, 'Tennessee': 7.00, 'Texas': 6.25, 'Utah': 4.85,
+            'Vermont': 6.00, 'Virginia': 5.30, 'Washington': 6.50, 'West Virginia': 6.00,
+            'Wisconsin': 5.00, 'Wyoming': 4.00
+        };
+
+        function initStateDropdown() {
+            const select = document.getElementById('stateSelect');
+            const states = Object.keys(stateTaxRates).sort();
+            states.forEach(state => {
+                const option = document.createElement('option');
+                option.value = state;
+                option.textContent = `${state} (${stateTaxRates[state].toFixed(2)}%)`;
+                select.appendChild(option);
+            });
+        }
+
+        function calculateTax() {
+            const amount = parseFloat(document.getElementById('amountInput').value);
+            const state = document.getElementById('stateSelect').value;
+            const container = document.getElementById('resultsContainer');
+
+            if (!amount || isNaN(amount) || amount <= 0 || !state) {
+                container.classList.add('hidden');
+                return;
+            }
+
+            const rate = stateTaxRates[state];
+            const tax = amount * (rate / 100);
+            const total = amount + tax;
+
+            document.getElementById('basePrice').textContent = `$${amount.toFixed(2)}`;
+            document.getElementById('taxRate').textContent = `${rate.toFixed(2)}%`;
+            document.getElementById('taxAmount').textContent = `$${tax.toFixed(2)}`;
+            document.getElementById('totalAmount').textContent = `$${total.toFixed(2)}`;
+            document.getElementById('stateInfo').textContent = `Sales tax rate for ${state} is ${rate.toFixed(2)}%. This is the state-level rate; local taxes may apply.`;
+
+            container.classList.remove('hidden');
+        }
+
+        document.addEventListener('DOMContentLoaded', initStateDropdown);
+    </script>
+</body>
+</html>

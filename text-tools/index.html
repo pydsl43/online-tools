@@ -3,11 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>在线文字处理工具 - 免费字数统计/文本转换/JSON格式化</title>
-<meta name="description" content="免费的在线文字处理工具箱，提供字数统计（支持中文字数）、文本转换（大小写/简繁转换/反转）、JSON格式化与验证。无需注册，纯客户端处理，保障数据安全。">
+<title data-i18n-title-tag="txt_title">在线文字处理工具 - 免费字数统计/文本转换/JSON格式化</title>
+<meta name="description" data-i18n-meta-content="txt_description" content="免费的在线文字处理工具箱，提供字数统计（支持中文字数）、文本转换（大小写/简繁转换/反转）、JSON格式化与验证。无需注册，纯客户端处理，保障数据安全。">
 <meta name="keywords" content="在线文字处理,字数统计,中文字数统计,文本转换,简繁转换,JSON格式化,JSON验证,在线工具">
-<meta property="og:title" content="在线文字处理工具 - 免费字数统计/文本转换/JSON格式化">
-<meta property="og:description" content="免费的在线文字处理工具箱，提供字数统计、文本转换、JSON格式化与验证。">
+<meta property="og:title" data-i18n-meta-content="txt_og_title" content="在线文字处理工具 - 免费字数统计/文本转换/JSON格式化">
+<meta property="og:description" data-i18n-meta-content="txt_og_desc" content="免费的在线文字处理工具箱，提供字数统计、文本转换、JSON格式化与验证。">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="zh_CN">
 <meta name="baidu-site-verification" content="codeva-0LodSOu7oa" />
@@ -89,8 +89,9 @@ footer { text-align: center; padding: 24px; color: rgba(255,255,255,0.7); font-s
 
 <div class="container">
   <div class="header">
-    <h1>🛠 在线文字处理工具</h1>
-    <p>免费 · 纯客户端处理 · 无需注册 · 保障数据隐私</p>
+    <h1 data-i18n="txt_heading">🛠 在线文字处理工具</h1>
+    <p data-i18n="txt_subtitle">免费 · 纯客户端处理 · 无需注册 · 保障数据隐私</p>
+    <div id="lang-selector" style="margin-top:10px;"></div>
   </div>
 
   <!-- ===== Google AdSense: 顶部横幅广告 ===== -->
@@ -106,18 +107,18 @@ footer { text-align: center; padding: 24px; color: rgba(255,255,255,0.7); font-s
 
   <div class="main-card">
     <div class="tab-bar">
-      <button class="tab-btn active" data-tab="tab1">📊 字数统计</button>
-      <button class="tab-btn" data-tab="tab2">🔀 文本转换</button>
-      <button class="tab-btn" data-tab="tab3">📋 JSON格式化</button>
+      <button class="tab-btn active" data-tab="tab1" data-i18n="txt_word_count_tab">📊 字数统计</button>
+      <button class="tab-btn" data-tab="tab2" data-i18n="txt_text_convert_tab">🔀 文本转换</button>
+      <button class="tab-btn" data-tab="tab3" data-i18n="txt_json_tab">📋 JSON格式化</button>
     </div>
 
     <!-- ========== TAB 1: 字数统计 ========== -->
     <div id="tab1" class="tab-content active">
-      <div class="section-title">📊 字数统计</div>
-      <p style="color:#64748b;font-size:0.85rem;margin-bottom:12px;">输入或粘贴文本，字数将自动实时统计</p>
-      <textarea id="wordCountInput" placeholder="在此输入或粘贴文本，字数将自动统计..." oninput="updateWordCount()"></textarea>
+      <div class="section-title" data-i18n="txt_word_count_tab">📊 字数统计</div>
+      <p style="color:#64748b;font-size:0.85rem;margin-bottom:12px;" data-i18n="txt_word_count_result">输入或粘贴文本，字数将自动实时统计</p>
+      <textarea id="wordCountInput" data-i18n-placeholder="txt_placeholder" placeholder="在此输入或粘贴文本，字数将自动统计..." oninput="updateWordCount()"></textarea>
       <div class="char-counter">当前输入: <span id="inputCharCount">0</span> 字符</div>
-      <div style="margin:8px 0;"><button class="btn btn-secondary btn-sm" onclick="clearWordCount()">🗑 清空</button></div>
+      <div style="margin:8px 0;"><button class="btn btn-secondary btn-sm" data-i18n="txt_clear_btn" onclick="clearWordCount()">🗑 清空</button></div>
       <div class="stat-grid" id="wordCountStats">
         <div class="stat-card"><div class="stat-value" id="totalChars">0</div><div class="stat-label">总字符数</div></div>
         <div class="stat-card"><div class="stat-value" id="charsNoSpace">0</div><div class="stat-label">字符数(无空格)</div></div>
@@ -129,7 +130,7 @@ footer { text-align: center; padding: 24px; color: rgba(255,255,255,0.7); font-s
         <div class="stat-card"><div class="stat-value" id="readTime">0<span style="font-size:0.7rem;">分钟</span></div><div class="stat-label">阅读时间</div></div>
         <div class="stat-card"><div class="stat-value" id="speakTime">0<span style="font-size:0.7rem;">分钟</span></div><div class="stat-label">演讲时间</div></div>
       </div>
-      <div><button class="btn btn-primary btn-sm" onclick="copyWordCount()">📋 复制统计结果</button></div>
+      <div><button class="btn btn-primary btn-sm" data-i18n="txt_copy_btn" onclick="copyWordCount()">📋 复制统计结果</button></div>
     </div>
 
     <!-- ===== Google AdSense: 中间广告位 ===== -->
@@ -145,16 +146,16 @@ footer { text-align: center; padding: 24px; color: rgba(255,255,255,0.7); font-s
 
     <!-- ========== TAB 2: 文本转换 ========== -->
     <div id="tab2" class="tab-content">
-      <div class="section-title">🔀 文本转换</div>
-      <p style="color:#64748b;font-size:0.85rem;margin-bottom:12px;">输入文本后选择转换方式</p>
-      <textarea id="convertInput" placeholder="在此输入要转换的文本..." oninput="updateConvertCount()"></textarea>
+      <div class="section-title" data-i18n="txt_text_convert_tab">🔀 文本转换</div>
+      <p style="color:#64748b;font-size:0.85rem;margin-bottom:12px;" data-i18n="txt_output_label">输入文本后选择转换方式</p>
+      <textarea id="convertInput" data-i18n-placeholder="txt_placeholder" placeholder="在此输入要转换的文本..." oninput="updateConvertCount()"></textarea>
       <div class="char-counter">当前输入: <span id="convertCharCount">0</span> 字符</div>
-      <div style="margin:8px 0;"><button class="btn btn-secondary btn-sm" onclick="clearConvert()">🗑 清空</button></div>
+      <div style="margin:8px 0;"><button class="btn btn-secondary btn-sm" data-i18n="txt_clear_btn" onclick="clearConvert()">🗑 清空</button></div>
       <div class="section-title" style="margin-top:16px;">大小写转换</div>
       <div class="btn-group">
-        <button class="btn btn-primary btn-sm" onclick="convertText('uppercase')">A 全部大写</button>
-        <button class="btn btn-primary btn-sm" onclick="convertText('lowercase')">a 全部小写</button>
-        <button class="btn btn-primary btn-sm" onclick="convertText('capitalize')">Aa 首字母大写</button>
+        <button class="btn btn-primary btn-sm" data-i18n="txt_upper_btn" onclick="convertText('uppercase')">A 全部大写</button>
+        <button class="btn btn-primary btn-sm" data-i18n="txt_lower_btn" onclick="convertText('lowercase')">a 全部小写</button>
+        <button class="btn btn-primary btn-sm" data-i18n="txt_capitalize_btn" onclick="convertText('capitalize')">Aa 首字母大写</button>
         <button class="btn btn-primary btn-sm" onclick="convertText('camelCase')">aaBb 驼峰式</button>
         <button class="btn btn-primary btn-sm" onclick="convertText('snakeCase')">aa_bb 蛇形式</button>
       </div>
@@ -162,30 +163,30 @@ footer { text-align: center; padding: 24px; color: rgba(255,255,255,0.7); font-s
       <div class="btn-group">
         <button class="btn btn-primary btn-sm" onclick="convertText('s2t')">简 → 繁</button>
         <button class="btn btn-primary btn-sm" onclick="convertText('t2s')">繁 → 简</button>
-        <button class="btn btn-primary btn-sm" onclick="convertText('reverse')">🔄 反转文字</button>
+        <button class="btn btn-primary btn-sm" data-i18n="txt_reverse_btn" onclick="convertText('reverse')">🔄 反转文字</button>
         <button class="btn btn-primary btn-sm" onclick="convertText('trim')">✂ 去除多余空格</button>
       </div>
-      <div class="section-title" style="margin-top:12px;">转换结果</div>
+      <div class="section-title" style="margin-top:12px;" data-i18n="txt_output_label">转换结果</div>
       <div class="result-area" id="convertResult"><span class="placeholder">转换结果将显示在此处</span></div>
-      <div><button class="btn btn-success btn-sm" onclick="copyConvertResult()">📋 复制结果</button></div>
+      <div><button class="btn btn-success btn-sm" data-i18n="txt_copy_btn" onclick="copyConvertResult()">📋 复制结果</button></div>
     </div>
 
     <!-- ========== TAB 3: JSON格式化 ========== -->
     <div id="tab3" class="tab-content">
-      <div class="section-title">📋 JSON格式化与验证</div>
-      <p style="color:#64748b;font-size:0.85rem;margin-bottom:12px;">输入JSON字符串，进行格式化、压缩或验证</p>
-      <textarea id="jsonInput" placeholder='例如: {"name":"张三","age":25,"hobbies":["读书","编程"]}' oninput="updateJsonCount()"></textarea>
+      <div class="section-title" data-i18n="txt_json_tab">📋 JSON格式化与验证</div>
+      <p style="color:#64748b;font-size:0.85rem;margin-bottom:12px;" data-i18n="txt_output_label">输入JSON字符串，进行格式化、压缩或验证</p>
+      <textarea id="jsonInput" data-i18n-placeholder="txt_placeholder" placeholder='例如: {"name":"张三","age":25,"hobbies":["读书","编程"]}' oninput="updateJsonCount()"></textarea>
       <div class="char-counter">当前输入: <span id="jsonCharCount">0</span> 字符</div>
       <div class="btn-group">
-        <button class="btn btn-primary btn-sm" onclick="formatJson()">🎨 格式化</button>
-        <button class="btn btn-secondary btn-sm" onclick="compressJson()">📦 压缩</button>
-        <button class="btn btn-success btn-sm" onclick="validateJson()">✅ 验证</button>
+        <button class="btn btn-primary btn-sm" data-i18n="txt_json_format_btn" onclick="formatJson()">🎨 格式化</button>
+        <button class="btn btn-secondary btn-sm" data-i18n="txt_json_minify_btn" onclick="compressJson()">📦 压缩</button>
+        <button class="btn btn-success btn-sm" data-i18n="txt_json_validate_btn" onclick="validateJson()">✅ 验证</button>
       </div>
       <div id="jsonError" style="display:none;background:#fff5f5;border:1px solid #feb2b2;border-radius:8px;padding:12px;margin:8px 0;color:#c53030;font-size:0.88rem;white-space:pre-wrap;"></div>
-      <div class="section-title" style="margin-top:12px;">格式化结果</div>
+      <div class="section-title" style="margin-top:12px;" data-i18n="txt_output_label">格式化结果</div>
       <div class="result-area" id="jsonResult"><span class="placeholder">格式化后的JSON将显示在此处</span></div>
       <div class="btn-group">
-        <button class="btn btn-success btn-sm" onclick="copyJsonResult()">📋 复制结果</button>
+        <button class="btn btn-success btn-sm" data-i18n="txt_copy_btn" onclick="copyJsonResult()">📋 复制结果</button>
         <button class="btn btn-primary btn-sm" onclick="downloadJson()">⬇ 下载 .json</button>
       </div>
       <div class="section-title" style="margin-top:16px;">JSON树形视图</div>
@@ -205,7 +206,7 @@ footer { text-align: center; padding: 24px; color: rgba(255,255,255,0.7); font-s
   </script>
 
   <footer>
-    <p>© 2026 在线文字处理工具 · 所有处理均在浏览器本地完成，您的数据不会上传到服务器</p>
+    <p data-i18n-html="footer_copyright">© 2026 在线文字处理工具 · 所有处理均在浏览器本地完成，您的数据不会上传到服务器</p>
   </footer>
 </div>
 
@@ -724,6 +725,15 @@ function createBracket(b) {
   span.textContent = b;
   return span;
 }
+</script>
+<script src="/i18n/translations.js"></script>
+<script src="/i18n/i18n.js" defer></script>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    if (window.createLanguageSelector) {
+      createLanguageSelector('lang-selector');
+    }
+  });
 </script>
 </body>
 </html>

@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Generador de CURP y RFC para México. Calcula tu CURP y RFC válidos con nuestro generador gratuito en línea.">
+    <meta name="keywords" content="CURP, RFC, generador CURP, generador RFC, México, Clave Única de Registro de Población, Registro Federal de Contribuyentes">
+    <meta name="author" content="BaiGei Tools">
+    <title>Generador de CURP y RFC - México</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2082456546225568" crossorigin="anonymous"></script>
+    <style>
+        .tool-card { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+        .result-curp { font-family: 'Courier New', monospace; letter-spacing: 2px; }
+        .copy-btn:hover { transform: translateY(-1px); }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <nav class="bg-white shadow-md py-3 px-4">
+        <div class="max-w-5xl mx-auto flex justify-between items-center">
+            <a href="https://wdnmd.vip/" class="text-gray-600 hover:text-gray-900 text-sm">&larr; Inicio</a>
+            <span class="text-gray-400 text-xs">BaiGei Tools</span>
+        </div>
+    </nav>
+
+    <div class="max-w-4xl mx-auto px-4 py-8">
+        <header class="text-center mb-8">
+            <h1 class="text-3xl md:text-4xl font-bold text-gray-800 mb-2">Generador de CURP y RFC</h1>
+            <p class="text-gray-500">Genera CURP y RFC válidos para personas físicas en México</p>
+        </header>
+
+        <div class="tool-card rounded-2xl shadow-xl p-6 md:p-8 mb-8 text-white">
+            <h2 class="text-2xl font-semibold mb-6">Datos de la persona</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                <div>
+                    <label class="block text-sm font-medium mb-1">Nombre</label>
+                    <input type="text" id="nombre" class="w-full px-3 py-2 rounded-lg text-gray-800 border border-gray-300 focus:ring-2 focus:ring-purple-300 focus:outline-none" placeholder="JUAN">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium mb-1">Apellido Paterno</label>
+                    <input type="text" id="apellidoPaterno" class="w-full px-3 py-2 rounded-lg text-gray-800 border border-gray-300 focus:ring-2 focus:ring-purple-300 focus:outline-none" placeholder="PÉREZ">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium mb-1">Apellido Materno</label>
+                    <input type="text" id="apellidoMaterno" class="w-full px-3 py-2 rounded-lg text-gray-800 border border-gray-300 focus:ring-2 focus:ring-purple-300 focus:outline-none" placeholder="LÓPEZ">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium mb-1">Fecha de Nacimiento</label>
+                    <input type="date" id="fechaNacimiento" class="w-full px-3 py-2 rounded-lg text-gray-800 border border-gray-300 focus:ring-2 focus:ring-purple-300 focus:outline-none">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium mb-1">Sexo</label>
+                    <select id="sexo" class="w-full px-3 py-2 rounded-lg text-gray-800 border border-gray-300 focus:ring-2 focus:ring-purple-300 focus:outline-none">
+                        <option value="H">Hombre</option>
+                        <option value="M">Mujer</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium mb-1">Estado</label>
+                    <select id="estado" class="w-full px-3 py-2 rounded-lg text-gray-800 border border-gray-300 focus:ring-2 focus:ring-purple-300 focus:outline-none">
+                        <option value="AS">Aguascalientes</option>
+                        <option value="BC">Baja California</option>
+                        <option value="BS">Baja California Sur</option>
+                        <option value="CC">Campeche</option>
+                        <option value="CL">Coahuila</option>
+                        <option value="CM">Colima</option>
+                        <option value="CS">Chiapas</option>
+                        <option value="CH">Chihuahua</option>
+                        <option value="DF">Ciudad de México</option>
+                        <option value="DG">Durango</option>
+                        <option value="GT">Guanajuato</option>
+                        <option value="GR">Guerrero</option>
+                        <option value="HG">Hidalgo</option>
+                        <option value="JC">Jalisco</option>
+                        <option value="EM">Estado de México</option>
+                        <option value="MN">Michoacán</option>
+                        <option value="MS">Morelos</option>
+                        <option value="NT">Nayarit</option>
+                        <option value="NL">Nuevo León</option>
+                        <option value="OC">Oaxaca</option>
+                        <option value="PL">Puebla</option>
+                        <option value="QT">Querétaro</option>
+                        <option value="QR">Quintana Roo</option>
+                        <option value="SP">San Luis Potosí</option>
+                        <option value="SL">Sinaloa</option>
+                        <option value="SR">Sonora</option>
+                        <option value="TC">Tabasco</option>
+                        <option value="TS">Tamaulipas</option>
+                        <option value="TL">Tlaxcala</option>
+                        <option value="VZ">Veracruz</option>
+                        <option value="YN">Yucatán</option>
+                        <option value="ZS">Zacatecas</option>
+                    </select>
+                </div>
+            </div>
+            <div class="flex flex-wrap gap-3 mt-6">
+                <button onclick="generarCURP()" class="bg-white text-purple-700 font-semibold px-6 py-2.5 rounded-lg hover:bg-purple-50 transition shadow-md">Generar CURP</button>
+                <button onclick="generarRFC()" class="bg-white text-purple-700 font-semibold px-6 py-2.5 rounded-lg hover:bg-purple-50 transition shadow-md">Generar RFC</button>
+                <button onclick="limpiar()" class="bg-transparent border border-white text-white font-semibold px-6 py-2.5 rounded-lg hover:bg-white/10 transition">Limpiar</button>
+            </div>
+        </div>
+
+        <div id="resultado" class="hidden">
+            <div class="bg-white rounded-2xl shadow-md p-6 md:p-8 border border-gray-200">
+                <div class="flex items-center justify-between mb-4">
+                    <h3 id="resultadoTitulo" class="text-xl font-semibold text-gray-800"></h3>
+                    <button id="copyBtn" onclick="copiarResultado()" class="copy-btn bg-gray-100 text-gray-600 px-3 py-1.5 rounded-lg text-sm hover:bg-gray-200 transition flex items-center gap-1">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
+                        Copiar
+                    </button>
+                </div>
+                <div id="resultadoTexto" class="result-curp text-2xl md:text-3xl text-center py-6 bg-gray-50 rounded-xl text-purple-700 font-bold"></div>
+            </div>
+        </div>
+
+        <div class="mt-8 bg-white rounded-2xl shadow-md p-6 border border-gray-200">
+            <h3 class="text-lg font-semibold text-gray-800 mb-3">Acerca de CURP y RFC</h3>
+            <div class="text-gray-600 text-sm space-y-2">
+                <p><strong>CURP</strong> (Clave Única de Registro de Población): Código alfanumérico de 18 caracteres que identifica a cada persona en México. Se compone de las iniciales de los nombres y apellidos, fecha de nacimiento, sexo, entidad federativa y dígitos verificadores.</p>
+                <p><strong>RFC</strong> (Registro Federal de Contribuyentes): Clave de 13 caracteres para personas físicas que permite identificar a los contribuyentes ante el SAT.</p>
+            </div>
+        </div>
+    </div>
+
+    <footer class="text-center py-6 text-gray-400 text-sm">
+        <p>&copy; 2026 BaiGei Tools</p>
+    </footer>
+
+    <script>
+        const ESTADOS = {
+            'AS':'Aguascalientes','BC':'Baja California','BS':'Baja California Sur','CC':'Campeche',
+            'CL':'Coahuila','CM':'Colima','CS':'Chiapas','CH':'Chihuahua','DF':'Ciudad de México',
+            'DG':'Durango','GT':'Guanajuato','GR':'Guerrero','HG':'Hidalgo','JC':'Jalisco',
+            'EM':'Estado de México','MN':'Michoacán','MS':'Morelos','NT':'Nayarit','NL':'Nuevo León',
+            'OC':'Oaxaca','PL':'Puebla','QT':'Querétaro','QR':'Quintana Roo','SP':'San Luis Potosí',
+            'SL':'Sinaloa','SR':'Sonora','TC':'Tabasco','TS':'Tamaulipas','TL':'Tlaxcala',
+            'VZ':'Veracruz','YN':'Yucatán','ZS':'Zacatecas','NE':'Nacido en el extranjero'
+        };
+
+        // Palabras inconvenientes que se evitan en CURP
+        const PALABRAS_INCONVENIENTES = [/^BUEI/, /^BUEY/, /^CACA/, /^CACO/, /^CAGA/, /^CAGO/, /^CAKA/, /^CAKO/, /^COGE/, /^COGI/, /^COJA/, /^COJE/, /^COJI/, /^COJO/, /^CULO/, /^FETO/, /^GUEY/, /^JOTO/, /^KACA/, /^KACO/, /^KAGA/, /^KAGO/, /^KOGE/, /^KOGI/, /^KOJA/, /^KOJE/, /^KOJI/, /^KOJO/, /^KULO/, /^MAME/, /^MAMO/, /^MEAR/, /^MEAS/, /^MEON/, /^MIAR/, /^MION/, /^MOCO/, /^MULA/, /^PEDA/, /^PEDO/, /^PENE/, /^PUTA/, /^PUTO/, /^QULO/, /^RATA/, /^RUIN/];
+
+        function getVal(id) {
+            return document.getElementById(id).value.trim().toUpperCase();
+        }
+
+        function getFirstLetter(str) {
+            return str.charAt(0);
+        }
+
+        function getFirstVowel(str) {
+            const vowels = 'AEIOU';
+            for (let i = 1; i < str.length; i++) {
+                if (vowels.includes(str[i])) return str[i];
+            }
+            return 'X';
+        }
+
+        function getConsonant(str) {
+            const consonants = 'BCDFGHJKLMNPQRSTVWXYZ';
+            for (let i = 0; i < str.length; i++) {
+                if (consonants.includes(str[i])) return str[i];
+            }
+            return 'X';
+        }
+
+        function getLastTwoDigits(year) {
+            return year.toString().padStart(2, '0').slice(-2);
+        }
+
+        function curpDigitoVerificador(curp) {
+            const valores = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+            let suma = 0;
+            for (let i = 0; i < 17; i++) {
+                suma += valores.indexOf(curp[i]) * (18 - i);
+            }
+            const residuo = suma % 10;
+            const digito = residuo === 0 ? 0 : 10 - residuo;
+            return digito.toString();
+        }
+
+        function corregirPalabraInconveniente(curpBase) {
+            for (let patron of PALABRAS_INCONVENIENTES) {
+                if (patron.test(curpBase)) {
+                    curpBase = curpBase.charAt(0) + 'X' + curpBase.slice(2);
+                    break;
+                }
+            }
+            return curpBase;
+        }
+
+        function generarCURP() {
+            const nombre = getVal('nombre');
+            const apaterno = getVal('apellidoPaterno');
+            const amaterno = getVal('apellidoMaterno');
+            const fecha = document.getElementById('fechaNacimiento').value;
+            const sexo = document.getElementById('sexo').value;
+            const estado = document.getElementById('estado').value;
+
+            if (!nombre || !apaterno || !fecha) {
+                alert('Por favor complete al menos: nombre, apellido paterno y fecha de nacimiento.');
+                return;
+            }
+
+            const birth = new Date(fecha);
+            const year = birth.getFullYear();
+            const month = String(birth.getMonth() + 1).padStart(2, '0');
+            const day = String(birth.getDate()).padStart(2, '0');
+
+            let curpBase = getFirstLetter(apaterno) + getFirstVowel(apaterno) + getFirstLetter(amaterno || 'X') + getFirstLetter(nombre);
+            curpBase = corregirPalabraInconveniente(curpBase);
+
+            const yearStr = getLastTwoDigits(year);
+            curpBase += yearStr + month + day + sexo + estado;
+
+            // Letras internas (primera consonante de apellidos y nombre)
+            let letrasInternas = '';
+            if (apaterno) letrasInternas += getConsonant(apaterno.slice(1));
+            if (amaterno) letrasInternas += getConsonant(amaterno);
+            letrasInternas += getConsonant(nombre.slice(1));
+            letrasInternas = letrasInternas.slice(0, 3).padEnd(3, 'X');
+
+            curpBase += letrasInternas;
+
+            const digito = curpDigitoVerificador(curpBase);
+            const curp = curpBase + digito;
+
+            mostrarResultado('CURP Generado', curp);
+        }
+
+        function generarRFC() {
+            const nombre = getVal('nombre');
+            const apaterno = getVal('apellidoPaterno');
+            const amaterno = getVal('apellidoMaterno');
+            const fecha = document.getElementById('fechaNacimiento').value;
+
+            if (!nombre || !apaterno || !fecha) {
+                alert('Por favor complete al menos: nombre, apellido paterno y fecha de nacimiento.');
+                return;
+            }
+
+            const birth = new Date(fecha);
+            const year = birth.getFullYear();
+            const month = String(birth.getMonth() + 1).padStart(2, '0');
+            const day = String(birth.getDate()).padStart(2, '0');
+
+            let rfcBase = getFirstLetter(apaterno) + getFirstVowel(apaterno) + getFirstLetter(amaterno || 'X') + getFirstLetter(nombre);
+            rfcBase = corregirPalabraInconveniente(rfcBase);
+
+            const yearStr = getLastTwoDigits(year);
+            rfcBase += yearStr + month + day;
+            rfcBase += 'XXX';  // Homoclave generada
+
+            mostrarResultado('RFC Generado', rfcBase);
+        }
+
+        function mostrarResultado(titulo, valor) {
+            document.getElementById('resultado').classList.remove('hidden');
+            document.getElementById('resultadoTitulo').textContent = titulo;
+            document.getElementById('resultadoTexto').textContent = valor;
+        }
+
+        function copiarResultado() {
+            const texto = document.getElementById('resultadoTexto').textContent;
+            navigator.clipboard.writeText(texto).then(() => {
+                const btn = document.getElementById('copyBtn');
+                btn.innerHTML = '¡Copiado!';
+                setTimeout(() => {
+                    btn.innerHTML = '<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg> Copiar';
+                }, 2000);
+            }).catch(() => {
+                alert('No se pudo copiar. Seleccione el texto manualmente.');
+            });
+        }
+
+        function limpiar() {
+            document.getElementById('nombre').value = '';
+            document.getElementById('apellidoPaterno').value = '';
+            document.getElementById('apellidoMaterno').value = '';
+            document.getElementById('fechaNacimiento').value = '';
+            document.getElementById('resultado').classList.add('hidden');
+        }
+
+        window.addEventListener('DOMContentLoaded', function() {
+            const today = new Date();
+            const defaultDate = new Date(today.getFullYear() - 30, 0, 1);
+            document.getElementById('fechaNacimiento').value = defaultDate.toISOString().split('T')[0];
+        });
+    </script>
+</body>
+</html>

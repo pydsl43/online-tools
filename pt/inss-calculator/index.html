@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Calculadora INSS 2025-2026. Calcule o desconto do INSS sobre o salário com as alíquotas atualizadas. Grátis e online.">
+    <meta name="keywords" content="calculadora INSS, INSS 2025, INSS 2026, desconto INSS, contribuição INSS, salário, alíquota INSS, ferramenta online">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://wdnmd.vip/pt/inss-calculator/">
+    <meta property="og:title" content="Calculadora INSS 2025-2026 - Simulador de Contribuição | BaiGei Tools">
+    <meta property="og:description" content="Calcule o desconto do INSS sobre o salário. Tabela de alíquotas atualizada para 2025-2026.">
+    <meta property="og:url" content="https://wdnmd.vip/pt/inss-calculator/">
+    <meta property="og:type" content="website">
+    <title>Calculadora INSS 2025-2026 - Simulador de Contribuição | BaiGei Tools</title>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2082456546225568" crossorigin="anonymous"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    animation: {
+                        'gradient': 'gradient 8s ease infinite',
+                    },
+                    keyframes: {
+                        gradient: {
+                            '0%, 100%': { backgroundPosition: '0% 50%' },
+                            '50%': { backgroundPosition: '100% 50%' },
+                        },
+                    },
+                },
+            },
+        }
+    </script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        .gradient-header {
+            background: linear-gradient(-45deg, #667eea, #764ba2, #f093fb, #4facfe, #00f2fe);
+            background-size: 400% 400%;
+            animation: gradient 8s ease infinite;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            transition: all 0.3s ease;
+        }
+        .glass-card:hover {
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+        .footer-gradient {
+            background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
+        }
+        .hero-gradient {
+            background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
+        }
+        input {
+            outline: none;
+        }
+        input:focus {
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.2);
+        }
+        .fade-in {
+            animation: fadeIn 0.4s ease forwards;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .result-card {
+            transition: all 0.3s ease;
+        }
+        .result-card:hover {
+            transform: translateY(-4px);
+        }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen flex flex-col font-sans">
+
+    <!-- Navigation -->
+    <nav class="hero-gradient text-white py-3 px-4 shadow-lg">
+        <div class="max-w-6xl mx-auto flex items-center justify-between">
+            <a href="https://wdnmd.vip/" class="text-lg font-bold hover:text-purple-300 transition">BaiGei Tools</a>
+            <div class="flex gap-4 text-sm">
+                <a href="https://wdnmd.vip/" class="hover:text-purple-300 transition">Início</a>
+                <a href="/pt/inss-calculator/" class="text-purple-300 font-semibold">INSS</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Header -->
+    <header class="gradient-header text-white py-12 px-4 text-center">
+        <div class="max-w-4xl mx-auto">
+            <h1 class="text-4xl md:text-5xl font-bold mb-4">Calculadora INSS 2025-2026</h1>
+            <p class="text-lg md:text-xl opacity-90">Calcule o desconto da contribuição previdenciária sobre o salário</p>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-1 max-w-2xl mx-auto w-full px-4 py-8">
+        <!-- Ad -->
+        <div class="glass-card rounded-2xl p-4 mb-6 text-center text-gray-400 text-sm">
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-2082456546225568"
+                 data-ad-slot="1234567890"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+            <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+        </div>
+
+        <!-- Calculator Form -->
+        <div class="glass-card rounded-2xl p-6 md:p-8 mb-6">
+            <div class="mb-6">
+                <label class="block text-sm font-semibold text-gray-700 mb-2">Salário Bruto (R$)</label>
+                <div class="relative">
+                    <span class="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 font-semibold text-lg">R$</span>
+                    <input type="number" id="salarioInput" class="w-full pl-12 pr-4 py-3 rounded-xl border border-gray-200 focus:border-purple-400 transition text-lg" placeholder="0,00" step="0.01" min="0" oninput="calcularInss()">
+                </div>
+            </div>
+            <button onclick="calcularInss()" class="w-full px-6 py-3 rounded-xl font-semibold text-white transition-all shadow-md hover:shadow-lg hover:-translate-y-0.5" style="background: linear-gradient(135deg, #667eea, #764ba2);">
+                Calcular INSS
+            </button>
+        </div>
+
+        <!-- Results -->
+        <div id="resultsContainer" class="hidden fade-in">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+                <div class="glass-card result-card rounded-xl p-4 text-center">
+                    <p class="text-xs text-gray-500 font-medium uppercase tracking-wide mb-1">Salário Bruto</p>
+                    <p id="resultBruto" class="text-xl font-bold text-gray-800">R$ 0,00</p>
+                </div>
+                <div class="glass-card result-card rounded-xl p-4 text-center border-t-4 border-red-400">
+                    <p class="text-xs text-gray-500 font-medium uppercase tracking-wide mb-1">Desconto INSS</p>
+                    <p id="resultDesconto" class="text-xl font-bold text-red-600">R$ 0,00</p>
+                </div>
+                <div class="glass-card result-card rounded-xl p-4 text-center border-t-4 border-green-400">
+                    <p class="text-xs text-gray-500 font-medium uppercase tracking-wide mb-1">Salário Líquido</p>
+                    <p id="resultLiquido" class="text-xl font-bold text-green-600">R$ 0,00</p>
+                </div>
+                <div class="glass-card result-card rounded-xl p-4 text-center border-t-4 border-purple-400">
+                    <p class="text-xs text-gray-500 font-medium uppercase tracking-wide mb-1">Alíquota Efetiva</p>
+                    <p id="resultAliquota" class="text-xl font-bold text-purple-600">0,00%</p>
+                </div>
+            </div>
+
+            <!-- Breakdown table -->
+            <div class="glass-card rounded-2xl p-6 mb-6">
+                <h3 class="text-sm font-bold text-gray-700 mb-3 uppercase tracking-wide">Detalhamento por Faixa</h3>
+                <div id="tabelaFaixas" class="space-y-2"></div>
+            </div>
+        </div>
+
+        <!-- INSS Table Reference -->
+        <div class="glass-card rounded-2xl p-6 text-sm text-gray-500 leading-relaxed">
+            <h3 class="font-bold text-gray-700 mb-3">Tabela INSS 2025-2026</h3>
+            <div class="overflow-x-auto">
+                <table class="w-full text-left text-sm">
+                    <thead>
+                        <tr class="border-b border-gray-200">
+                            <th class="py-2 pr-4 font-semibold text-gray-700">Faixa Salarial</th>
+                            <th class="py-2 pr-4 font-semibold text-gray-700">Alíquota</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="border-b border-gray-100">
+                            <td class="py-2 pr-4">Até R$ 1.518,00</td>
+                            <td class="py-2 pr-4 text-purple-600 font-semibold">7,5%</td>
+                        </tr>
+                        <tr class="border-b border-gray-100">
+                            <td class="py-2 pr-4">De R$ 1.518,01 a R$ 2.793,88</td>
+                            <td class="py-2 pr-4 text-purple-600 font-semibold">9%</td>
+                        </tr>
+                        <tr class="border-b border-gray-100">
+                            <td class="py-2 pr-4">De R$ 2.793,89 a R$ 4.190,83</td>
+                            <td class="py-2 pr-4 text-purple-600 font-semibold">12%</td>
+                        </tr>
+                        <tr>
+                            <td class="py-2 pr-4">De R$ 4.190,84 a R$ 8.157,41</td>
+                            <td class="py-2 pr-4 text-purple-600 font-semibold">14%</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <p class="mt-3 text-xs text-gray-400">* Tabela progressiva do INSS referente a 2025-2026. O desconto é calculado de forma progressiva por faixa.</p>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer-gradient text-white py-8 px-4">
+        <div class="max-w-6xl mx-auto text-center">
+            <p class="mb-2">&copy; 2026 BaiGei Tools</p>
+            <a href="https://wdnmd.vip/" class="text-purple-300 hover:text-purple-200 text-sm transition">Voltar ao Início</a>
+        </div>
+    </footer>
+
+    <script>
+        const faixas = [
+            { limite: 1518.00, aliquota: 0.075, nome: '1ª Faixa' },
+            { limite: 2793.88, aliquota: 0.09, nome: '2ª Faixa' },
+            { limite: 4190.83, aliquota: 0.12, nome: '3ª Faixa' },
+            { limite: 8157.41, aliquota: 0.14, nome: '4ª Faixa' },
+        ];
+        const teto = 8157.41;
+
+        function formatMoney(val) {
+            return 'R$ ' + val.toFixed(2).replace('.', ',');
+        }
+
+        function calcularInss() {
+            const input = document.getElementById('salarioInput');
+            const salario = parseFloat(input.value);
+
+            if (!salario || isNaN(salario) || salario <= 0) {
+                document.getElementById('resultsContainer').classList.add('hidden');
+                return;
+            }
+
+            const container = document.getElementById('resultsContainer');
+            let totalDesconto = 0;
+            let salarioRestante = salario;
+            const faixaDetalhes = [];
+
+            for (let i = 0; i < faixas.length; i++) {
+                const faixa = faixas[i];
+                const limiteAnterior = i > 0 ? faixas[i - 1].limite : 0;
+                const baseFaixa = Math.min(faixa.limite - limiteAnterior, Math.max(0, salario - limiteAnterior));
+                const descontoFaixa = baseFaixa * faixa.aliquota;
+                totalDesconto += descontoFaixa;
+
+                if (baseFaixa > 0) {
+                    faixaDetalhes.push({
+                        nome: faixa.nome,
+                        faixa: `R$ ${limiteAnterior.toFixed(2)} - R$ ${faixa.limite.toFixed(2)}`,
+                        base: baseFaixa,
+                        aliquota: (faixa.aliquota * 100).toFixed(1) + '%',
+                        desconto: descontoFaixa
+                    });
+                }
+            }
+
+            const salarioCalculo = Math.min(salario, teto > salario ? salario : teto);
+            const aliquotaEfetiva = salario > 0 ? (totalDesconto / salarioCalculo) * 100 : 0;
+            const salarioLiquido = salario - totalDesconto;
+
+            document.getElementById('resultBruto').textContent = formatMoney(salario);
+            document.getElementById('resultDesconto').textContent = formatMoney(totalDesconto);
+            document.getElementById('resultLiquido').textContent = formatMoney(salarioLiquido);
+            document.getElementById('resultAliquota').textContent = aliquotaEfetiva.toFixed(2) + '%';
+
+            // Render breakdown table
+            const tabela = document.getElementById('tabelaFaixas');
+            if (faixaDetalhes.length === 0) {
+                tabela.innerHTML = '<p class="text-gray-400 text-sm">Nenhuma faixa aplicada.</p>';
+            } else {
+                tabela.innerHTML = faixaDetalhes.map((f, idx) => {
+                    const colors = ['border-l-purple-400', 'border-l-blue-400', 'border-l-orange-400', 'border-l-red-400'];
+                    const bgColors = ['bg-purple-50', 'bg-blue-50', 'bg-orange-50', 'bg-red-50'];
+                    return `
+                        <div class="flex items-center justify-between p-3 rounded-xl ${bgColors[idx]} border-l-4 ${colors[idx]}">
+                            <div>
+                                <p class="text-sm font-semibold text-gray-700">${f.nome}</p>
+                                <p class="text-xs text-gray-500">${f.faixa}</p>
+                            </div>
+                            <div class="text-right">
+                                <p class="text-sm font-bold text-gray-800">${formatMoney(f.desconto)}</p>
+                                <p class="text-xs text-gray-500">Base: ${formatMoney(f.base)} × ${f.aliquota}</p>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+            }
+
+            container.classList.remove('hidden');
+            container.classList.add('fade-in');
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            (adsbygoogle = window.adsbygoogle || []).push({});
+            document.getElementById('salarioInput').addEventListener('keydown', function(e) {
+                if (e.key === 'Enter') calcularInss();
+            });
+        });
+    </script>
+</body>
+</html>

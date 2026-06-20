@@ -1,38 +1,74 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://wdnmd.vip/</loc>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://wdnmd.vip/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://wdnmd.vip/?lang=en" />
+    <xhtml:link rel="alternate" hreflang="ja" href="https://wdnmd.vip/?lang=ja" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://wdnmd.vip/?lang=es" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://wdnmd.vip/?lang=pt" />
   </url>
   <url>
     <loc>https://wdnmd.vip/image-tools/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://wdnmd.vip/image-tools/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://wdnmd.vip/image-tools/?lang=en" />
+    <xhtml:link rel="alternate" hreflang="ja" href="https://wdnmd.vip/image-tools/?lang=ja" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://wdnmd.vip/image-tools/?lang=es" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://wdnmd.vip/image-tools/?lang=pt" />
   </url>
   <url>
     <loc>https://wdnmd.vip/pdf-tools/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://wdnmd.vip/pdf-tools/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://wdnmd.vip/pdf-tools/?lang=en" />
+    <xhtml:link rel="alternate" hreflang="ja" href="https://wdnmd.vip/pdf-tools/?lang=ja" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://wdnmd.vip/pdf-tools/?lang=es" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://wdnmd.vip/pdf-tools/?lang=pt" />
   </url>
   <url>
     <loc>https://wdnmd.vip/text-tools/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://wdnmd.vip/text-tools/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://wdnmd.vip/text-tools/?lang=en" />
+    <xhtml:link rel="alternate" hreflang="ja" href="https://wdnmd.vip/text-tools/?lang=ja" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://wdnmd.vip/text-tools/?lang=es" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://wdnmd.vip/text-tools/?lang=pt" />
   </url>
   <url>
     <loc>https://wdnmd.vip/privacy.html</loc>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://wdnmd.vip/privacy.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://wdnmd.vip/privacy.html?lang=en" />
+    <xhtml:link rel="alternate" hreflang="ja" href="https://wdnmd.vip/privacy.html?lang=ja" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://wdnmd.vip/privacy.html?lang=es" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://wdnmd.vip/privacy.html?lang=pt" />
   </url>
   <url>
     <loc>https://wdnmd.vip/about.html</loc>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://wdnmd.vip/about.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://wdnmd.vip/about.html?lang=en" />
+    <xhtml:link rel="alternate" hreflang="ja" href="https://wdnmd.vip/about.html?lang=ja" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://wdnmd.vip/about.html?lang=es" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://wdnmd.vip/about.html?lang=pt" />
   </url>
   <url>
     <loc>https://wdnmd.vip/contact.html</loc>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://wdnmd.vip/contact.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://wdnmd.vip/contact.html?lang=en" />
+    <xhtml:link rel="alternate" hreflang="ja" href="https://wdnmd.vip/contact.html?lang=ja" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://wdnmd.vip/contact.html?lang=es" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://wdnmd.vip/contact.html?lang=pt" />
   </url>
 </urlset>

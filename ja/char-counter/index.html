@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>文字数カウント - 日本語対応</title>
+    <meta name="description" content="日本語テキストの文字数をリアルタイムでカウント。漢字・ひらがな・カタカナ・数字の内訳も表示。">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2082456546225568" crossorigin="anonymous"></script>
+</head>
+<body class="bg-gradient-to-br from-teal-50 via-cyan-50 to-sky-50 min-h-screen">
+    <div class="container mx-auto px-4 py-8 max-w-3xl">
+        <a href="https://wdnmd.vip/" class="text-gray-500 hover:text-gray-700 text-sm mb-4 inline-block">&larr; トップへ戻る</a>
+        
+        <div class="text-center mb-8">
+            <h1 class="text-3xl font-bold text-gray-800 mb-2">📝 文字数カウント</h1>
+            <p class="text-gray-500">日本語対応・リアルタイム文字数カウンター</p>
+        </div>
+
+        <div class="bg-white rounded-2xl shadow-lg p-6 mb-6">
+            <div class="mb-4">
+                <label for="textInput" class="block text-gray-700 font-medium mb-2">テキストを入力</label>
+                <textarea id="textInput" placeholder="ここにテキストを入力してください..." class="w-full h-48 px-4 py-3 rounded-xl border-2 border-gray-200 focus:border-teal-500 focus:outline-none resize-y text-lg leading-relaxed"></textarea>
+            </div>
+            <div class="flex justify-between items-center">
+                <div class="text-sm text-gray-400">
+                    <span id="charCount">0</span> 文字
+                </div>
+                <button id="clearBtn" class="px-4 py-2 bg-gray-100 hover:bg-gray-200 rounded-lg text-sm text-gray-600 transition">クリア</button>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-2 md:grid-cols-3 gap-4 mb-6">
+            <div class="bg-white rounded-xl shadow p-4 text-center">
+                <p class="text-sm text-gray-500">総文字数</p>
+                <p class="text-3xl font-bold text-teal-600" id="totalChars">0</p>
+            </div>
+            <div class="bg-white rounded-xl shadow p-4 text-center">
+                <p class="text-sm text-gray-500">空白除く字数</p>
+                <p class="text-3xl font-bold text-cyan-600" id="charsNoSpace">0</p>
+            </div>
+            <div class="bg-white rounded-xl shadow p-4 text-center">
+                <p class="text-sm text-gray-500">漢字数</p>
+                <p class="text-3xl font-bold text-orange-600" id="kanjiCount">0</p>
+            </div>
+            <div class="bg-white rounded-xl shadow p-4 text-center">
+                <p class="text-sm text-gray-500">ひらがな数</p>
+                <p class="text-3xl font-bold text-pink-600" id="hiraganaCount">0</p>
+            </div>
+            <div class="bg-white rounded-xl shadow p-4 text-center">
+                <p class="text-sm text-gray-500">カタカナ数</p>
+                <p class="text-3xl font-bold text-purple-600" id="katakanaCount">0</p>
+            </div>
+            <div class="bg-white rounded-xl shadow p-4 text-center">
+                <p class="text-sm text-gray-500">数字</p>
+                <p class="text-3xl font-bold text-blue-600" id="digitCount">0</p>
+            </div>
+            <div class="bg-white rounded-xl shadow p-4 text-center">
+                <p class="text-sm text-gray-500">英字（a-z）</p>
+                <p class="text-3xl font-bold text-green-600" id="alphaCount">0</p>
+            </div>
+            <div class="bg-white rounded-xl shadow p-4 text-center">
+                <p class="text-sm text-gray-500">改行数</p>
+                <p class="text-3xl font-bold text-rose-600" id="lineBreakCount">0</p>
+            </div>
+            <div class="bg-white rounded-xl shadow p-4 text-center">
+                <p class="text-sm text-gray-500">単語数（推定）</p>
+                <p class="text-3xl font-bold text-indigo-600" id="wordCount">0</p>
+            </div>
+        </div>
+
+        <div class="bg-white rounded-2xl shadow-lg p-6">
+            <h2 class="text-lg font-bold text-gray-800 mb-4">カウント結果</h2>
+            <div id="resultBox" class="bg-gray-50 rounded-xl p-4 font-mono text-sm text-gray-600 break-all mb-4 min-h-[60px]">
+                テキストを入力すると結果が表示されます
+            </div>
+            <div class="flex gap-2">
+                <button id="copyBtn" class="px-6 py-2 bg-teal-500 hover:bg-teal-600 text-white rounded-lg text-sm transition">結果をコピー</button>
+                <button id="copyTextBtn" class="px-6 py-2 bg-gray-100 hover:bg-gray-200 text-gray-600 rounded-lg text-sm transition">テキストをコピー</button>
+            </div>
+        </div>
+    </div>
+
+    <footer class="text-center py-6 text-gray-400 text-sm">
+        <a href="https://wdnmd.vip/" class="hover:text-gray-600 transition">トップページ</a>
+        <span class="mx-2">|</span>
+        © 2026 BaiGei Tools
+    </footer>
+
+    <script>
+        const textInput = document.getElementById('textInput');
+        
+        function countChars() {
+            const text = textInput.value;
+            
+            const totalChars = text.length;
+            const charsNoSpace = text.replace(/[\s]/g, '').length;
+            const kanjiCount = (text.match(/[\u4e00-\u9fff]/g) || []).length;
+            const hiraganaCount = (text.match(/[\u3040-\u309f]/g) || []).length;
+            const katakanaCount = (text.match(/[\u30a0-\u30ff]/g) || []).length;
+            const digitCount = (text.match(/[0-9]/g) || []).length;
+            const alphaCount = (text.match(/[a-zA-Z]/g) || []).length;
+            const lineBreakCount = (text.match(/\n/g) || []).length;
+            const wordCount = text.trim() ? text.trim().split(/\s+/).length : 0;
+
+            document.getElementById('charCount').textContent = totalChars;
+            document.getElementById('totalChars').textContent = totalChars;
+            document.getElementById('charsNoSpace').textContent = charsNoSpace;
+            document.getElementById('kanjiCount').textContent = kanjiCount;
+            document.getElementById('hiraganaCount').textContent = hiraganaCount;
+            document.getElementById('katakanaCount').textContent = katakanaCount;
+            document.getElementById('digitCount').textContent = digitCount;
+            document.getElementById('alphaCount').textContent = alphaCount;
+            document.getElementById('lineBreakCount').textContent = lineBreakCount;
+            document.getElementById('wordCount').textContent = wordCount;
+
+            const resultBox = document.getElementById('resultBox');
+            if (totalChars > 0) {
+                resultBox.innerHTML = `
+                    <div>総文字数: ${totalChars}</div>
+                    <div>空白除く字数: ${charsNoSpace}</div>
+                    <div>漢字: ${kanjiCount} | ひらがな: ${hiraganaCount} | カタカナ: ${katakanaCount}</div>
+                    <div>数字: ${digitCount} | 英字: ${alphaCount} | 改行: ${lineBreakCount}</div>
+                    <div>単語数（推定）: ${wordCount}</div>
+                `;
+            } else {
+                resultBox.innerHTML = 'テキストを入力すると結果が表示されます';
+            }
+        }
+
+        textInput.addEventListener('input', countChars);
+
+        document.getElementById('clearBtn').addEventListener('click', () => {
+            textInput.value = '';
+            countChars();
+            textInput.focus();
+        });
+
+        document.getElementById('copyBtn').addEventListener('click', () => {
+            const text = document.getElementById('resultBox').textContent;
+            navigator.clipboard.writeText(text).then(() => {
+                const btn = document.getElementById('copyBtn');
+                btn.textContent = 'コピーしました！';
+                setTimeout(() => btn.textContent = '結果をコピー', 2000);
+            });
+        });
+
+        document.getElementById('copyTextBtn').addEventListener('click', () => {
+            const text = textInput.value;
+            if (!text) return;
+            navigator.clipboard.writeText(text).then(() => {
+                const btn = document.getElementById('copyTextBtn');
+                btn.textContent = 'コピーしました！';
+                setTimeout(() => btn.textContent = 'テキストをコピー', 2000);
+            });
+        });
+    </script>
+</body>
+</html>

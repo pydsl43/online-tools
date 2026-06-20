@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Validador de RUT chileno. Verifica si un RUT es válido, calcula el dígito verificador y genera RUTs aleatorios válidos.">
+    <meta name="keywords" content="RUT, validador RUT, Chile, Rol Único Tributario, dígito verificador, rut chileno">
+    <meta name="author" content="BaiGei Tools">
+    <title>Validador de RUT - Chile</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2082456546225568" crossorigin="anonymous"></script>
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <nav class="bg-white shadow-md py-3 px-4">
+        <div class="max-w-5xl mx-auto flex justify-between items-center">
+            <a href="https://wdnmd.vip/" class="text-gray-600 hover:text-gray-900 text-sm">&larr; Inicio</a>
+            <span class="text-gray-400 text-xs">BaiGei Tools</span>
+        </div>
+    </nav>
+
+    <div class="max-w-2xl mx-auto px-4 py-8">
+        <header class="text-center mb-8">
+            <h1 class="text-3xl md:text-4xl font-bold text-gray-800 mb-2">Validador de RUT</h1>
+            <p class="text-gray-500">Valida y genera RUTs chilenos (Rol Único Tributario)</p>
+        </header>
+
+        <div class="bg-white rounded-2xl shadow-md p-6 md:p-8 border border-gray-200 mb-6">
+            <div class="mb-6">
+                <label for="rutInput" class="block text-sm font-medium text-gray-700 mb-2">Ingrese un RUT</label>
+                <div class="flex gap-2">
+                    <input type="text" id="rutInput" class="flex-1 px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-blue-400 focus:outline-none text-lg tracking-wider" placeholder="12.345.678-5" autocomplete="off">
+                    <button onclick="validarRUT()" class="bg-blue-600 text-white px-6 py-3 rounded-xl hover:bg-blue-700 transition font-semibold shadow-sm">Validar</button>
+                </div>
+            </div>
+
+            <div id="resultado" class="hidden mb-6">
+                <div id="resultadoCard" class="rounded-xl p-4 border-l-4 flex items-center gap-3">
+                    <div id="resultadoIcono" class="w-10 h-10 rounded-full flex items-center justify-center text-white font-bold text-xl"></div>
+                    <div>
+                        <p id="resultadoTitulo" class="font-semibold text-lg"></p>
+                        <p id="resultadoDesc" class="text-sm"></p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex flex-wrap gap-3">
+                <button onclick="generarRUTAleatorio()" class="bg-green-600 text-white px-5 py-2.5 rounded-xl hover:bg-green-700 transition font-medium shadow-sm">Generar RUT aleatorio</button>
+                <button onclick="limpiar()" class="bg-gray-100 text-gray-600 px-5 py-2.5 rounded-xl hover:bg-gray-200 transition font-medium">Limpiar</button>
+            </div>
+        </div>
+
+        <div class="bg-white rounded-2xl shadow-md p-6 border border-gray-200">
+            <h3 class="text-lg font-semibold text-gray-800 mb-3">Acerca del RUT chileno</h3>
+            <div class="text-gray-600 text-sm space-y-2">
+                <p>El <strong>RUT</strong> (Rol Único Tributario) es el identificador tributario de personas y empresas en Chile. Está compuesto por un número de hasta 8 dígitos más un dígito verificador (DV) que puede ser un número del 0 al 9 o la letra K.</p>
+                <p>El dígito verificador se calcula mediante el <strong>módulo 11</strong>, un algoritmo que asigna pesos a cada dígito y calcula el resto de la suma.</p>
+            </div>
+            <div class="mt-4 bg-gray-50 rounded-xl p-4">
+                <h4 class="font-medium text-gray-700 mb-2">Formato válido:</h4>
+                <code class="text-blue-600 bg-blue-50 px-3 py-1 rounded text-sm">XX.XXX.XXX-Y</code>
+                <span class="text-gray-400 mx-2">o</span>
+                <code class="text-blue-600 bg-blue-50 px-3 py-1 rounded text-sm">XXXXXXXX-Y</code>
+                <p class="text-xs text-gray-400 mt-2">Donde Y es el dígito verificador (0-9 o K)</p>
+            </div>
+        </div>
+    </div>
+
+    <footer class="text-center py-6 text-gray-400 text-sm">
+        <p>&copy; 2026 BaiGei Tools</p>
+    </footer>
+
+    <script>
+        function formatearRUT(rut) {
+            const limpio = rut.replace(/[^0-9kK]/g, '').toUpperCase();
+            if (limpio.length <= 1) return limpio.toUpperCase();
+
+            const numero = limpio.slice(0, -1);
+            const dv = limpio.slice(-1);
+
+            let numFormateado = '';
+            for (let i = numero.length - 1, j = 0; i >= 0; i--, j++) {
+                if (j > 0 && j % 3 === 0) numFormateado = '.' + numFormateado;
+                numFormateado = numero[i] + numFormateado;
+            }
+
+            return numFormateado + '-' + dv;
+        }
+
+        function calcularDV(rutNumero) {
+            let suma = 0;
+            let multiplicador = 2;
+
+            for (let i = rutNumero.length - 1; i >= 0; i--) {
+                suma += parseInt(rutNumero[i]) * multiplicador;
+                multiplicador = multiplicador === 7 ? 2 : multiplicador + 1;
+            }
+
+            const residuo = suma % 11;
+            const dvCalculado = 11 - residuo;
+
+            if (dvCalculado === 11) return '0';
+            if (dvCalculado === 10) return 'K';
+            return dvCalculado.toString();
+        }
+
+        function validarRUT() {
+            const input = document.getElementById('rutInput').value.trim();
+            const limpio = input.replace(/[^0-9kK]/g, '').toUpperCase();
+            const resultado = document.getElementById('resultado');
+            const titulo = document.getElementById('resultadoTitulo');
+            const desc = document.getElementById('resultadoDesc');
+            const icono = document.getElementById('resultadoIcono');
+            const card = document.getElementById('resultadoCard');
+
+            if (limpio.length < 2) {
+                alert('Ingrese un RUT válido (mínimo 2 caracteres).');
+                return;
+            }
+
+            const rutNumero = limpio.slice(0, -1);
+            const rutDV = limpio.slice(-1);
+
+            const dvCorrecto = calcularDV(rutNumero);
+
+            resultado.classList.remove('hidden');
+
+            if (rutDV === dvCorrecto) {
+                card.className = 'rounded-xl p-4 border-l-4 flex items-center gap-3 bg-green-50 border-green-500';
+                icono.className = 'w-10 h-10 rounded-full flex items-center justify-center text-white font-bold text-xl bg-green-500';
+                icono.textContent = '✓';
+                titulo.textContent = 'RUT Válido';
+                titulo.className = 'font-semibold text-lg text-green-800';
+                desc.textContent = 'El RUT ingresado es correcto. Dígito verificador: ' + rutDV;
+                desc.className = 'text-sm text-green-600';
+            } else {
+                card.className = 'rounded-xl p-4 border-l-4 flex items-center gap-3 bg-red-50 border-red-500';
+                icono.className = 'w-10 h-10 rounded-full flex items-center justify-center text-white font-bold text-xl bg-red-500';
+                icono.textContent = '✕';
+                titulo.textContent = 'RUT Inválido';
+                titulo.className = 'font-semibold text-lg text-red-800';
+                desc.textContent = 'El RUT ingresado no es válido. El dígito verificador debería ser: ' + dvCorrecto + ' (ingresaste: ' + rutDV + ')';
+                desc.className = 'text-sm text-red-600';
+            }
+        }
+
+        function generarRUTAleatorio() {
+            let rutNumero = '';
+            for (let i = 0; i < 8; i++) {
+                rutNumero += Math.floor(Math.random() * 10);
+            }
+            // Asegurar que no empiece con 0
+            rutNumero = Math.floor(Math.random() * 9 + 1) + rutNumero.slice(1);
+
+            const dv = calcularDV(rutNumero);
+            const rutFormateado = formatearRUT(rutNumero + dv);
+
+            document.getElementById('rutInput').value = rutFormateado;
+            validarRUT();
+        }
+
+        function limpiar() {
+            document.getElementById('rutInput').value = '';
+            document.getElementById('resultado').classList.add('hidden');
+        }
+
+        // Auto-format en tiempo real
+        document.getElementById('rutInput').addEventListener('input', function(e) {
+            const cursorPos = this.selectionStart;
+            const raw = this.value.replace(/[^0-9kK]/g, '').toUpperCase();
+
+            if (raw.length > 0) {
+                const numero = raw.slice(0, -1);
+                const dv = raw.slice(-1);
+                if (numero.length > 0) {
+                    let numFormateado = '';
+                    for (let i = numero.length - 1, j = 0; i >= 0; i--, j++) {
+                        if (j > 0 && j % 3 === 0) numFormateado = '.' + numFormateado;
+                        numFormateado = numero[i] + numFormateado;
+                    }
+                    this.value = numFormateado + '-' + dv;
+                } else {
+                    this.value = '-' + dv;
+                }
+            }
+
+            // Evitar ciclos con el validador automático
+            if (this.value.replace(/[^0-9kK]/g, '').length >= 8) {
+                validarRUT();
+            } else {
+                document.getElementById('resultado').classList.add('hidden');
+            }
+        });
+    </script>
+</body>
+</html>
