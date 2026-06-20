@@ -231,7 +231,7 @@ const translations = {
     page_title: "FreeBee Tools - Free Image Compression, PDF Processing, Text Processing",
 
     hero_badge: "FreeBee Tools · Completely Free · Local Processing · Privacy Protected",
-    hero_title: "BaiGei Tools",
+    hero_title: "FreeBee Tools",
     hero_subtitle: "Image Compression · PDF Tools · Text Processing · All Free",
     hero_description: "All tools run locally in your browser. Your files are never uploaded to any server — safe and worry-free.",
     cta_button: "Get Started →",
@@ -631,7 +631,7 @@ const translations = {
     page_title: "Regalado Tools - Compresión de Imágenes, Procesamiento PDF, Procesamiento de Texto Gratis",
 
     hero_badge: "Regalado Tools · Completamente Gratis · Procesamiento Local · Privacidad Protegida",
-    hero_title: "BaiGei Tools",
+    hero_title: "FreeBee Tools",
     hero_subtitle: "Compresión de Imágenes · Herramientas PDF · Procesamiento de Texto · Todo Gratis",
     hero_description: "Todas las herramientas funcionan localmente en su navegador. Sus archivos nunca se cargan a ningún servidor: seguro y sin preocupaciones.",
     cta_button: "Comenzar →",
@@ -831,7 +831,7 @@ const translations = {
     page_title: "Na Faixa Tools - Compressão de Imagens, Processamento PDF, Processamento de Texto Grátis",
 
     hero_badge: "Na Faixa Tools · Totalmente Grátis · Processamento Local · Privacidade Protegida",
-    hero_title: "BaiGei Tools",
+    hero_title: "FreeBee Tools",
     hero_subtitle: "Compressão de Imagens · Ferramentas PDF · Processamento de Texto · Tudo Grátis",
     hero_description: "Todas as ferramentas funcionam localmente no seu navegador. Seus arquivos nunca são enviados para nenhum servidor — seguro e sem preocupações.",
     cta_button: "Começar →",
