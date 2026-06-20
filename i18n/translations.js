@@ -220,17 +220,17 @@ const translations = {
   },
 
   en: {
-    brand_name: "🛠️ BaiGei Tools",
+    brand_name: "🛠️ FreeBee Tools",
     header_tagline: "Free · Secure · Fast",
 
     // Meta / Page
-    meta_description: "BaiGei Tools - Free online image compression, PDF processing, text processing tools. No registration required, local processing, privacy protected.",
+    meta_description: "FreeBee Tools - Free online image compression, PDF processing, text processing tools. No registration required, local processing, privacy protected.",
     meta_keywords: "online tools,image compression,PDF tools,text processing,free tools,online processing",
-    og_title: "BaiGei Tools - Free Image Compression, PDF Processing, Text Processing",
-    og_description: "BaiGei Tools - Free online image compression, PDF processing, text processing tools. No registration required, local processing, privacy protected.",
-    page_title: "BaiGei Tools - Free Image Compression, PDF Processing, Text Processing",
+    og_title: "FreeBee Tools - Free Image Compression, PDF Processing, Text Processing",
+    og_description: "FreeBee Tools - Free online image compression, PDF processing, text processing tools. No registration required, local processing, privacy protected.",
+    page_title: "FreeBee Tools - Free Image Compression, PDF Processing, Text Processing",
 
-    hero_badge: "BaiGei Tools · Completely Free · Local Processing · Privacy Protected",
+    hero_badge: "FreeBee Tools · Completely Free · Local Processing · Privacy Protected",
     hero_title: "BaiGei Tools",
     hero_subtitle: "Image Compression · PDF Tools · Text Processing · All Free",
     hero_description: "All tools run locally in your browser. Your files are never uploaded to any server — safe and worry-free.",
@@ -420,17 +420,17 @@ const translations = {
   },
 
   ja: {
-    brand_name: "🛠️ 白給ツール",
+    brand_name: "🛠️ タダツール",
     header_tagline: "無料 · 安全 · 高速",
 
     // Meta / Page
-    meta_description: "白給ツール - 無料オンライン画像圧縮、PDF処理、テキスト処理ツール。登録不要、ローカル処理、プライバシー保護。",
+    meta_description: "タダツール - 無料オンライン画像圧縮、PDF処理、テキスト処理ツール。登録不要、ローカル処理、プライバシー保護。",
     meta_keywords: "オンラインツール,画像圧縮,PDFツール,テキスト処理,無料ツール,オンライン処理",
-    og_title: "白給ツール - 無料画像圧縮、PDF処理、テキスト処理",
-    og_description: "白給ツール - 無料オンライン画像圧縮、PDF処理、テキスト処理ツール。登録不要、ローカル処理、プライバシー保護。",
-    page_title: "白給ツール - 無料画像圧縮、PDF処理、テキスト処理",
+    og_title: "タダツール - 無料画像圧縮、PDF処理、テキスト処理",
+    og_description: "タダツール - 無料オンライン画像圧縮、PDF処理、テキスト処理ツール。登録不要、ローカル処理、プライバシー保護。",
+    page_title: "タダツール - 無料画像圧縮、PDF処理、テキスト処理",
 
-    hero_badge: "白給ツール · 完全無料 · ローカル処理 · プライバシー保護",
+    hero_badge: "タダツール · 完全無料 · ローカル処理 · プライバシー保護",
     hero_title: "白給ツール",
     hero_subtitle: "画像圧縮 · PDF処理 · テキスト処理 · すべて無料",
     hero_description: "すべてのツールはブラウザ上でローカルに動作します。ファイルがサーバーにアップロードされることは一切なく、安全で安心です。",
@@ -620,17 +620,17 @@ const translations = {
   },
 
   es: {
-    brand_name: "🛠️ BaiGei Tools",
+    brand_name: "🛠️ Regalado Tools",
     header_tagline: "Gratis · Seguro · Rápido",
 
     // Meta / Page
-    meta_description: "BaiGei Tools - Herramientas gratuitas de compresión de imágenes, procesamiento PDF y procesamiento de texto en línea. Sin registro, procesamiento local, privacidad protegida.",
+    meta_description: "Regalado Tools - Herramientas gratuitas de compresión de imágenes, procesamiento PDF y procesamiento de texto en línea. Sin registro, procesamiento local, privacidad protegida.",
     meta_keywords: "herramientas en línea,compresión de imágenes,herramientas PDF,procesamiento de texto,herramientas gratuitas,procesamiento en línea",
-    og_title: "BaiGei Tools - Compresión de Imágenes, Procesamiento PDF, Procesamiento de Texto Gratis",
-    og_description: "BaiGei Tools - Herramientas gratuitas de compresión de imágenes, procesamiento PDF y procesamiento de texto en línea. Sin registro, procesamiento local, privacidad protegida.",
-    page_title: "BaiGei Tools - Compresión de Imágenes, Procesamiento PDF, Procesamiento de Texto Gratis",
+    og_title: "Regalado Tools - Compresión de Imágenes, Procesamiento PDF, Procesamiento de Texto Gratis",
+    og_description: "Regalado Tools - Herramientas gratuitas de compresión de imágenes, procesamiento PDF y procesamiento de texto en línea. Sin registro, procesamiento local, privacidad protegida.",
+    page_title: "Regalado Tools - Compresión de Imágenes, Procesamiento PDF, Procesamiento de Texto Gratis",
 
-    hero_badge: "BaiGei Tools · Completamente Gratis · Procesamiento Local · Privacidad Protegida",
+    hero_badge: "Regalado Tools · Completamente Gratis · Procesamiento Local · Privacidad Protegida",
     hero_title: "BaiGei Tools",
     hero_subtitle: "Compresión de Imágenes · Herramientas PDF · Procesamiento de Texto · Todo Gratis",
     hero_description: "Todas las herramientas funcionan localmente en su navegador. Sus archivos nunca se cargan a ningún servidor: seguro y sin preocupaciones.",
@@ -820,17 +820,17 @@ const translations = {
   },
 
   pt: {
-    brand_name: "🛠️ BaiGei Tools",
+    brand_name: "🛠️ Na Faixa Tools",
     header_tagline: "Grátis · Seguro · Rápido",
 
     // Meta / Page
-    meta_description: "BaiGei Tools - Ferramentas gratuitas de compressão de imagens, processamento PDF e processamento de texto online. Sem registro, processamento local, privacidade protegida.",
+    meta_description: "Na Faixa Tools - Ferramentas gratuitas de compressão de imagens, processamento PDF e processamento de texto online. Sem registro, processamento local, privacidade protegida.",
     meta_keywords: "ferramentas online,compressão de imagens,ferramentas PDF,processamento de texto,ferramentas gratuitas,processamento online",
-    og_title: "BaiGei Tools - Compressão de Imagens, Processamento PDF, Processamento de Texto Grátis",
-    og_description: "BaiGei Tools - Ferramentas gratuitas de compressão de imagens, processamento PDF e processamento de texto online. Sem registro, processamento local, privacidade protegida.",
-    page_title: "BaiGei Tools - Compressão de Imagens, Processamento PDF, Processamento de Texto Grátis",
+    og_title: "Na Faixa Tools - Compressão de Imagens, Procesamento PDF, Processamento de Texto Grátis",
+    og_description: "Na Faixa Tools - Ferramentas gratuitas de compressão de imagens, processamento PDF e processamento de texto online. Sem registro, processamento local, privacidade protegida.",
+    page_title: "Na Faixa Tools - Compressão de Imagens, Processamento PDF, Processamento de Texto Grátis",
 
-    hero_badge: "BaiGei Tools · Completamente Grátis · Processamento Local · Privacidade Protegida",
+    hero_badge: "Na Faixa Tools · Totalmente Grátis · Processamento Local · Privacidade Protegida",
     hero_title: "BaiGei Tools",
     hero_subtitle: "Compressão de Imagens · Ferramentas PDF · Processamento de Texto · Tudo Grátis",
     hero_description: "Todas as ferramentas funcionam localmente no seu navegador. Seus arquivos nunca são enviados para nenhum servidor — seguro e sem preocupações.",
