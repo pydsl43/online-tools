@@ -21,26 +21,42 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Ping Google
+      # Deprecated: Google discontinued the sitemap ping endpoint (returns 404).
+      - name: Ping Google (deprecated)
+        continue-on-error: true
         run: |
           curl -s -o /dev/null -w "%{http_code}\n" \
-            "https://www.google.com/ping?sitemap=https://wdnmd.vip/sitemap.xml"
-          
-      - name: Ping Bing
-        run: |
-          curl -s -o /dev/null -w "%{http_code}\n" \
-            "https://www.bing.com/ping?sitemap=https://wdnmd.vip/sitemap.xml"
+            "https://www.google.com/ping?sitemap=https://wdnmd.vip/sitemap.xml" || true
 
-      - name: Baidu API Push (all URLs from sitemap)
+      # Deprecated: Bing discontinued the sitemap ping endpoint (returns 410).
+      - name: Ping Bing (deprecated)
+        continue-on-error: true
         run: |
-          # Extract all URLs from sitemap.xml and push via Baidu API
-          # API push works without ICP filing (unlike sitemap tool)
-          URLS=$(grep -oP '<loc>\s*\Khttps://wdnmd\.vip[^<]+' sitemap.xml || true)
-          if [ -n "$URLS" ]; then
-            echo "$URLS" | curl -s \
-              -H 'Content-Type:text/plain' \
-              --data-binary @- \
-              "http://data.zz.baidu.com/urls?site=wdnmd.vip&token=6oMAGbJv1JJXIUVI"
-          else
+          curl -s -o /dev/null -w "%{http_code}\n" \
+            "https://www.bing.com/ping?sitemap=https://wdnmd.vip/sitemap.xml" || true
+
+      - name: Baidu API Push (quota-aware, 10 URLs/day)
+        env:
+          BAIDU_TOKEN: ${{ secrets.BAIDU_TOKEN }}
+        run: |
+          set -euo pipefail
+          TOKEN="${BAIDU_TOKEN:-6oMAGbJv1JJXIUVI}"
+          DAY=$(date +%j)
+          URLS=$(grep -oP '<loc>\s*\Khttps://wdnmd\.vip[^<]+' sitemap.xml | sort)
+          TOTAL=$(echo "$URLS" | wc -l | tr -d ' ')
+          if [ "$TOTAL" -eq 0 ]; then
             echo "No URLs found in sitemap.xml"
+            exit 1
           fi
+          OFFSET=$(( (DAY * 10) % TOTAL + 1 ))
+          {
+            echo "$URLS" | tail -n +"$OFFSET"
+            echo "$URLS" | head -n "$((OFFSET - 1))"
+          } | head -10 > /tmp/baidu_urls.txt
+          echo "Pushing $(wc -l < /tmp/baidu_urls.txt | tr -d ' ') URLs (offset $OFFSET of $TOTAL):"
+          cat /tmp/baidu_urls.txt
+          RESP=$(curl -s -H 'Content-Type:text/plain' --data-binary @/tmp/baidu_urls.txt \
+            "http://data.zz.baidu.com/urls?site=wdnmd.vip&token=${TOKEN}")
+          echo "$RESP"
+          echo "$RESP" | grep -q '"error"' && exit 1 || true
+          echo "$RESP" | grep -q '"success"' || exit 1
