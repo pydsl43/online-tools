@@ -48,12 +48,13 @@ jobs:
             echo "No URLs found in sitemap.xml"
             exit 1
           fi
-          OFFSET=$(( (DAY * 10) % TOTAL + 1 ))
-          {
-            echo "$URLS" | tail -n +"$OFFSET"
-            echo "$URLS" | head -n "$((OFFSET - 1))"
-          } | head -10 > /tmp/baidu_urls.txt
-          echo "Pushing $(wc -l < /tmp/baidu_urls.txt | tr -d ' ') URLs (offset $OFFSET of $TOTAL):"
+          mapfile -t URL_ARRAY < <(printf '%s\n' "$URLS")
+          START=$(( (DAY * 10) % TOTAL ))
+          : > /tmp/baidu_urls.txt
+          for (( i=0; i<10; i++ )); do
+            echo "${URL_ARRAY[$(( (START + i) % TOTAL ))]}" >> /tmp/baidu_urls.txt
+          done
+          echo "Pushing $(wc -l < /tmp/baidu_urls.txt | tr -d ' ') URLs (offset $((START + 1)) of $TOTAL):"
           cat /tmp/baidu_urls.txt
           RESP=$(curl -s -H 'Content-Type:text/plain' --data-binary @/tmp/baidu_urls.txt \
             "http://data.zz.baidu.com/urls?site=wdnmd.vip&token=${TOKEN}")
