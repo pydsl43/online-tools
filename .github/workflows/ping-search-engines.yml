@@ -59,5 +59,9 @@ jobs:
           RESP=$(curl -s -H 'Content-Type:text/plain' --data-binary @/tmp/baidu_urls.txt \
             "http://data.zz.baidu.com/urls?site=wdnmd.vip&token=${TOKEN}")
           echo "$RESP"
+          if echo "$RESP" | grep -q 'over quota'; then
+            echo "Baidu daily push quota exhausted; will retry tomorrow."
+            exit 0
+          fi
           echo "$RESP" | grep -q '"error"' && exit 1 || true
           echo "$RESP" | grep -q '"success"' || exit 1
